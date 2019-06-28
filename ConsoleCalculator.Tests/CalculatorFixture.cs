@@ -24,15 +24,8 @@ namespace ConsoleCalculator.Tests
         [Fact]
         public void Test3()
         {
-            string exp = "2+";
-            Assert.Equal("2", ActualString(exp));
-        }
-
-        [Fact]
-        public void Test4()
-        {
-            string exp = "0....0";
-            Assert.Equal("0.0", ActualString(exp));
+            string exp = "1/0=";
+            Assert.Equal("-E-", ActualString(exp));
         }
 
         [Fact]
@@ -42,12 +35,6 @@ namespace ConsoleCalculator.Tests
             Assert.Equal("4", ActualString(exp));
         }
 
-        [Fact]
-        public void Test6()
-        {
-            string exp = "3+4=";
-            Assert.Equal("7", ActualString(exp));
-        }
 
         [Fact]
         public void Test7()
@@ -70,12 +57,7 @@ namespace ConsoleCalculator.Tests
             Assert.Equal("", ActualString(exp));
         }
 
-        [Fact]
-        public void Test10()
-        {
-            string exp = "3.5s+4s=";
-            Assert.Equal("-7.5", ActualString(exp));
-        }
+     
 
 
 

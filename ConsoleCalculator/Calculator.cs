@@ -24,9 +24,12 @@ namespace ConsoleCalculator
                     Reset();
                     break;
                 case '=':
-                    if(!string.IsNullOrEmpty(op))
-                    Result(op);
-                    op = string.Empty;
+                    if (!string.IsNullOrEmpty(op))
+                    {
+                        string s = op;
+                        op = string.Empty;
+                        return Result(s);
+                    }
                     break;
                 default:
                     return "";
@@ -36,18 +39,23 @@ namespace ConsoleCalculator
             return operand;
         }
 
-        private void Result(string op)
+        private string Result(string op)
         {
             double answer=0;
             switch(op)
             {
                 case "+": answer = double.Parse(operand) + double.Parse(temp); break;
                 case "-": answer = double.Parse(operand) - double.Parse(temp); break;
-                case "/": answer = double.Parse(operand) / double.Parse(temp); break;
+                case "/":
+                    if (temp == "0")
+                        return "-E-";
+                    else
+                    answer = double.Parse(operand) / double.Parse(temp); break;
                 case "x": answer = double.Parse(operand) * double.Parse(temp); break;       
             }
-            operand = answer.ToString();
             temp = string.Empty;
+
+            return operand = answer.ToString();
         }
 
         private void Reset()

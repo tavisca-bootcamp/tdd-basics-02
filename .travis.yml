@@ -1,6 +1,6 @@
 language: csharp
 solution: ConsoleCalculator.sln
-dist: trusty
+dist: xenial
 mono: none
 dotnet: 2.2.300
 install:

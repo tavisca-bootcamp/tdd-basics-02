@@ -45,7 +45,7 @@ namespace ConsoleCalculator
             {
                 if (calculatorUtility.Flag == 0 && calculatorUtility.PreviousOperator != '?')
                 {
-                    if (!setInitialValues(key))
+                    if (!SetFlagAndPreviousOperator(key))
                         return "-E-";
                 }
                 else
@@ -67,7 +67,7 @@ namespace ConsoleCalculator
             //throw new NotImplementedException();
         }
 
-        private bool setInitialValues(char key)
+        private bool SetFlagAndPreviousOperator(char key)
         {
             bool temp = true;
             calculatorUtility.Flag = 1;

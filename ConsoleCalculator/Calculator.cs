@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace ConsoleCalculator
 {
-    class Calculator
+   public class Calculator
     {
         Stack<string> stackOfEquation = new Stack<string>();
         string answer = "";

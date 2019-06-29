@@ -127,7 +127,15 @@ namespace ConsoleCalculator.Tests
         public void TestResetKey()
         {
             string expression = "1..05+1.35=c";
-            string expected = "";
+            string expected = "0";
+            string actual = GetResult(expression);
+            Assert.Equal(expected, actual);
+        }
+        [Fact]
+        public void TestWithMultiplication()
+        {
+            string expression = "15x10+10=";
+            string expected = "160";
             string actual = GetResult(expression);
             Assert.Equal(expected, actual);
         }

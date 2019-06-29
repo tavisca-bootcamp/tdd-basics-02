@@ -13,37 +13,83 @@ namespace ConsoleCalculator
         //public char OperatorKey { get; set; }
         //public int OperatorOccurance { get; set; }
         //public bool Is { get; set; }
+        public string Number { get; set; }
+        public float Result { get; set; }
+        public int Flag { get; set; }
+        public char PreviousOperator { get; set; }
+
+       public CalculatorUtility()
+        {
+            Number = "";
+            Result = float.MinValue;
+            PreviousOperator = '?';
+            Flag = 0;
+        }
         public bool IsResetKey(char key)
         {
             if (key == 'c' || key == 'C')
                 return true;
             else
                 return false;
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
-        public string Divide(double firstNumber, double secondNumber)
+        public bool isKeyZero(char key)
         {
-            return (firstNumber / secondNumber).ToString();
-            throw new NotImplementedException();
+            if (key == '0')
+                return true;
+            else return false;
+            //throw new NotImplementedException();
         }
 
-        public string Multiply(double firstNumber, double secondNumber)
-        {
-            return (firstNumber * secondNumber).ToString();
-            throw new NotImplementedException();
+        public float Divide(float firstNumber, float secondNumber)
+        { 
+            return (firstNumber / secondNumber);
+            //throw new NotImplementedException();
         }
 
-        public string Substract(double firstNumber, double secondNumber)
+        public String calculateResult(char key)
         {
-            return (firstNumber - secondNumber).ToString();
-            throw new NotImplementedException();
+            if (Result != float.MinValue)
+            {
+                if (IsAdd(key))
+                    Result = Add(Result, float.Parse(Number));
+                else if (IsSubstract(key))
+                    Result = Add(Result, float.Parse(Number));
+                else if (IsMultiply(key))
+                    Result = Multiply(Result, float.Parse(Number));
+                else
+                {
+                    if (float.Parse(Number) != 0)
+                        Result = Divide(Result, float.Parse(Number));
+                    else
+                        return "-E-";
+                }
+            }
+            else
+                Result = float.Parse(Number);
+            PreviousOperator = key;
+            Number = "";
+            Flag = 0;
+            return "Success";
         }
 
-        public string Add(double firstNumber, double secondNumber)
+        public float Multiply(float firstNumber, float secondNumber)
         {
-            return (firstNumber + secondNumber).ToString();
-            throw new NotImplementedException();
+            return (firstNumber * secondNumber);
+            //throw new NotImplementedException();
+        }
+
+        public float Substract(float firstNumber, float secondNumber)
+        {
+            return (firstNumber - secondNumber);
+            //throw new NotImplementedException();
+        }
+
+        public float Add(float firstNumber, float secondNumber)
+        {
+            return (firstNumber + secondNumber);
+            //throw new NotImplementedException();
         }
 
         public bool IsDivide(char key)
@@ -51,7 +97,7 @@ namespace ConsoleCalculator
             if (key == '/')
                 return true;
             else return false;
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public bool IsMultiply(char key)
@@ -60,7 +106,7 @@ namespace ConsoleCalculator
                 return true;
             else
                 return false;
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public bool IsSubstract(char key)
@@ -69,7 +115,7 @@ namespace ConsoleCalculator
                 return true;
             else
                 return false;
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public bool IsAdd(char key)
@@ -78,7 +124,7 @@ namespace ConsoleCalculator
                 return true;
             else
                 return false;
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public bool IsDecimalPoint(char key)
@@ -87,16 +133,16 @@ namespace ConsoleCalculator
                 return true;
             else
                 return false;
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
-        public bool IsNegativeInteger(char key)
+        public bool IsNegativeNumber(char key)
         {
             if (key == 's' || key == 'S')
                 return true;
             else
                 return false;
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public bool IsEqualOperator(char key)
@@ -105,21 +151,21 @@ namespace ConsoleCalculator
                 return true;
             else
                 return false;
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public bool IsArithmeticOperator(char key)
         {
-            if (key == '+' || key == '-' || key == 'x' || key == 'X' || key == '/' || key == '=')
+            if (key == '+' || key == '-' || key == 'x' || key == 'X' || key == '/')
                 return true;
             else
                 return false;
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public bool IsNumber(char key)
         {
-            if (key >= '0' && key <= '9')
+            if (key > '0' && key <= '9')
                 return true;
             else
                 return false;

@@ -6,86 +6,76 @@ namespace ConsoleCalculator
     {
         CalculatorUtility calculatorUtility = new CalculatorUtility();
 
-        public double _firstNumber = 0;
-        public double _secondNumber = 0;
-        public string _integer = "";
-        public char _operator;
-        public string _result = "";
-        public int _operatorCount = 0;
-        public bool _isDecimalPointUsed = false;
+        
         public string SendKeyPress(char key)
         {
             if (calculatorUtility.IsResetKey(key))
             {
-                _integer = "";
-                _firstNumber = 0;
-                _secondNumber = 0;
-                _operatorCount = 0;
-                _isDecimalPointUsed = false;
-                _result = "";
+                calculatorUtility = new CalculatorUtility();
+                return "0";
             }
-            else if (calculatorUtility.IsNumber(key) || calculatorUtility.IsDecimalPoint(key))
+            else if (calculatorUtility.isKeyZero(key))
             {
-                
-                if (_isDecimalPointUsed)
-                {
-                    if (!calculatorUtility.IsDecimalPoint(key))
-                        _integer += key;
-                }
+                if (!calculatorUtility.Number.Equals("0"))
+                    calculatorUtility.Number += key;
+                return calculatorUtility.Number;
+            }
+            else if (calculatorUtility.IsNumber(key))
+            {
+                calculatorUtility.Number += key;
+                return calculatorUtility.Number;
+            }
+            else if (calculatorUtility.IsNegativeNumber(key))
+            {
+                int temp;
+                if (int.TryParse(calculatorUtility.Number, out temp))
+                    calculatorUtility.Number = (-temp).ToString();
                 else
-                    _integer += key;
-                if (calculatorUtility.IsDecimalPoint(key))
-                    _isDecimalPointUsed = true;
-                _result = _integer;
+                    calculatorUtility.Number = (-float.Parse(calculatorUtility.Number)).ToString();
+                return calculatorUtility.Number;
             }
-            else if (calculatorUtility.IsNegativeInteger(key))
+            else if (calculatorUtility.IsDecimalPoint(key))
             {
-                _integer = (-double.Parse(_integer)).ToString();
-                _result = _integer;
+                int temp;
+                if (int.TryParse(calculatorUtility.Number, out temp))
+                    calculatorUtility.Number += key;
+                return calculatorUtility.Number;
             }
             else if (calculatorUtility.IsArithmeticOperator(key))
             {
-                if (_operatorCount >= 1)
+                if (calculatorUtility.Flag == 0 && calculatorUtility.PreviousOperator != '?')
                 {
-                    _operatorCount++;
-                    _secondNumber = double.Parse(_integer);
-                    if (calculatorUtility.IsAdd(_operator))
-                        _result = calculatorUtility.Add(_firstNumber, _secondNumber);
-                    else if (calculatorUtility.IsSubstract(_operator))
-                        _result = calculatorUtility.Substract(_firstNumber, _secondNumber);
-                    else if (calculatorUtility.IsMultiply(_operator))
-                        _result = calculatorUtility.Multiply(_firstNumber, _secondNumber);
-                    else if (calculatorUtility.IsDivide(_operator))
-                    { 
-                        if (_secondNumber == 0)
-                            return "-E-";
-                        _result = calculatorUtility.Divide(_firstNumber, _secondNumber);
-                    }
-                    _isDecimalPointUsed = false;
-                    _integer = "";
-                    _firstNumber = double.Parse(_result);
+                    if (!setInitialValues(key))
+                        return "-E-";
                 }
-                else if (!calculatorUtility.IsEqualOperator(key))
+                else
                 {
-                    //_integer = "";
-                    _operator = key;
+                    if (calculatorUtility.calculateResult(key) == "-E-")
+                        return "-E-";
+    
                 }
-                if (!calculatorUtility.IsEqualOperator(key) && _operatorCount < 1)
-                {
-                    _operatorCount++;
-                    _firstNumber = double.Parse(_integer);
-                    _result = _integer;
-                    _isDecimalPointUsed = false;
-                    _integer = "";
-
-                    return _result;
-                }
-                
+                return calculatorUtility.Result.ToString();
             }
-            return _result;
+            else if (calculatorUtility.IsEqualOperator(key))
+            {
+                if (calculatorUtility.Number == "")
+                    calculatorUtility.Number = calculatorUtility.Result.ToString();
+                return SendKeyPress(calculatorUtility.PreviousOperator);
+            }
+            else
+                return calculatorUtility.Number;
             //throw new NotImplementedException();
         }
 
+        private bool setInitialValues(char key)
+        {
+            bool temp = true;
+            calculatorUtility.Flag = 1;
+            if (SendKeyPress(calculatorUtility.PreviousOperator)=="-E-")
+                return false;
+            calculatorUtility.PreviousOperator = key;
+            return temp;
 
+        }
     }
 }

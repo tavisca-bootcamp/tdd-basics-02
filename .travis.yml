@@ -2,7 +2,7 @@ language: csharp
 os: osx
 solution: ConsoleCalculator.sln
 mono: none
-dotnet: 2.2.5
+dotnet: 2.1.502
 install: 
  - dotnet restore
 script:

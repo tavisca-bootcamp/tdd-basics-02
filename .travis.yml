@@ -1,0 +1,8 @@
+language: csharp
+solution: ConsoleCalculator.sln
+install:
+  - nuget restore ConsoleCalculator.sln
+  - nuget install xunit.runners -Version 1.9.2 -OutputDirectory testrunner
+script:
+  - msbuild /p:Configuration=Release ConsoleCalculator.sln
+  - mono ./testrunner/xunit.runners.1.9.2/tools/xunit.console.clr4.exe ./ConsoleCalculator.Tests/bin/Debug/netcoreapp2.1/ConsoleCalculator.Tests.dll

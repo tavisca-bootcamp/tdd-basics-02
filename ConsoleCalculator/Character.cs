@@ -23,12 +23,12 @@ public class Character
 
     public static  bool IsToggle(char key)
     {
-        return key == 's' || key == 'S';
+        throw new NotImplementedException();
     }
 
     public static bool IsSetZero(char key)
     {
-        return key == 'c' || key == 'C';
+        throw new NotImplementedException();
     }
 
 }

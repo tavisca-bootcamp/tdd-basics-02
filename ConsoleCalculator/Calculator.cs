@@ -1,16 +1,25 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ConsoleCalculator
 {
     public class Calculator
     {
-        public string operandOne = "0";
-        public string operandTwo;
-        public string DisplayString;
-        
-        public const char TOGGlES= 's';
+        public string FirstOperand;
+        public string SecondOperand;
+        public string DisplayString="0";
+        public Nullable<char> Symbol;
+        public Dictionary<char, Operation> OperationMap = new Dictionary<char, Operation>()
+        {
+            {'+',new Addition() },
+            {'-',new Subtraction() },
+            {'x',new Multiplication() },
+            {'X',new Multiplication() },
+            {'/',new Division() },
 
-        public const char SETZERO = 'c';
+        };
+        
+        
        
 
         public string SendKeyPress(char key)
@@ -53,14 +62,51 @@ namespace ConsoleCalculator
             throw new NotImplementedException();
         }
 
-        private void DoOperation(char c)
+        private void DoOperation(char key)
         {
-            throw new NotImplementedException();
+            if (Symbol == null)
+                Symbol = key;
+            else
+            {
+                double operandOne = double.Parse(FirstOperand);
+                double operandTwo = double.Parse(SecondOperand);
+                String result = OperationMap[Symbol.Value].DoCalculation(operandOne, operandTwo);
+                FirstOperand = result;
+                SecondOperand = null;
+                if (key == '=')
+                    Symbol = null;
+                else
+                    Symbol = key;
+                DisplayString = result;
+
+
+
+            }
         }
 
-        private void UpdateOperands(char c)
+        private void UpdateOperands(char key)
+        {   if (Symbol.HasValue)
+            {   SecondOperand = UpdateSpecificOperand(SecondOperand,key);
+                DisplayString = SecondOperand;
+            }
+            else
+            {
+                FirstOperand = UpdateSpecificOperand(FirstOperand, key);
+                DisplayString = FirstOperand;
+
+            }
+           
+        }
+
+        private string UpdateSpecificOperand(string operand ,char key)
         {
-            throw new NotImplementedException();
+            switch(operand)
+            {
+                case var c when c == null:return key.ToString();
+                case var c when c.Equals("0") && key == '0':return "0";
+                default:return String.Concat(operand, key.ToString());
+            }
+           
         }
     }
 }

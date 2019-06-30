@@ -54,7 +54,10 @@ namespace ConsoleCalculator
 
         private void SetZero()
         {
-            throw new NotImplementedException();
+            FirstOperand = null;
+            SecondOperand = null;
+            Symbol = null;
+            DisplayString = "0";
         }
 
         private void ChangeSign()

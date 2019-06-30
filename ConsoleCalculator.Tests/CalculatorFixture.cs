@@ -116,5 +116,33 @@ namespace ConsoleCalculator.Tests
             Assert.Equal(expected, actual);
 
         }
+
+        [Fact]
+        public void SetZeroTest1()
+        {
+            var calculator = new Calculator();
+            var expression = new char[] { '4', '-', '2', '-', 'c',  };
+            var expected = new string[] { "4", "4", "2", "2", "0"};
+            int length = expression.Length;
+            var actual = new string[length];
+            for (int i = 0; i < length; i++)
+                actual[i] = calculator.SendKeyPress(expression[i]);
+
+
+        }
+
+        [Fact]
+        public void SetZeroTest2()
+        {
+            var calculator = new Calculator();
+            var expression = new char[] { '4', '-', '2','c','1','+','2','='};
+            var expected = new string[] { "4", "4", "2","0", "1","1","2","3"};
+            int length = expression.Length;
+            var actual = new string[length];
+            for (int i = 0; i < length; i++)
+                actual[i] = calculator.SendKeyPress(expression[i]);
+
+
+        }
     }
 }

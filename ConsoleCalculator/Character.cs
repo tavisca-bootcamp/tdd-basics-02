@@ -28,7 +28,7 @@ public class Character
 
     public static bool IsSetZero(char key)
     {
-        throw new NotImplementedException();
+        return key == 'c' || key == 'C';
     }
 
 }

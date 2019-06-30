@@ -15,5 +15,15 @@ namespace ConsoleCalculator.Tests
             Assert.Equal("2", c.SendKeyPress('2'));
             Assert.Equal("3", c.SendKeyPress('='));
         }
+        [Fact]
+        public void ignoreunwantedchar1()
+        {
+            
+            Assert.Equal("1", c.SendKeyPress('1'));
+            Assert.Equal("1", c.SendKeyPress('d'));
+            Assert.Equal("1", c.SendKeyPress('/'));
+            Assert.Equal("2", c.SendKeyPress('2'));
+            Assert.Equal("0.5", c.SendKeyPress('='));
+        }
     }
 }

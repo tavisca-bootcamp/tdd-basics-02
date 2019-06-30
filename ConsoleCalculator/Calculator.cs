@@ -56,11 +56,13 @@ namespace ConsoleCalculator
                     if (operation == '\0')
                     {
                         operand1 = operand1 + key;
+                        operand1 = (int.Parse(operand1)).ToString();
                         return operand1;
                     }
                     else
                     {
                         operand2 = operand2 + key;
+                        operand2 = (int.Parse(operand2)).ToString();
                         return operand2;
                     }
                 }
@@ -95,9 +97,15 @@ namespace ConsoleCalculator
             else
             {
                 if (operand2 == null)
+                {
+                    operand1 = (int.Parse(operand1)).ToString();
                     return operand1;
+                }
                 else
+                {
+                    operand2 = (int.Parse(operand2)).ToString();
                     return operand2;
+                }
             }
             throw new NotImplementedException();
         }

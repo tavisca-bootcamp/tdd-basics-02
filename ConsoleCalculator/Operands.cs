@@ -27,6 +27,7 @@ public class Operands
         switch (operand)
         {
             case var c when c == null: return key.ToString();
+            case var c when c.Contains(".") && key == '.':return operand;
             case var c when c.Equals("0") && key == '0': return "0";
             default: return String.Concat(operand, key.ToString());
         }

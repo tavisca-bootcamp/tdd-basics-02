@@ -16,7 +16,7 @@ public class Character
         }
     }
 
-    public static bool IsDigit(char key)
+    public static bool IsDigitOrDot(char key)
     {
         return (key >= '0' && key <= '9') || key == '.';
     }

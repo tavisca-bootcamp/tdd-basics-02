@@ -172,5 +172,33 @@ namespace ConsoleCalculator.Tests
 
 
         }
+
+        [Fact]
+        public void DecimalTest1()
+        {
+            var calculator = new Calculator();
+            var expression = new char[] { '1', '.' , '.' , '2'   ,  '+'  ,'1', '=' };
+            var expected = new string[] { "1", "1.", "1.", "1.2" , "1.2" ,"1", "2.2"};
+            int length = expression.Length;
+            var actual = new string[length];
+            for (int i = 0; i < length; i++)
+                actual[i] = calculator.SendKeyPress(expression[i]);
+
+
+        }
+
+        [Fact]
+        public void DecimalTest2()
+        {
+            var calculator = new Calculator();
+            var expression = new char[] { '4', '+', '0', '.' , '.' , '5'  , '='   };
+            var expected = new string[] { "4", "4", "0", "0.", "0.", "0.5", "4.5" };
+            int length = expression.Length;
+            var actual = new string[length];
+            for (int i = 0; i < length; i++)
+                actual[i] = calculator.SendKeyPress(expression[i]);
+
+
+        }
     }
 }

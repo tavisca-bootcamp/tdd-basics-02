@@ -34,7 +34,7 @@ namespace ConsoleCalculator
             
                 switch (key)
                 {
-                    case var c when Character.IsDigit(c):
+                    case var c when Character.IsDigitOrDot(c):
                         UpdatedDisplay=Operands.UpdateOperands(c);
                         break;
 

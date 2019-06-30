@@ -3,10 +3,10 @@ using Xunit;
 
 namespace ConsoleCalculator.Tests
 {
-    [TestClass]
+    
     public class CalculatorFixture
     {
-        [TestMethod]
+        [Fact]
         public void DummyTest()
         {
             Calculator calculator = new Calculator();
@@ -18,7 +18,7 @@ namespace ConsoleCalculator.Tests
                 Assert.Equal(answer[i], calculator.SendKeyPress(equation[i]));
             }
         }
-        [TestMethod]
+        [Fact]
         public void DummyTest1()
         {
             Calculator calculator1 = new Calculator();
@@ -30,7 +30,7 @@ namespace ConsoleCalculator.Tests
                 Assert.Equal(answer[i], calculator1.SendKeyPress(equation[i]));
             }
         }
-        [TestMethod]
+        [Fact]
         public void DummyTest2()
         {
             Calculator calculator2 = new Calculator();
@@ -42,7 +42,7 @@ namespace ConsoleCalculator.Tests
                 Assert.Equal(answer[i], calculator2.SendKeyPress(equation[i]));
             }
         }
-        [TestMethod]
+        [Fact]
         public void DummyTest3()
         {
             Calculator calculator3 = new Calculator();
@@ -54,7 +54,7 @@ namespace ConsoleCalculator.Tests
                 Assert.Equal(answer[i], calculator3.SendKeyPress(equation[i]));
             }
         }
-        [TestMethod]
+        [Fact]
         public void DummyTest4()
         {
             Calculator calculator4 = new Calculator();
@@ -66,7 +66,7 @@ namespace ConsoleCalculator.Tests
                 Assert.Equal(answer[i], calculator4.SendKeyPress(equation[i]));
             }
         }
-        [TestMethod]
+        [Fact]
         public void DummyTest5()
         {
             Calculator calculator5 = new Calculator();

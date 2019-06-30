@@ -1,8 +1,10 @@
 language: csharp
 solution: ConsoleCalculator.sln
+mono: none
+dotnet: 2.1.502
 install:
-  - nuget restore ConsoleCalculator.sln
-  - nuget install xunit.runners -Version 1.9.2 -OutputDirectory testrunner
+    - dotnet restore
 script:
-  - msbuild /p:Configuration=Release ConsoleCalculator.sln
-  - mono ./testrunner/xunit.runners.1.9.2/tools/xunit.console.clr4.exe ConsoleCalculator.Tests/bin/Debug/netcoreapp2.1/ConsoleCalculator.Tests.dll
+    - dotnet build
+    - dotnet test ConsoleCalculator.Tests/ConsoleCalculator.Tests.csproj
+

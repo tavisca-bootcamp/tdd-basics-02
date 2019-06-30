@@ -5,11 +5,7 @@ namespace ConsoleCalculator.Tests
 {
     public class CalculatorFixture
     {
-        Calculator calc;
-        CalculatorFixture()
-        {
-            calc=new Calculator();
-        }
+        Calculator calc=new Calculator();
 
         [Fact]
         public void SampleTest()

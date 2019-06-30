@@ -54,15 +54,7 @@ namespace ConsoleCalculator.Tests
             Assert.Equal("-E-",ProcessOutput("+"));
         }
 
-        [Fact]
-        public void ExtraneousOperatorTest(){
-            Assert.Equal("-E-",ProcessOutput("2++"));
-        }
-
-        [Fact]
-        public void InvalidExpressionTest(){
-            Assert.Equal("-E-",ProcessOutput("1+2=+"));
-        }
+        
 
         public string ProcessOutput(string Input){
             string Output = "";

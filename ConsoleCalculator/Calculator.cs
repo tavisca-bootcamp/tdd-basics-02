@@ -1,9 +1,8 @@
 ﻿using System;
-using static System.Console;
+
 
 namespace ConsoleCalculator
-{
-    
+{   
     public class Calculator
     {
         private static bool Begin = true;
@@ -16,11 +15,16 @@ namespace ConsoleCalculator
             string output = "-E-";
             try{
                 output = Po.ProcessResult(key);
+                if(output == "") output = "-E-";
             }
             catch(Exception){
-                
+              
             }
             return output;
         }
     }
+
 }
+
+
+    

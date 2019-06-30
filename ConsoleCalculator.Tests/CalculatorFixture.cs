@@ -60,5 +60,33 @@ namespace ConsoleCalculator.Tests
             Assert.Equal(expected, actual);
 
         }
+
+        [Fact]
+        public void MultiplicationTest()
+        {
+            var calculator = new Calculator();
+            var expression = new char[] { '1', '0', 'x', '5', 'x', '2', '='};
+            var expected = new string[] { "1", "10", "10", "5", "50", "2", "100"};
+            int length = expression.Length;
+            var actual = new string[length];
+            for (int i = 0; i < length; i++)
+                actual[i] = calculator.SendKeyPress(expression[i]);
+            Assert.Equal(expected, actual);
+
+        }
+
+        [Fact]
+        public void MultiplicationTest2()
+        {
+            var calculator = new Calculator();
+            var expression = new char[] { '1', 'x', '2', '.' ,   '5',  'x' , '2', '=' };
+            var expected = new string[] { "1", "1", "2", "2.", "2.5", "2.5", "2","5" };
+            int length = expression.Length;
+            var actual = new string[length];
+            for (int i = 0; i < length; i++)
+                actual[i] = calculator.SendKeyPress(expression[i]);
+            Assert.Equal(expected, actual);
+
+        }
     }
 }

@@ -32,5 +32,33 @@ namespace ConsoleCalculator.Tests
             Assert.Equal(expected, actual);
 
         }
+
+        [Fact]
+        public void TestSubtraction1()
+        {
+            var calculator = new Calculator();
+            var expression = new char[] { '4','-','2','-','1','=' };
+            var expected = new string[] { "4","4","2","2","1", "1"};
+            int length = expression.Length;
+            var actual = new string[length];
+            for (int i = 0; i < length; i++)
+                actual[i] = calculator.SendKeyPress(expression[i]);
+            Assert.Equal(expected, actual);
+
+        }
+
+        [Fact]
+        public void SubtractionAddtionCombined()
+        {
+            var calculator = new Calculator();
+           var expression = new char[] { '4', '.', '1' , '-', '0', '.', '2', '+', '0','.','1','=' };
+           var expected = new string[] { "4", "4.","4.1","4.1", "0","0.", "0.2", "3.9", "0", "0.","0.1","4" };
+            int length = expression.Length;
+            var actual = new string[length];
+            for (int i = 0; i < length; i++)
+                actual[i] = calculator.SendKeyPress(expression[i]);
+            Assert.Equal(expected, actual);
+
+        }
     }
 }

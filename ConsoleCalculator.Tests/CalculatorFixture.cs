@@ -6,9 +6,10 @@ namespace ConsoleCalculator.Tests
     public class CalculatorFixture
     {
         [Fact]
-        public void DummyTest()
+        public void TestOne()
         {
-            return;
+            
+            
         }
     }
 }

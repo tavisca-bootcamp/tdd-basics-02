@@ -18,7 +18,15 @@ namespace ConsoleCalculator.Tests
             string expected="22";
             string actual=calc.CalculateExpression(expr);
             Assert.Equal(expected,actual);
-            return;
+        }
+        [Fact]
+        public void SampleTest1()
+        {
+            string expr=" 10/0=";
+            string expected="-E-";
+            string actual=calc.CalculateExpression(expr);
+            Assert.Equal(expected,actual);
+            
         }
     }
 }

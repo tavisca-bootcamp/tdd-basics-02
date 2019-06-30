@@ -8,7 +8,7 @@ namespace ConsoleCalculator.Tests
         [Fact]
         public void TestOne()
         {
-            
+            //it will pass
             
         }
     }

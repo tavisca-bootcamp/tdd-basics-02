@@ -78,13 +78,47 @@ namespace ConsoleCalculator
                     result="";
                     
                 }
+
                 
             }
+            else if(key=='/')
+            {
+                if(Flag==0&&op!='#')
+                {
+                    Flag=1;
+                    if(SendKeyPress(op)=="-E-")
+                    {
+                        return "-E-";
+                    }
+                    op='/';
+                }
+                else
+                {
+                    if(ans!=double.MinValue)
+                    {
+                        if(double.Parse(result)!=0)
+                        {
+                            ans/=double.Parse(result);
+
+                        }
+                        else
+                            return "-E-";
+                    }
+                    else
+                    ans =double.Parse(result);
+                    op='/';
+                    Flag=0;
+                    result="";
+                    
+                }
+            
+            }
+
             
                 return ans.ToString();
 
           
-        }
+        } 
         public string DigitCalc(char key)
         {
             if(!result.Equals("0"))
@@ -151,37 +185,9 @@ namespace ConsoleCalculator
                 case '-':
                 case 'x':
                 case 'X':
-                          return operation(key);
                 case '/':
-                     if(Flag==0&&op!='#')
-                {
-                    Flag=1;
-                    if(SendKeyPress(op)=="-E-")
-                    {
-                        return "-E-";
-                    }
-                    op='/';
-                }
-                else
-                {
-                    if(ans!=double.MinValue)
-                    {
-                        if(double.Parse(result)!=0)
-                        {
-                            ans/=double.Parse(result);
-
-                        }
-                        else
-                            return "-E-";
-                    }
-                    else
-                    ans =double.Parse(result);
-                    op='/';
-                    Flag=0;
-                    result="";
-                    
-            }
-            return ans.ToString(); 
+                          return operation(key);
+        
             
 
             case '=': return CalculateValue(key);

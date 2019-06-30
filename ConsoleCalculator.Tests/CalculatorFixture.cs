@@ -7,7 +7,7 @@ namespace ConsoleCalculator.Tests
     {
         Calculator c = new Calculator();
         [Fact]
-        public void ignoreunwantedchar()
+        public void IgnoreUnwantedChar()
         {
             Assert.Equal("0", c.SendKeyPress('d'));
             Assert.Equal("1", c.SendKeyPress('1'));
@@ -16,7 +16,7 @@ namespace ConsoleCalculator.Tests
             Assert.Equal("3", c.SendKeyPress('='));
         }
         [Fact]
-        public void ignoreunwantedchar1()
+        public void IgnoreUnwantedChar1()
         {
             
             Assert.Equal("1", c.SendKeyPress('1'));
@@ -24,6 +24,19 @@ namespace ConsoleCalculator.Tests
             Assert.Equal("1", c.SendKeyPress('/'));
             Assert.Equal("2", c.SendKeyPress('2'));
             Assert.Equal("0.5", c.SendKeyPress('='));
+        }
+        [Fact]
+        public void MultipleDigitsAndOperations()
+        {
+
+            Assert.Equal("1", c.SendKeyPress('1'));
+            Assert.Equal("10", c.SendKeyPress('0'));
+            Assert.Equal("10", c.SendKeyPress('+'));
+            Assert.Equal("2", c.SendKeyPress('2'));
+            Assert.Equal("12", c.SendKeyPress('-'));
+            Assert.Equal("1", c.SendKeyPress('1'));
+            Assert.Equal("10", c.SendKeyPress('0'));
+            Assert.Equal("2", c.SendKeyPress('='));
         }
     }
 }

@@ -5,6 +5,8 @@ namespace ConsoleCalculator
     public class Calculator
     {
         private char[] validChar = new char[20] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '-', 'x', 'X', '/', 's', 'S', 'c', 'C', '=' };
+        private string operand1 = "0", operand2 = null;
+        private char operation = '\0';
         private string Calculation(char dummyOperation,string operand1,string operand2)
         {
             int convertedOperand1 = Convert.ToInt32(operand1);
@@ -47,8 +49,7 @@ namespace ConsoleCalculator
         public string SendKeyPress(char key)
         {
             // Add your implementation here.
-            string operand1 = "0", operand2 = null;
-            char operation= '\0';
+            
             if(Array.IndexOf(validChar,key)!=-1)
             {
                 if(Char.IsDigit(key))

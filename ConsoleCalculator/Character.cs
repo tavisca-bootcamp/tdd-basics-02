@@ -30,5 +30,11 @@ public class Character
     {
         return key == 'c' || key == 'C';
     }
+    public static bool IsInfinity(string s)
+    {   double a = 1.0, b = 0.0;
+        double infinity = a / b;
+        string result = infinity.ToString();
+        return result.Equals(s);
+    }
 
 }

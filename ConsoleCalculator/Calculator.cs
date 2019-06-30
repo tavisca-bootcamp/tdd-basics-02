@@ -8,6 +8,8 @@ namespace ConsoleCalculator
         public string UpdatedDisplay;
         public Operands Operands;
         public Dictionary<char, Operation> OperationMap;
+        public readonly string ERROR = "-E-";
+        
         public Calculator()
         {
             UpdatedDisplay = "0";
@@ -53,7 +55,13 @@ namespace ConsoleCalculator
                 }
 
 
-            
+            if(Character.IsInfinity(UpdatedDisplay))
+            {
+                Operands.Reset();
+                UpdatedDisplay = "0";
+                return ERROR;
+
+            }
            
             return UpdatedDisplay;
 

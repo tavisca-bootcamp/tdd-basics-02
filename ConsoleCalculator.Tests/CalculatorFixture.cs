@@ -144,5 +144,33 @@ namespace ConsoleCalculator.Tests
 
 
         }
+
+        [Fact]
+        public void DivisionTest1()
+        {
+            var calculator = new Calculator();
+            var expression = new char[] { '1',  '0', '/', '2' , '/', '2', '='};
+            var expected = new string[] { "1", "10", "10", "2", "5", "2", "2.5"};
+            int length = expression.Length;
+            var actual = new string[length];
+            for (int i = 0; i < length; i++)
+                actual[i] = calculator.SendKeyPress(expression[i]);
+
+
+        }
+
+        [Fact]
+        public void DivideByZeroTest()
+        {
+            var calculator = new Calculator();
+            var expression = new char[] { '1', '/', '0', '=' };
+            var expected = new string[] { "1", "1", "0", "-E-"};
+            int length = expression.Length;
+            var actual = new string[length];
+            for (int i = 0; i < length; i++)
+                actual[i] = calculator.SendKeyPress(expression[i]);
+
+
+        }
     }
 }

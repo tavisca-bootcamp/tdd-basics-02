@@ -34,6 +34,7 @@ namespace ConsoleCalculator
                     
 
                 }
+        
             }
             else if(key=='-')
             {
@@ -55,6 +56,7 @@ namespace ConsoleCalculator
                     result="";
                     
                  }
+    
             }
             else if(key=='x'||key=='X')
             {
@@ -76,42 +78,12 @@ namespace ConsoleCalculator
                     result="";
                     
                 }
+                
             }
-            else if(key=='/')
-            {
-                 if(Flag==0&&op!='#')
-                {
-                    Flag=1;
-                    if(SendKeyPress(op)=="-E-")
-                    {
-                        return "-E-";
-                    }
-                    op='/';
-                }
-                else
-                {
-                    if(ans!=double.MinValue)
-                    {
-                        if(double.Parse(result)!=0)
-                        {
-                            ans/=double.Parse(result);
+            
+                return ans.ToString();
 
-                        }
-                        else
-                            return "-E-";
-                    }
-                    else
-                    ans =double.Parse(result);
-                    op='/';
-                    Flag=0;
-                    result="";
-                    
-            }
-            }
-
-
-
-            return result.ToString();
+          
         }
         public string DigitCalc(char key)
         {
@@ -179,10 +151,40 @@ namespace ConsoleCalculator
                 case '-':
                 case 'x':
                 case 'X':
-                case '/':
                           return operation(key);
-                        
-                case '=': return CalculateValue(key);
+                case '/':
+                     if(Flag==0&&op!='#')
+                {
+                    Flag=1;
+                    if(SendKeyPress(op)=="-E-")
+                    {
+                        return "-E-";
+                    }
+                    op='/';
+                }
+                else
+                {
+                    if(ans!=double.MinValue)
+                    {
+                        if(double.Parse(result)!=0)
+                        {
+                            ans/=double.Parse(result);
+
+                        }
+                        else
+                            return "-E-";
+                    }
+                    else
+                    ans =double.Parse(result);
+                    op='/';
+                    Flag=0;
+                    result="";
+                    
+            }
+            return ans.ToString(); 
+            
+
+            case '=': return CalculateValue(key);
                             
                          
                 default :
@@ -193,14 +195,15 @@ namespace ConsoleCalculator
         
             public string CalculateExpression(string exp)
             {
-                string answer="";
-                foreach(char c in exp)
-                {
-                    answer+=SendKeyPress(c);
+                    string answer="";
+                    foreach(char c in exp)
+                    {
+                        answer=SendKeyPress(c);
+                    }
 
-                }
-                return  answer;
+                    return answer;
             }
+
             
         }
 }

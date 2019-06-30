@@ -129,7 +129,7 @@ namespace ConsoleCalculator
                 if (_operator == null) return oprand1;
 
                 oprand1 = SendKeyPress((char)_operator);
-                if (oprand1 == "-E-") return Error();
+                if (oprand1 == "-E-") return error();
 
                 oprand2 = "";
                 _operator = null;
@@ -137,7 +137,11 @@ namespace ConsoleCalculator
                 return oprand1;
             }
 
-            return "";
+            #region ignoring keys other then specified
+            if(_oprator == null){
+                return oprand1;
+            }else
+                return oprand2;
 
 
         }

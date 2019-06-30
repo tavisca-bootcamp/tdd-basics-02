@@ -88,5 +88,33 @@ namespace ConsoleCalculator.Tests
             Assert.Equal(expected, actual);
 
         }
+
+        [Fact]
+        public void ToggleTest1()
+        {
+            var calculator = new Calculator();
+            var expression = new char[] { '5', '+', '2', 's', '='};
+            var expected = new string[] { "5", "5", "2", "-2", "3"};
+            int length = expression.Length;
+            var actual = new string[length];
+            for (int i = 0; i < length; i++)
+                actual[i] = calculator.SendKeyPress(expression[i]);
+            Assert.Equal(expected, actual);
+
+        }
+
+        [Fact]
+        public void ToggleTest2()
+        {
+            var calculator = new Calculator();
+            var expression = new char[] { '5', '-', '2', '.' , '3' ,   's'   , 's'  ,  '=' };
+            var expected = new string[] { "5", "5", "2", "2.","2.3", "-2.3" ,  "2.3", "2.7"};
+            int length = expression.Length;
+            var actual = new string[length];
+            for (int i = 0; i < length; i++)
+                actual[i] = calculator.SendKeyPress(expression[i]);
+            Assert.Equal(expected, actual);
+
+        }
     }
 }

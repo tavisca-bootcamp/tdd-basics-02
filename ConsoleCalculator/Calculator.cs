@@ -35,7 +35,7 @@ namespace ConsoleCalculator
                             break;
 
                 case var c when Character.IsToggle(c):
-                            Toggle();
+                            ChangeSign();
                             break;
 
                 case var c when Character.IsSetZero(c):
@@ -57,9 +57,27 @@ namespace ConsoleCalculator
             throw new NotImplementedException();
         }
 
-        private void Toggle()
+        private void ChangeSign()
         {
-            throw new NotImplementedException();
+            if (SecondOperand == null)
+            {
+                FirstOperand = Toggle(FirstOperand);
+                DisplayString = FirstOperand;
+            }
+            else
+            {
+                SecondOperand = Toggle(SecondOperand);
+                DisplayString = SecondOperand;
+            }
+
+        }
+
+        private string Toggle(string operand)
+        {
+            double temp = double.Parse(operand);
+            temp = -temp;
+            return temp.ToString();
+            
         }
 
         private void DoOperation(char key)
@@ -72,7 +90,9 @@ namespace ConsoleCalculator
                 double operandTwo = double.Parse(SecondOperand);
                 String result = OperationMap[Symbol.Value].DoCalculation(operandOne, operandTwo);
                 FirstOperand = result;
+                
                 SecondOperand = null;
+
                 if (key == '=')
                     Symbol = null;
                 else

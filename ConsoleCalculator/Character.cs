@@ -23,7 +23,7 @@ public class Character
 
     public static  bool IsToggle(char key)
     {
-        throw new NotImplementedException();
+        return key == 's' || key =='S' ;
     }
 
     public static bool IsSetZero(char key)

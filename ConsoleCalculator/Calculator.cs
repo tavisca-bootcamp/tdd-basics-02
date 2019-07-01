@@ -5,9 +5,16 @@ namespace ConsoleCalculator
 {
     public class Calculator
     {
-        private double accumulator = 0.0d;
-        private StringBuilder display = new StringBuilder();
-        private char sign = '\0';
+        private double accumulator;
+        private StringBuilder display;
+        private char sign;
+
+        public Calculator()
+        {
+            accumulator = 0.0d;
+            display = new StringBuilder();
+            sign = '\0';    //Sign is not set.
+        }
 
         public string SendKeyPress(char key)
         {
@@ -15,41 +22,34 @@ namespace ConsoleCalculator
             switch (inputChar)
             {
                 case char w when char.IsDigit(w):
-                    if (w == '0' && display.Length == 1 && display.ToString()[0] == '0')
+                    if (w == '0' && IsDisplayZero())
                         break;
-                    if (sign != '\0')
+                    if (IsSignSet())
                         display.Clear();
                     display.Append(w);
                     break;
 
                 case '.':
-                    if (display.Length == 0)
-                        display.Append("0.");
-                    else if (!display.ToString().Contains("."))
-                        display.Append('.');
+                    AddDecimalPoint();
                     break;
 
                 case char w when w == 'c' || w == 'C':
                     display.Clear();
-                    accumulator = 0.0d;
+                    ResetState();
                     return "0";
 
                 case char w when w == 's' || w == 'S':
-                    if (display[0] != '-')
-                        display.Insert(0, '-');
-                    else
-                        display.Remove(0, 1);
+                    ToggleSign();
                     break;
 
-                case char w when w == '+' || w == '-' || w == 'x' || w == 'X' || w == '/':
+                case char w when IsOperator(w):
                     UpdateDisplayText();
                     sign = w;
                     break;
 
                 case '=':
                     UpdateDisplayText();
-                    accumulator = 0.0d;
-                    sign = '\0';
+                    ResetState();
                     break;
 
                 default:
@@ -57,6 +57,43 @@ namespace ConsoleCalculator
             }
 
             return display.ToString();
+        }
+
+        private void AddDecimalPoint()
+        {
+            if (display.Length == 0)
+                display.Append("0.");
+            else if (!display.ToString().Contains("."))
+                display.Append('.');
+        }
+
+        private void ResetState()
+        {
+            accumulator = 0.0d;
+            sign = '\0';
+        }
+
+        private void ToggleSign()
+        {
+            if (display[0] != '-')
+                display.Insert(0, '-');
+            else
+                display.Remove(0, 1);
+        }
+
+        private bool IsOperator(char c)
+        {
+            return c == '+' || c == '-' || c == 'x' || c == 'X' || c == '/';
+        }
+
+        private bool IsSignSet()
+        {
+            return sign != '\0';
+        }
+
+        private bool IsDisplayZero()
+        {
+            return display.Length == 1 && display.ToString()[0] == '0';
         }
 
         private void UpdateDisplayText()

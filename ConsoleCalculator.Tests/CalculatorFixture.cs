@@ -102,6 +102,14 @@ namespace ConsoleCalculator.Tests
             Assert.Equal("6", c.SendKeyPress('+'));
             Assert.Equal("12", c.SendKeyPress('='));
         }
-
+        [Fact]
+        public void Error()
+        {
+            Assert.Equal("1", c.SendKeyPress('1'));
+            Assert.Equal("11", c.SendKeyPress('1'));
+            Assert.Equal("11", c.SendKeyPress('/'));
+            Assert.Equal("0", c.SendKeyPress('0'));
+            Assert.Equal("-E-", c.SendKeyPress('='));
+        }
     }
 }

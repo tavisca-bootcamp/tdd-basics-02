@@ -6,7 +6,7 @@ namespace ConsoleCalculator
     {
         private char[] validChar = new char[21] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '-', 'x', 'X', '/', 's', 'S', 'c', 'C', '=', '.' };
         private string operand1 = "0", operand2 = null;
-        private char operation = '\0';
+        private char operation = '\0', previousOperation = '\0';
         private string Toggle(Char key,string operand)
         {
             if (operand.IndexOf('.') == -1)
@@ -89,7 +89,10 @@ namespace ConsoleCalculator
                         doubleAns = doubleOperand1 * doubleOperand2;
                     break;
                 case '/':
-                    if(flag==0)
+                    if (flag == 0)
+                    {
+                        if (convertedOperand2 == 0)
+                            return "-E-";
                         if (convertedOperand1 % convertedOperand2 == 0)
                             ans = convertedOperand1 / convertedOperand2;
                         else
@@ -99,8 +102,13 @@ namespace ConsoleCalculator
                             doubleAns = doubleOperand1 / doubleOperand2;
                             flag = 1;
                         }
+                    }
                     else
+                    {
+                        if (doubleOperand2 == 0)
+                            return "-E-";
                         doubleAns = doubleOperand1 / doubleOperand2;
+                    }
                     break;                   
             }
             if (flag == 0)
@@ -177,6 +185,7 @@ namespace ConsoleCalculator
                 }
                 else if(key != '=')
                 {
+                    previousOperation = operation;
                     if (operation == '\0')
                     {
                         operation = key;
@@ -193,6 +202,7 @@ namespace ConsoleCalculator
                 }
                 else
                 {
+                    previousOperation = operation;
                     if (operation != '\0')
                     {
                         if (operand2 == null)

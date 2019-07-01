@@ -1,0 +1,10 @@
+language: csharp
+solution: bowling-ball.sln
+mono: none
+dotnet: 2.1.502
+install:
+    - dotnet restore
+script:
+    - dotnet build
+    - dotnet test BowlingBall.Tests/BowlingBall.Tests.csproj
+

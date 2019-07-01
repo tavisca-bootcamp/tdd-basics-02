@@ -55,12 +55,20 @@ namespace ConsoleCalculator
                     // First condition: Only number 1 exists
                     // Second condition: Avoid adding multiple floating points
                     if (previousOperator == null && StaticFunctions.LastCharacterOf(number1) != '.') {
+                        // Converting . to 0.
+                        if (string.IsNullOrEmpty(number1)) {
+                            number1 = "0";
+                        } 
+                        // Add point at the end of the string 
                         number1 += key;
                         return number1;
                     }
+
                     #region Number1 in cache and number 2 under process
+                        // Converting . to 0.
+                        if (string.IsNullOrEmpty(number2)) number2 = "0" + key;
                         // Avoid adding multiple floating points
-                        if (StaticFunctions.LastCharacterOf(number2) != '.') number2 += key;
+                        else if (StaticFunctions.LastCharacterOf(number2) != '.') number2 += key;
                         return number2;
                     #endregion 
                 
@@ -88,14 +96,13 @@ namespace ConsoleCalculator
                     // Number 2 was not provided before hitting '=', so the displayed number is number2
                     if (number2 == "") number2 = number1;
 
-                    number1 = SendKeyPress((char)previousOperator);
+                    string result = SendKeyPress((char)previousOperator);
                     
-                    if (number1 == "-E-") return Error();
+                    if (result == "-E-") return Error();
 
-                    number2 = "";
-                    previousOperator = null;
+                    ClearMemory();
 
-                    return number1;
+                    return result;
             }
 
             return "";

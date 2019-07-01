@@ -4,7 +4,7 @@ namespace ConsoleCalculator
 {
     public class Calculator
     {
-        private char[] validChar = new char[20] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '-', 'x', 'X', '/', 's', 'S', 'c', 'C', '=' };
+        private char[] validChar = new char[21] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '-', 'x', 'X', '/', 's', 'S', 'c', 'C', '=', '.' };
         private string operand1 = "0", operand2 = null;
         private char operation = '\0';
         private string DecimalHandle(string operand, char key)

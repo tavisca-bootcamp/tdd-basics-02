@@ -12,10 +12,14 @@ namespace ConsoleCalculator.Tests
 
         [Fact]
         public void AddScenario() {
-            string keysPressed = "10+2=";
+            string keysPressed1 = "10+2=";
+            string keysPressed2 = "1+2+.=";
 
-            string result = FeedKeysAndGetResult(keysPressed);
-            Assert.Equal("12", result);
+            string result1 = FeedKeysAndGetResult(keysPressed1);
+            string result2 = FeedKeysAndGetResult(keysPressed2);
+
+            Assert.Equal("12", result1);
+            Assert.Equal("3", result2);
         }
 
         [Fact]

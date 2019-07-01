@@ -6,7 +6,7 @@ namespace ConsoleCalculator.Tests
     public class CalculatorFixture
     {
         Calculator calculator = new Calculator();
-        string val = "";
+        //string val = "";
 
         [Fact]
         public void DummyTest()
@@ -17,9 +17,8 @@ namespace ConsoleCalculator.Tests
         [Fact]
         public void TestOperand()
         {
-            val = calculator.SendKeyPress('1');
-            val = calculator.SendKeyPress('5');
-            Assert.Equal("15", val);
+            calculator.SendKeyPress('1');
+            Assert.Equal("15", calculator.SendKeyPress('5'));
             return;
 
         }
@@ -31,9 +30,7 @@ namespace ConsoleCalculator.Tests
             calculator.SendKeyPress('+');
             calculator.SendKeyPress('5');
             Assert.Equal("6", calculator.SendKeyPress('='));
-            Assert.Equal("0", calculator.SendKeyPress('c'));
-            calculator.SendKeyPress('5');
-            Assert.Equal("-5", calculator.SendKeyPress('S'));
+            Assert.Equal("0", calculator.SendKeyPress('c'));            
         }
 
 
@@ -98,7 +95,7 @@ namespace ConsoleCalculator.Tests
         {            
             Assert.Equal("-E-", calculator.SendKeyPress('o'));
             calculator.SendKeyPress('c');
-            Assert.Equal("@", calculator.SendKeyPress('0'));
+            Assert.Equal("0", calculator.SendKeyPress('0'));
             calculator.SendKeyPress('c');
         }
 
@@ -118,12 +115,12 @@ namespace ConsoleCalculator.Tests
         public void TestDecimalSecondOperand()
         {
             calculator.SendKeyPress('1');
-            calculator.SendKeyPress('0');
+            //calculator.SendKeyPress('0');
             calculator.SendKeyPress('+');
             calculator.SendKeyPress('5');
             calculator.SendKeyPress('.');
             calculator.SendKeyPress('8');
-            Assert.Equal("15.8", calculator.SendKeyPress('='));
+            Assert.Equal("6.8", calculator.SendKeyPress('='));
             calculator.SendKeyPress('c');
         }
 
@@ -138,6 +135,35 @@ namespace ConsoleCalculator.Tests
             Assert.Equal("5", calculator.SendKeyPress('='));
             calculator.SendKeyPress('c');
         }
+
+        [Fact]
+        public void FailTestOperand()
+        {
+            calculator.SendKeyPress('1');
+            Assert.Equal("5", calculator.SendKeyPress('5'));
+            return;
+
+        }
+
+        [Fact]
+        public void FailTestOperator()
+        {
+            calculator.SendKeyPress('1');
+            calculator.SendKeyPress('+');
+            calculator.SendKeyPress('5');
+            Assert.Equal("5", calculator.SendKeyPress('='));
+            Assert.Equal("0", calculator.SendKeyPress('c'));
+        }
+                
+        [Fact]
+        public void FailTestInvalidKey()
+        {
+            Assert.Equal("o", calculator.SendKeyPress('o'));
+            calculator.SendKeyPress('c');
+            Assert.Equal("0", calculator.SendKeyPress('0'));
+            calculator.SendKeyPress('c');
+        }      
+                
     }
 }
 

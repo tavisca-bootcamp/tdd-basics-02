@@ -11,6 +11,7 @@ namespace ConsoleCalculator
         public char lastOperator;
         public bool validOperand;
         public bool validOperator;
+        public bool validFunctionality;
 
 
         public Calculator()
@@ -21,14 +22,18 @@ namespace ConsoleCalculator
             lastOperator = 'N';
             validOperand = false;
             validOperator = false;
+            validFunctionality = false;
         }        
 
         public string SendKeyPress(char key)
         {
             // Add your implementation here.
-                        
+
+            validOperand = false;
+            
             // to check if key is valid or not
-            switch(key){
+            switch (key)
+            {
                 case '0':                    
                 case '1':                    
                 case '2':                    
@@ -55,35 +60,41 @@ namespace ConsoleCalculator
                 case '=':
                 case 'c':
                 case 'C':
+                    validOperator = IsValidOperator(key);
+                    break;
                 case 's':
                 case 'S':
                     validOperator = IsValidOperator(key);                    
                     break;    
             }
             // obtaining first operand
-            if(validOperator == false && validOperand == true){
+            if(validOperator == false && validOperand == true)
+            {
                 firstOperand += key;
                 result = firstOperand;
             }
                 
             // obtaining second operand
-            if(validOperator == true && validOperand == true){
-                if(key != 'c' && key != 'C' && key != 's' && key != 'S'){
-                    secondOperand += key;
-                    result = secondOperand;
-                }
-                    
-                else
-                    result = "-E-";
+            if(validOperator == true && validOperand == true)
+            {
+                secondOperand += key;
+                result = secondOperand;
             }
+
+            if (validOperand == false && validOperator == false)
+                result = "-E-";
+
             //obtaining decimal numbers
-            if(key == '.'){
-                if(validOperator == false){
+            if (key == '.')
+            {
+                if(validOperator == false)
+                {
                     firstOperand = DecimalPoint(firstOperand);
                     result = firstOperand;
                 }
                     
-                else{
+                else
+                {
                     secondOperand = DecimalPoint(secondOperand);
                     result = secondOperand;
                 }
@@ -92,23 +103,28 @@ namespace ConsoleCalculator
             
             if(key == 'c' || key == 'C')
                 result = ClearConsole();
-            if(key == 's' || key == 'S'){
+
+            if(key == 's' || key == 'S')
+            {
 
                 // change sign of first operand as operator is not pressed yet nor second operand
-                if(secondOperand.Equals(null) && validOperator == false){
+                if(secondOperand.Equals(null))
+                {
                     firstOperand = ToggleSign(firstOperand);
                     result = firstOperand;
                 }
                     
                 // change sign of second operand
-                else{
+                else
+                {
                     secondOperand = ToggleSign(secondOperand);
                     result = secondOperand;
                 }
                     
             }
-            if(!string.Equals(firstOperand, null) && !string.Equals(secondOperand, null) && key == '=' ){
-
+            if(!string.Equals(firstOperand, null) && !string.Equals(secondOperand, null) && key == '=' )
+            {
+                                
                 if(lastOperator == '+') // Addition
                     result = Add(firstOperand, secondOperand);
                 if(lastOperator == '-')  // Subtraction
@@ -119,49 +135,38 @@ namespace ConsoleCalculator
                     result = Divide(firstOperand, secondOperand);
                 
             }
-
-            /*if (result.Contains('.'))
-            {
-                string substring = result.Substring(result.IndexOf('.')+1);
-                int checkZero = Convert.ToInt32(substring);
-                if(checkZero == 0)
-                    result = result.Substring(0, result.IndexOf('.'));                 
-            }*/
-                
-
+                                   
             return result;
 
            // throw new NotImplementedException();
         }
 
-        public bool IsValidOperator(char key){
-
+        public bool IsValidOperator(char key)
+        {
             char[] validOperator = {'+','-','/','=','x','X','c','C','s','S'};
             //if(validOperator.Contains(key) == true)
-            return validOperator.Contains(key);
-           // else
-             //   return false;
-
+            return validOperator.Contains(key);           
         }
         
-        public bool IsValidOperand(char key){
+        public bool IsValidOperand(char key)
+        {
             char[] validOperand = {'0','1','2','3','4','5','6','7','8','9'};
-            //if(validOperand.Contains(key) == true)
-                return validOperand.Contains(key);
-            //else
-              //  return false;
+            return validOperand.Contains(key);        
         }
 
-        public string DecimalPoint(string operand){
+        public string DecimalPoint(string operand)
+        {
             // adding decimal point when no numeric value is present and . key is pressed
             if(string.Equals(operand, null))
                 operand="0.";
-            else{
+            else
+            {
                 // adding decimal point when numeric value is present
                 if(!operand.Contains('.') && Convert.ToInt32(operand) != 0)
                     operand +=".";
                 // ignoring multiple decimal points and ignoring multiple zeroes before decimal point
-                if (operand.Contains('.')) {
+                if (operand.Contains('.'))
+                {
                     if(Convert.ToDouble(operand) == 0.0)
                     operand = "0.";
                 }
@@ -170,25 +175,29 @@ namespace ConsoleCalculator
                 return operand;                         
         }
 
-        public string Add(string operand1, string operand2){
-            // addition of two numerics
-            double sum = (Convert.ToDouble(operand1)) + (Convert.ToDouble(operand2));
+        public string Add(string operand1, string operand2)
+        {
+            // addition of two numerics            
+            double sum = Convert.ToDouble(operand1) + Convert.ToDouble(operand2);
             return sum.ToString();
         }
 
-        public string Subtract(string operand1, string operand2){
+        public string Subtract(string operand1, string operand2)
+        {
             // subtraction of two numerics
             double difference = Convert.ToDouble(operand1) - Convert.ToDouble(operand2);
             return difference.ToString();
         }
 
-        public string Multiply(string operand1, string operand2){
+        public string Multiply(string operand1, string operand2)
+        {
             // multiplication of two numerics
             double product = Convert.ToDouble(operand1) * Convert.ToDouble(operand2);
             return product.ToString();
         }
 
-        public string Divide(string operand1, string operand2){
+        public string Divide(string operand1, string operand2)
+        {
             // division of two numerics
             double quotient;
             try
@@ -198,17 +207,22 @@ namespace ConsoleCalculator
                 else
                     quotient = Convert.ToDouble(operand1) / Convert.ToDouble(operand2);
             }
-            catch(DivideByZeroException){
+            catch(DivideByZeroException)
+            {
                 return "-E-";
             }
             return quotient.ToString();
         }
 
-        public string ToggleSign(string operand1){
+        // to toggle sign
+        public string ToggleSign(string operand1)
+        {
             return (-1 * (Convert.ToDouble(operand1))).ToString();
         }
 
-        public string ClearConsole(){
+        // to clear console
+        public string ClearConsole()
+        {
             return "0";        
         }                     
     }

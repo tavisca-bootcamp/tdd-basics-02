@@ -1,4 +1,10 @@
-language : c#
-
-rvm :
-    7.3
+language: csharp
+rvm : 7.3
+solution: ConsoleCalculator.sln
+mono: none
+dotnet: 2.1.502
+install:
+    - dotnet restore
+script:
+    - dotnet build
+    - dotnet test ConsoleCalculator.Tests/ConsoleCalculator.Tests.csproj

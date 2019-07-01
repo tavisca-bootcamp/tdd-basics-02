@@ -39,10 +39,21 @@ namespace ConsoleCalculator
             {
                 double operandOne = double.Parse(FirstOperand);
                 double operandTwo = double.Parse(SecondOperand);
+                if (Symbol == 'x')
+                    Symbol = 'X';
                 switch(Symbol)
                 {
                     case '+':
                         result = Operations.Addition(operandOne, operandTwo);
+                        break;
+                    case '-':
+                        result = Operations.Subtraction(operandOne, operandTwo);
+                        break;
+                    case 'X':
+                        result = Operations.Multiplication(operandOne, operandTwo);
+                        break;
+                    case '/':
+                        result = Operations.Division(operandOne, operandTwo);
                         break;
                 }
                 

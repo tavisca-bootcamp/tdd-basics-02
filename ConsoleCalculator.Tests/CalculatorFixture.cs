@@ -27,6 +27,20 @@ namespace ConsoleCalculator.Tests
             Assert.Equal("3", cal.SendKeyPress('+'));
             
         }
+        [Fact]
+        public void TestAllOperators()
+        {
+            Assert.Equal("1", cal.SendKeyPress('1'));
+            Assert.Equal("1", cal.SendKeyPress('+'));
+            Assert.Equal("2", cal.SendKeyPress('2'));
+            Assert.Equal("3", cal.SendKeyPress('x'));
+            Assert.Equal("2", cal.SendKeyPress('2'));
+            Assert.Equal("6", cal.SendKeyPress('-'));
+            Assert.Equal("5", cal.SendKeyPress('5'));
+            Assert.Equal("1", cal.SendKeyPress('/'));
+
+        }
+
 
     }
 }

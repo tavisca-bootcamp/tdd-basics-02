@@ -13,6 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ConsoleCalculator\ConsoleCalculator.csproj" />
+    <ProjectReference Include="C:\Users\Asmita\Source\Repos\tdd-basics-02\ConsoleCalculator.Tests\ConsoleCalculator.Tests.csproj" />
   </ItemGroup>
 </Project>

@@ -1,6 +1,6 @@
 using System;
 using Xunit;
-
+using ConsoleCalculator;
 namespace ConsoleCalculator.Tests
 {
     public class CalculatorFixture

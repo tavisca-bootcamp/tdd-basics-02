@@ -37,17 +37,18 @@ namespace ConsoleCalculator
 
                     if (CanCalc())
                     {
-                        try
-                        {
-                            stored = Calculate(stored, optr, temp).ToString();
-                        }
-                        catch (Exception e)
-                        {
-                            return "-E-";
-                        }
+
+                        stored = Calculate(stored, optr, temp).ToString();
                         optrExists = false;
                         temp = "";
-                        disp = stored;
+                        if (Double.IsInfinity(Convert.ToDouble(stored)))
+                        {
+                            disp = "-E-";
+                        }
+                        else
+                        {
+                            disp = stored;
+                        } 
                     }
                     else
                     {
@@ -99,13 +100,13 @@ namespace ConsoleCalculator
                     result = Convert.ToDouble(inp1) + Convert.ToDouble(inp3);
                     break;
                 case "-":
-                    result = Convert.ToDouble(inp1) + Convert.ToDouble(inp3);
+                    result = Convert.ToDouble(inp1) - Convert.ToDouble(inp3);
                     break;
                 case "x":
-                    result = Convert.ToDouble(inp1) + Convert.ToDouble(inp3);
+                    result = Convert.ToDouble(inp1) * Convert.ToDouble(inp3);
                     break;
                 case "/":
-                    result = Convert.ToDouble(inp1) + Convert.ToDouble(inp3);
+                    result = Convert.ToDouble(inp1) / Convert.ToDouble(inp3);
                     break;
                 default:
                     return 0;

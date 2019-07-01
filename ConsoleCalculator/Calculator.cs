@@ -195,6 +195,8 @@ namespace ConsoleCalculator
                 {
                     if (operation != '\0')
                     {
+                        if (operand2 == null)
+                            operand2 = operand1;
                         operand1 = Calculation(operation, operand1, operand2);
                         operand2 = null;
                         return operand1;

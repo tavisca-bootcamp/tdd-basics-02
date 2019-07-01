@@ -91,6 +91,17 @@ namespace ConsoleCalculator.Tests
             Assert.Equal("2", c.SendKeyPress('2'));
             Assert.Equal("1", c.SendKeyPress('='));
         }
+        [Fact]
+        public void EqualFollowedOperator()
+        {
+            Assert.Equal("1", c.SendKeyPress('1'));
+            Assert.Equal("1", c.SendKeyPress('+'));
+            Assert.Equal("2", c.SendKeyPress('2'));
+            Assert.Equal("3", c.SendKeyPress('+'));
+            Assert.Equal("3", c.SendKeyPress('3'));
+            Assert.Equal("6", c.SendKeyPress('+'));
+            Assert.Equal("12", c.SendKeyPress('='));
+        }
 
     }
 }

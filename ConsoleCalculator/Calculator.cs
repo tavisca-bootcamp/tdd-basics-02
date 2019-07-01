@@ -6,9 +6,10 @@ namespace ConsoleCalculator
     public class Calculator
     {
         private string expression = "";
-        private string number = "";
-        private string consoleDisplay = "";
+        private string number = "0";
+        private string consoleDisplay = "0";
         private DataTable dt = new DataTable();
+        CheckInputType CIT = new CheckInputType();
 
         public string SendKeyPress(char key)
         {
@@ -17,77 +18,67 @@ namespace ConsoleCalculator
 
         private string display(char key)
         {
-            if(key=='c')
+            if (CIT.isClear(key))
             {
-                consoleDisplay = "0";
-                expression = number = "";
+                number = consoleDisplay = "0";
+                expression = "";
             }
-            else if(isOperator(key))
+            else if (CIT.isOperator(key))
             {
-                expression += consoleDisplay;
-                number = "";
-                expression = consoleDisplay = evaluateExpression(expression);
-                expression += key;
+                consoleDisplay = addConsoleValueToExp(expression, consoleDisplay);
+                expression = consoleDisplay + key;
+                number = "0";
             }
-            else if(isNumber(key))
+            else if (CIT.isNumber(key))
             {
-                number = evaluateExpression(number += key);
+                number = evaluateExpression(number + key);
                 consoleDisplay = number;
             }
-            else if(key=='.' && !consoleDisplay.Contains("."))
+            else if (CIT.isDecimalValid(key, number))
             {
-                number += key;
+                number += '.';
                 consoleDisplay = number;
             }
-            else if(key=='S'||key=='s')
+            else if (CIT.isSignChange(key))
             {
-                number= -float.Parse(number)+"";
+                number = invertingTheNumber(consoleDisplay);
                 consoleDisplay = number;
             }
-            else if (key=='=')
+            else if (key == '=')
             {
-                if (number=="")
-                {
-                    string c = expression.Substring(0, expression.Length - 1);
-                    expression = expression + c;
-                }
-                else
-                {
-                    expression += number;
-                }
-                consoleDisplay = evaluateExpression(expression);
+                consoleDisplay = addConsoleValueToExp(expression, consoleDisplay); ;
+                expression = "";
             }
-            if(consoleDisplay== "∞")
+            if (consoleDisplay == "∞")
             {
                 consoleDisplay = "-E-";
             }
             return consoleDisplay;
         }
 
+        private string addConsoleValueToExp(string expression, string consoleDisplay)
+        {
+            return evaluateExpression(expression + consoleDisplay);
+        }
+
+        private string invertingTheNumber(string consoleDisplay)
+        {
+            float a = -float.Parse(consoleDisplay);
+            return Convert.ToString(a);
+        }
+
         private string evaluateExpression(string expression)
+        {
+            expression = replaceXByMultOp(expression);
+            var exp = Convert.ToString(dt.Compute(expression, ""));
+            return exp;
+        }
+
+        private string replaceXByMultOp(string expression)
         {
             expression = expression.Replace('x', '*');
             expression = expression.Replace('X', '*');
-            var exp = dt.Compute(expression, "");
-            return exp+"";
-        }
-
-        private bool isNumber(char key)
-        {
-            if(Char.IsDigit(key))
-            {
-                return true;
-            }
-            return false;
-        }
-
-        private bool isOperator(char key)
-        {
-            if(key=='+'|| key == '-' || key == 'x' || key == 'X' || key == '/')
-            {
-                return true;
-            }
-            return false;
+            return expression;
         }
     }
 }

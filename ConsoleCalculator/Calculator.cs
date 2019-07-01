@@ -37,47 +37,67 @@ namespace ConsoleCalculator
         }
         private string Calculation(char dummyOperation,string operand1,string operand2)
         {
-            int convertedOperand1 = Convert.ToInt32(operand1);
-            int convertedOperand2 = int.Parse(operand2);
+            int convertedOperand1=0, convertedOperand2=0;
+            double doubleOperand1=0, doubleOperand2=0;
             int ans = 0;
             double doubleAns = 0;
             int flag = 0;
+            if((operand1.IndexOf('.')!=-1) || (operand2.IndexOf('.')!=-1))
+            {
+                doubleOperand1 = double.Parse(operand1);
+                doubleOperand2 = double.Parse(operand2);
+                flag = 1;
+            }
+            else
+            {
+                convertedOperand1 = int.Parse(operand1);
+                convertedOperand2 = int.Parse(operand2);
+            }
             switch (dummyOperation)
             {
                 case '+':
-                    ans = convertedOperand1 + convertedOperand2;
+                    if (flag == 0)
+                        ans = convertedOperand1 + convertedOperand2;
+                    else
+                        doubleAns = doubleOperand1 + doubleOperand2;
                     break;
                 case '-':
-                    ans = convertedOperand1 - convertedOperand2;
+                    if (flag == 0)
+                        ans = convertedOperand1 - convertedOperand2;
+                    else
+                        doubleAns = doubleOperand1 - doubleOperand2;
                     break;
                 case 'x':
                 case 'X':
-                    ans = convertedOperand1 * convertedOperand2;
+                    if (flag == 0)
+                        ans = convertedOperand1 * convertedOperand2;
+                    else
+                        doubleAns = doubleOperand1 * doubleOperand2;
                     break;
                 case '/':
-                    if (convertedOperand1 % convertedOperand2 == 0)
-                        ans = convertedOperand1 / convertedOperand2;
+                    if(flag==0)
+                        if (convertedOperand1 % convertedOperand2 == 0)
+                            ans = convertedOperand1 / convertedOperand2;
+                        else
+                        {
+                            doubleOperand1 = Double.Parse(operand1);
+                            doubleOperand2 = Double.Parse(operand2);
+                            doubleAns = doubleOperand1 / doubleOperand2;
+                            flag = 1;
+                        }
                     else
-                    {
-                        double doubleOperand1 = Double.Parse(operand1);
-                        double doubleOperand2 = Double.Parse(operand2);
                         doubleAns = doubleOperand1 / doubleOperand2;
-                        flag = 1;
-                    }
                     break;
             }
-           
             if (flag == 0)
                 operand1 = ans.ToString();
             else
                 operand1 = doubleAns.ToString();
-            //operand2 = null;
             return operand1;
         }
         public string SendKeyPress(char key)
         {
-            // Add your implementation here.
-            
+            // Add your implementation here. 
             if(Array.IndexOf(validChar,key)!=-1)
             {
                 if (Char.IsDigit(key)&& key =='0')
@@ -92,7 +112,6 @@ namespace ConsoleCalculator
                         operand2 = ZeroHandle(operand2, key);
                         return operand2;
                     }
-
                 }
                 else if (Char.IsDigit(key))
                 {
@@ -121,7 +140,6 @@ namespace ConsoleCalculator
                         operand2 = DecimalHandle(operand2, key);
                         return operand2;
                     }
-
                 }
                 else if(key != '=')
                 {
@@ -136,8 +154,7 @@ namespace ConsoleCalculator
                         operation = key;
                         operand1 = Calculation(dummyOperation, operand1, operand2);
                         operand2 = null;
-                        return operand1;
-                        
+                        return operand1;   
                     }
                 }
                 else

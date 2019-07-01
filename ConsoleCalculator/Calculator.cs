@@ -106,7 +106,7 @@ namespace ConsoleCalculator
                     }
                     else
                     {
-                        if (operand1.IndexOf('.') == -1)
+                        if (operand2.IndexOf('.') == -1)
                             if (int.Parse(operand2) > 0)
                                 operand2 = (0 - int.Parse(operand2)).ToString();
                             else
@@ -180,8 +180,16 @@ namespace ConsoleCalculator
                 }
                 else if(key == 's'||key=='S'||key=='c'||key=='C')
                 {
-                    string operand = Calculation(key, operand1, operand2);
-                    return operand;
+                    if (operation == '\0')
+                    {
+                        operand1 = Calculation(key, operand1, operand2);
+                        return operand1;
+                    }
+                    else
+                    {
+                        operand2 = Calculation(key, operand1, operand2);
+                        return operand2;
+                    }
                 }
                 else if(key != '=')
                 {

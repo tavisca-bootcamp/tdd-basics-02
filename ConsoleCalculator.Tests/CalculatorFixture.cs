@@ -79,6 +79,18 @@ namespace ConsoleCalculator.Tests
             Assert.Equal("12", c.SendKeyPress('-'));
             Assert.Equal("0", c.SendKeyPress('c'));
         }
+        [Fact]
+        public void decimalOperations1()
+        {
+
+            Assert.Equal("1", c.SendKeyPress('1'));
+            Assert.Equal("1", c.SendKeyPress('d'));
+            Assert.Equal("1", c.SendKeyPress('/'));
+            Assert.Equal("2", c.SendKeyPress('2'));
+            Assert.Equal("0.5", c.SendKeyPress('*'));
+            Assert.Equal("2", c.SendKeyPress('2'));
+            Assert.Equal("1.0", c.SendKeyPress('='));
+        }
 
     }
 }

@@ -3,8 +3,8 @@ solution: ConsoleCalculator.sln
 mono: none
 dotnet: 2.2.300
 install:
-	- dotnet restore
+- dotnet restore
 script:
-	- dotnet build
-	- dotnet test ConsoleCalculator.Tests/ConsoleCalculator.Tests.csproj
+- dotnet build
+- dotnet test ConsoleCalculator.Tests/ConsoleCalculator.Tests.csproj
 

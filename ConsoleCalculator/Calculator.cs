@@ -6,12 +6,12 @@ namespace ConsoleCalculator
 {
     public class Calculator
     {
-        public StringBuilder firstNumber = new StringBuilder("");
-        public StringBuilder secondNumber = new StringBuilder("");
-        public StringBuilder display = new StringBuilder("");
-        public int mode = 0;
-        public char _operator = 'z';
-        public List<char> symbolList = new List<char>() { '-', '+', '/', '=', 'x', 'X', 'c', 'C', 's', 'S' };
+        StringBuilder firstNumber = new StringBuilder(String.Empty);
+        StringBuilder secondNumber = new StringBuilder(String.Empty);
+        StringBuilder display = new StringBuilder(String.Empty);
+        int mode = 0;
+        char _operator = 'z';
+        List<char> symbolList = new List<char>() { '-', '+', '/', '=', 'x', 'X', 'c', 'C', 's', 'S' };
 
         public string SendKeyPress(char key)
         {
@@ -19,8 +19,7 @@ namespace ConsoleCalculator
             {
                 if (IsOperator(key))
                 {
-                    PerformOperation(key);
-                    return display.ToString();
+                    PerformArithmeticOperation(key);
                 }
                 else if(key=='.')
                 {
@@ -33,13 +32,9 @@ namespace ConsoleCalculator
                 else
                 {
                     PerformNumberDisplay(key);
-                    return display.ToString();
                 }
             }
-            else
-            {
-                return display.ToString();
-            }
+            return display.ToString();
         }
 
         private string HandleZero(char key)
@@ -72,12 +67,12 @@ namespace ConsoleCalculator
             display.Append(key);
         }
 
-        private void PerformOperation(char key)
+        private void PerformArithmeticOperation(char key)
         {
             var arithmeticList = new List<char>() { '+', 'x', 'X', '-', '/' };
             if(arithmeticList.Contains(key))
             {
-                PerformOperation('=');
+                PerformArithmeticOperation('=');
                 firstNumber.Clear();
                 firstNumber.Append(display.ToString());
                 mode = 1;

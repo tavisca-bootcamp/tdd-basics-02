@@ -6,7 +6,7 @@ namespace ConsoleCalculator.Tests
     {
         Calculator calculator = new Calculator();
 
-        private string sendMultipleKey(char[] key)
+        private string SendMultipleKey(char[] key)
         {
             var i = 0;
             for (i = 0; i < key.Length - 1; i++)
@@ -30,7 +30,7 @@ namespace ConsoleCalculator.Tests
         {
             char[] key = new char[] { 'h', '1', '2' };
 
-            string fromCall = sendMultipleKey(key);
+            string fromCall = SendMultipleKey(key);
 
             Assert.Equal("12", fromCall);
         }
@@ -40,7 +40,7 @@ namespace ConsoleCalculator.Tests
         {
             char[] key = new char[] { 'h', '0', '0','0' };
 
-            string fromCall = sendMultipleKey(key);
+            string fromCall = SendMultipleKey(key);
 
             Assert.Equal("0", fromCall);
         }
@@ -50,7 +50,7 @@ namespace ConsoleCalculator.Tests
         {
             char[] key = new char[] { 'h', '0', '.', '.' };
 
-            string fromCall = sendMultipleKey(key);
+            string fromCall = SendMultipleKey(key);
 
             Assert.Equal("0.", fromCall);
         }
@@ -60,7 +60,7 @@ namespace ConsoleCalculator.Tests
         {
             char[] key = new char[] { 'h', '.', '.' };
 
-            string fromCall = sendMultipleKey(key);
+            string fromCall = SendMultipleKey(key);
 
             Assert.Equal("0.", fromCall);
         }
@@ -71,17 +71,17 @@ namespace ConsoleCalculator.Tests
         {
             char[] key = new char[] { 'h', '1', '2','+' };
 
-            string fromCall = sendMultipleKey(key);
+            string fromCall = SendMultipleKey(key);
 
             Assert.Equal("12", fromCall);
         }
 
         [Fact]
-        public void TestOperatorAndKeyPress()
+        public void TestOperatorAndNumerKeyPress()
         {
             char[] key = new char[] { 'h', '1', '2', '+','1' };
 
-            string fromCall = sendMultipleKey(key);
+            string fromCall = SendMultipleKey(key);
 
             Assert.Equal("1", fromCall);
         }
@@ -90,7 +90,7 @@ namespace ConsoleCalculator.Tests
         {
             char[] key = new char[] { 'h', '1', 's','s' };
 
-            string fromCall = sendMultipleKey(key);
+            string fromCall = SendMultipleKey(key);
 
             Assert.Equal("1", fromCall);
         }
@@ -100,7 +100,7 @@ namespace ConsoleCalculator.Tests
         {
             char[] key = new char[] { 'h', '1', '2', '+', '1' ,'='};
 
-            string fromCall = sendMultipleKey(key);
+            string fromCall = SendMultipleKey(key);
 
             Assert.Equal("13", fromCall);
         }
@@ -110,7 +110,7 @@ namespace ConsoleCalculator.Tests
         {
             char[] key = new char[] { 'h', '1', '/', '0','='};
 
-            string fromCall = sendMultipleKey(key);
+            string fromCall = SendMultipleKey(key);
 
             Assert.Equal("-E-", fromCall);
         }
@@ -120,7 +120,7 @@ namespace ConsoleCalculator.Tests
         {
             char[] key = new char[] { 'h', '1', '+', '3','s','S' ,'=' };
 
-            string fromCall = sendMultipleKey(key);
+            string fromCall = SendMultipleKey(key);
 
             Assert.Equal("4", fromCall);
         }
@@ -130,27 +130,27 @@ namespace ConsoleCalculator.Tests
         {
             char[] key = new char[] { '1', '+', '2', '+', 'C' };
 
-            string fromCall = sendMultipleKey(key);
+            string fromCall = SendMultipleKey(key);
 
             Assert.Equal("0", fromCall);
         }
 
         [Fact]
-        public void TestAnotherCalculation()
+        public void TestArithmeticCalculation()
         {
             char[] key = new char[] { '1', '+', '2', '+', '3','+','=' };
 
-            string fromCall = sendMultipleKey(key);
+            string fromCall = SendMultipleKey(key);
 
             Assert.Equal("12", fromCall);
         }
 
         [Fact]
-        public void TestSomeCalulation()
+        public void TestCombinationOfArithmetic()
         {
             char[] key = new char[] { '1','2' ,'+', '2', 'S', 's', 'S', '=' };
 
-            string fromCall = sendMultipleKey(key);
+            string fromCall = SendMultipleKey(key);
 
             Assert.Equal("10", fromCall);
         }
@@ -160,7 +160,7 @@ namespace ConsoleCalculator.Tests
         {
             char[] key = new char[] { '0', '0', '.', '.', '0', '0', '1' };
 
-            string fromCall = sendMultipleKey(key);
+            string fromCall = SendMultipleKey(key);
 
             Assert.Equal("0.001", fromCall);
         }

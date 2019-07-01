@@ -164,5 +164,15 @@ namespace ConsoleCalculator.Tests
 
             Assert.Equal("0.001", fromCall);
         }
+
+        [Fact]
+        public void TestTwoDecimalInANumber()
+        {
+            char[] key = new char[] { '1', '.', '0', '0', '.', '1', '+','2','=' };
+
+            string fromCall = SendMultipleKey(key);
+
+            Assert.Equal("-E-", fromCall);
+        }
     }
 }

@@ -23,47 +23,52 @@ namespace ConsoleCalculator
                 }
                 else if(key=='.')
                 {
-                    return HandleDecimal('.');
+                    HandleDecimal('.');
                 }
                 else if(key=='0')
                 {
-                    return HandleZero('0');
+                    HandleZero('0');
                 }
                 else
                 {
-                    PerformNumberDisplay(key);
+                    Display(key);
                 }
             }
             return display.ToString();
         }
 
-        private string HandleZero(char key)
+        private void HandleZero(char key)
         {
             if (display.Length == 1)
             {
                 if (display[0] == '0')
-                    return display.ToString();
+                    return;
             }
-            PerformNumberDisplay(key);
-            return display.ToString();
+            Display(key);
         }
 
-        private string  HandleDecimal(char key)
+        private void HandleDecimal(char key)
         {
-            if (display.Length == 0)
+            if (display.Length == 0||display.ToString().Equals("0"))
+            {
+                display.Clear();
                 display.Append("0.");
+            }
             else if (display[display.Length - 1] != '.')
-                PerformNumberDisplay(key);
-            return display.ToString();
+            {
+                Display(key);
+            }
         }
 
-        private void PerformNumberDisplay(char key)
+        private void Display(char key)
         {
             if(mode==1)
             {
                 display.Clear();
                 mode = 0;
             }
+            if (display.ToString().Equals("0"))
+                display.Clear();
             display.Append(key);
         }
 
@@ -100,14 +105,19 @@ namespace ConsoleCalculator
                         break;
                     case 'c':
                     case 'C':
-                        _operator = 'z';
-                        firstNumber.Clear();
-                        secondNumber.Clear();
-                        display.Clear();
-                        display.Append('0');
+                        ClearDisplay();
                         break;
                 }
             }
+        }
+
+        private void ClearDisplay()
+        {
+            _operator = 'z';
+            firstNumber.Clear();
+            secondNumber.Clear();
+            display.Clear();
+            display.Append('0');
         }
 
         private void PerformCalculation()
@@ -134,7 +144,6 @@ namespace ConsoleCalculator
                 display.Clear();
                 display.Append("-E-");
             }
-
         }
 
         private decimal GetResult(decimal fNumber, decimal sNumber)

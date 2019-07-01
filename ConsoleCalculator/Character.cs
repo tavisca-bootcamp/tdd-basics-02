@@ -10,8 +10,21 @@ namespace ConsoleCalculator
         {
             return (key >= '0' && key <= '9') || key == '.';
         }
-           
-       
-        
+
+        public static bool IsOperator(char key)
+        {
+            switch (key)
+            {
+                case '+':
+                case '-':
+                case 'x':
+                case 'X':
+                case '/':
+                case '=':
+                    return true;
+                default: return false;
+            }
+        }
+
     }
 }

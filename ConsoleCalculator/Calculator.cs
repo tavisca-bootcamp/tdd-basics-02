@@ -11,22 +11,54 @@ namespace ConsoleCalculator
         public string SendKeyPress(char key)
         {
             // Add your implementation here.
-            //const char localVariable = key;
+            
             switch (key)
             {
-                case var localVariable when Character.IsDigitOrDot(localVariable):
+                case var localVariable when Character.IsDigitOrDot(localVariable): // update operand at the time of input only
                     Display = UpdateOperands(localVariable);
+                    break;
+                case var localVariable when Character.IsOperator(localVariable):// do arithimatic operations
+                    Display = DoOperation(localVariable);
                     break;
 
                 default:
                     break;
             }
-            Console.WriteLine(Display);
+            //Console.WriteLine(Display);
 
             return Display;
            
         }
 
+        private string DoOperation(char key)
+        {
+            string result = Display;
+            if (Symbol == null)
+                Symbol = key;
+            else
+            {
+                double operandOne = double.Parse(FirstOperand);
+                double operandTwo = double.Parse(SecondOperand);
+                switch(Symbol)
+                {
+                    case '+':
+                        result = Operations.Addition(operandOne, operandTwo);
+                        break;
+                }
+                
+                FirstOperand = result;
+
+                SecondOperand = null;
+
+                if (key == '=')
+                    Symbol = null;
+                else
+                    Symbol = key;
+
+
+            }
+            return result;
+        }
         private string UpdateOperands(char key)
         {
             String result;

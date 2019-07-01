@@ -115,7 +115,6 @@ namespace ConsoleCalculator.Tests
         public void TestDecimalSecondOperand()
         {
             calculator.SendKeyPress('1');
-            //calculator.SendKeyPress('0');
             calculator.SendKeyPress('+');
             calculator.SendKeyPress('5');
             calculator.SendKeyPress('.');

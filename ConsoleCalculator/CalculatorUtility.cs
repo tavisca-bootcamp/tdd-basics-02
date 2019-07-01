@@ -25,28 +25,12 @@ namespace ConsoleCalculator
             PreviousOperator = '?';
             Flag = 0;
         }
-        public bool IsResetKey(char key)
-        {
-            if (key == 'c' || key == 'C')
-                return true;
-            else
-                return false;
-            //throw new NotImplementedException();
-        }
-
-        public bool isKeyZero(char key)
-        {
-            if (key == '0')
-                return true;
-            else return false;
-            //throw new NotImplementedException();
-        }
-
-        public float Divide(float firstNumber, float secondNumber)
-        { 
-            return (firstNumber / secondNumber);
-            //throw new NotImplementedException();
-        }
+        public bool IsResetKey(char key) => key == 'c' || key == 'C';
+      
+        public bool isKeyZero(char key) => key == '0';
+   
+        public float Divide(float firstNumber, float secondNumber) => firstNumber / secondNumber;
+        
 
         public String calculateResult(char key)
         {
@@ -55,7 +39,7 @@ namespace ConsoleCalculator
                 if (IsAdd(key))
                     Result = Add(Result, float.Parse(Number));
                 else if (IsSubstract(key))
-                    Result = Add(Result, float.Parse(Number));
+                    Result = Substract(Result, float.Parse(Number));
                 else if (IsMultiply(key))
                     Result = Multiply(Result, float.Parse(Number));
                 else
@@ -74,59 +58,23 @@ namespace ConsoleCalculator
             return "Success";
         }
 
-        public float Multiply(float firstNumber, float secondNumber)
-        {
-            return (firstNumber * secondNumber);
-            //throw new NotImplementedException();
-        }
+        public float Multiply(float firstNumber, float secondNumber) => firstNumber * secondNumber;
+         
+        public float Substract(float firstNumber, float secondNumber) => firstNumber - secondNumber;
+         
 
-        public float Substract(float firstNumber, float secondNumber)
-        {
-            return (firstNumber - secondNumber);
-            //throw new NotImplementedException();
-        }
+        public float Add(float firstNumber, float secondNumber) => firstNumber + secondNumber;
+         
 
-        public float Add(float firstNumber, float secondNumber)
-        {
-            return (firstNumber + secondNumber);
-            //throw new NotImplementedException();
-        }
+        public bool IsDivide(char key) => key == '/';
+       
+        public bool IsMultiply(char key) => key == 'x' || key == 'X';
 
-        public bool IsDivide(char key)
-        {
-            if (key == '/')
-                return true;
-            else return false;
-            //throw new NotImplementedException();
-        }
 
-        public bool IsMultiply(char key)
-        {
-            if (key == 'x' || key == 'X')
-                return true;
-            else
-                return false;
-            //throw new NotImplementedException();
-        }
-
-        public bool IsSubstract(char key)
-        {
-            if (key == '-')
-                return true;
-            else
-                return false;
-            //throw new NotImplementedException();
-        }
-
-        public bool IsAdd(char key)
-        {
-            if (key == '+')
-                return true;
-            else
-                return false;
-            //throw new NotImplementedException();
-        }
-
+        public bool IsSubstract(char key) => key == '-';
+        
+        public bool IsAdd(char key) => key == '+';
+        
         public bool IsDecimalPoint(char key)
         {
             if (key == '.')
@@ -136,40 +84,16 @@ namespace ConsoleCalculator
             //throw new NotImplementedException();
         }
 
-        public bool IsNegativeNumber(char key)
-        {
-            if (key == 's' || key == 'S')
-                return true;
-            else
-                return false;
-            //throw new NotImplementedException();
-        }
+        public bool IsNegativeNumber(char key) => (key == 's' || key == 'S');
 
-        public bool IsEqualOperator(char key)
-        {
-            if (key == '=')
-                return true;
-            else
-                return false;
-            //throw new NotImplementedException();
-        }
 
-        public bool IsArithmeticOperator(char key)
-        {
-            if (key == '+' || key == '-' || key == 'x' || key == 'X' || key == '/')
-                return true;
-            else
-                return false;
-            //throw new NotImplementedException();
-        }
+        public bool IsEqualOperator(char key) => (key == '=');
 
-        public bool IsNumber(char key)
-        {
-            if (key > '0' && key <= '9')
-                return true;
-            else
-                return false;
-            //throw new NotImplementedException();
-        }
+
+        public bool IsArithmeticOperator(char key) => (key == '+' || key == '-' || key == 'x' || key == 'X' || key == '/');
+
+             
+        public bool IsNumber(char key) => key > '0' && key <= '9';
+       
     }
 }

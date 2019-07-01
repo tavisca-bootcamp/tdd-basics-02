@@ -7,6 +7,26 @@ namespace ConsoleCalculator
         private char[] validChar = new char[20] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '-', 'x', 'X', '/', 's', 'S', 'c', 'C', '=' };
         private string operand1 = "0", operand2 = null;
         private char operation = '\0';
+        private string DecimalHandle(string operand, char key)
+        {
+            if (operand.IndexOf('.')!=-1)
+                return operand;
+            else
+            {
+                operand = operand + key;
+                return operand;
+            }
+        }
+        private string ZeroHandle(string operand,char key)
+        {
+            if(operand == "0")
+                return operand;
+            else
+            {
+                operand = operand + key;
+                return operand;
+            }
+        }
         private string Calculation(char dummyOperation,string operand1,string operand2)
         {
             int convertedOperand1 = Convert.ToInt32(operand1);
@@ -52,7 +72,21 @@ namespace ConsoleCalculator
             
             if(Array.IndexOf(validChar,key)!=-1)
             {
-                if(Char.IsDigit(key))
+                if (Char.IsDigit(key)&& key =='0')
+                {
+                    if (operation == '\0')
+                    {
+                        operand1 = ZeroHandle(operand1, key);
+                        return operand1;
+                    }
+                    else
+                    {
+                        operand2 = ZeroHandle(operand2, key);
+                        return operand2;
+                    }
+
+                }
+                else if (Char.IsDigit(key))
                 {
                     if (operation == '\0')
                     {
@@ -66,6 +100,20 @@ namespace ConsoleCalculator
                         operand2 = (int.Parse(operand2)).ToString();
                         return operand2;
                     }
+                }
+                else if (key == '.')
+                {
+                    if (operation == '\0')
+                    {
+                        operand1 = DecimalHandle(operand1, key);
+                        return operand1;
+                    }
+                    else
+                    {
+                        operand2 = DecimalHandle(operand2, key);
+                        return operand2;
+                    }
+
                 }
                 else if(key != '=')
                 {

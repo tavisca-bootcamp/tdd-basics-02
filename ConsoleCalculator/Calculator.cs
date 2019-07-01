@@ -11,7 +11,7 @@ namespace ConsoleCalculator
         public char lastOperator;
         public bool validOperand;
         public bool validOperator;
-        public bool validFunctionality;
+        
 
 
         public Calculator()
@@ -22,7 +22,7 @@ namespace ConsoleCalculator
             lastOperator = 'N';
             validOperand = false;
             validOperator = false;
-            validFunctionality = false;
+            
         }        
 
         public string SendKeyPress(char key)

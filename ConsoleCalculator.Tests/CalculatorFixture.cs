@@ -6,8 +6,7 @@ namespace ConsoleCalculator.Tests
     public class CalculatorFixture
     {
         Calculator calculator = new Calculator();
-        //string val = "";
-
+        
         [Fact]
         public void DummyTest()
         {
@@ -115,7 +114,6 @@ namespace ConsoleCalculator.Tests
         public void TestDecimalSecondOperand()
         {
             calculator.SendKeyPress('1');
-            //calculator.SendKeyPress('0');
             calculator.SendKeyPress('+');
             calculator.SendKeyPress('5');
             calculator.SendKeyPress('.');
@@ -136,7 +134,7 @@ namespace ConsoleCalculator.Tests
             calculator.SendKeyPress('c');
         }
 
-        [Fact]
+        /*[Fact]
         public void FailTestOperand()
         {
             calculator.SendKeyPress('1');
@@ -144,6 +142,7 @@ namespace ConsoleCalculator.Tests
             return;
 
         }
+        
 
         [Fact]
         public void FailTestOperator()
@@ -163,7 +162,7 @@ namespace ConsoleCalculator.Tests
             Assert.Equal("0", calculator.SendKeyPress('0'));
             calculator.SendKeyPress('c');
         }      
-                
+      */          
     }
 }
 

@@ -113,9 +113,9 @@ namespace ConsoleCalculator
                                 operand2 = (Math.Abs(int.Parse(operand2))).ToString();
                         else
                              if (double.Parse(operand2) > 0)
-                            operand2 = (0 - double.Parse(operand2)).ToString();
-                        else
-                            operand2 = (Math.Abs(double.Parse(operand2))).ToString();
+                                operand2 = (0 - double.Parse(operand2)).ToString();
+                             else
+                                operand2 = (Math.Abs(double.Parse(operand2))).ToString();
                         return operand2;
                     }
                 case 'c':
@@ -177,6 +177,11 @@ namespace ConsoleCalculator
                         operand2 = DecimalHandle(operand2, key);
                         return operand2;
                     }
+                }
+                else if(key == 's'||key=='S'||key=='c'||key=='C')
+                {
+                    string operand = Calculation(key, operand1, operand2);
+                    return operand;
                 }
                 else if(key != '=')
                 {

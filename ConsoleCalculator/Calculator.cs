@@ -141,7 +141,7 @@ namespace ConsoleCalculator
                     try
                     {
                         firstNumber = (double.Parse(firstNumber) / double.Parse(secondNumber)).ToString();
-                        if (firstNumber.Equals("Infinity"))
+                        if (firstNumber.Equals((1.0/0).ToString()))
                         {
                             //firstNumber = "-E-";
                             throw new DivideByZeroException();

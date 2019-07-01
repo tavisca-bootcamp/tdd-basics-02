@@ -7,6 +7,14 @@ namespace ConsoleCalculator
         private char[] validChar = new char[21] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '-', 'x', 'X', '/', 's', 'S', 'c', 'C', '=', '.' };
         private string operand1 = "0", operand2 = null;
         private char operation = '\0';
+        private string IntOrDouble(string operand )
+        {
+            if (operand.IndexOf('.')==-1)
+                operand = (int.Parse(operand)).ToString();
+            else
+                operand = (double.Parse(operand)).ToString();
+            return operand;
+        }
         private string DecimalHandle(string operand, char key)
         {
             if (operand.IndexOf('.')!=-1)
@@ -91,13 +99,13 @@ namespace ConsoleCalculator
                     if (operation == '\0')
                     {
                         operand1 = operand1 + key;
-                        operand1 = (int.Parse(operand1)).ToString();
+                        operand1 = IntOrDouble(operand1);
                         return operand1;
                     }
                     else
                     {
                         operand2 = operand2 + key;
-                        operand2 = (int.Parse(operand2)).ToString();
+                        operand1 = IntOrDouble(operand1);
                         return operand2;
                     }
                 }

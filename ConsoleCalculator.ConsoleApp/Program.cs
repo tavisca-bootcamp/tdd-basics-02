@@ -1,4 +1,8 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace ConsoleCalculator.App
 {
@@ -8,17 +12,20 @@ namespace ConsoleCalculator.App
         {
             var calc = new Calculator();
             ConsoleKeyInfo key;
-            Console.WriteLine("Press Ctrl + C to close the program.");
+            Console.WriteLine("0");
+           
             while (IsKillSwitch(key = Console.ReadKey(true)) == false)
             {
                 Console.Clear();
-                Console.WriteLine(calc.SendKeyPress(key.KeyChar));
+                calc.SendKeyPress(key.KeyChar);
+                break;
             }
-        }
+            Console.Clear();
+          }
 
         private static bool IsKillSwitch(ConsoleKeyInfo key)
         {
-            return key.Key == ConsoleKey.C && key.Modifiers == ConsoleModifiers.Control;
+            return key.Key == ConsoleKey.X || key.Modifiers == ConsoleModifiers.Control;
         }
     }
 }

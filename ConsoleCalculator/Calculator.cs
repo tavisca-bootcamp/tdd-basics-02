@@ -88,6 +88,43 @@ namespace ConsoleCalculator
                     else
                         doubleAns = doubleOperand1 / doubleOperand2;
                     break;
+                case 's':
+                case 'S':
+                    if (operation == '\0')
+                    {
+                        if (operand1.IndexOf('.') == -1)
+                            if (int.Parse(operand1) > 0)
+                                operand1 = (0 - int.Parse(operand1)).ToString();
+                            else
+                                operand1 = (Math.Abs(int.Parse(operand1))).ToString();
+                        else
+                             if (double.Parse(operand1) > 0)
+                                 operand1 = (0 - double.Parse(operand1)).ToString();
+                             else
+                                 operand1 = (Math.Abs(double.Parse(operand1))).ToString();
+                        return operand1;
+                    }
+                    else
+                    {
+                        if (operand1.IndexOf('.') == -1)
+                            if (int.Parse(operand2) > 0)
+                                operand2 = (0 - int.Parse(operand2)).ToString();
+                            else
+                                operand2 = (Math.Abs(int.Parse(operand2))).ToString();
+                        else
+                             if (double.Parse(operand2) > 0)
+                            operand2 = (0 - double.Parse(operand2)).ToString();
+                        else
+                            operand2 = (Math.Abs(double.Parse(operand2))).ToString();
+                        return operand2;
+                    }
+                case 'c':
+                case 'C':
+                    operand1 = "0";
+                    operand2 = null;
+                    operation = '\0';
+                    return operand1;
+
             }
             if (flag == 0)
                 operand1 = ans.ToString();
@@ -165,7 +202,8 @@ namespace ConsoleCalculator
                         operand2 = null;
                         return operand1;
                     }
-                    return operand1;
+                    else
+                        return operand1;
                 }
             }
             else

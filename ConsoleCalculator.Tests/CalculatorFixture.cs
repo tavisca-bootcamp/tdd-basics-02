@@ -41,7 +41,6 @@ namespace ConsoleCalculator.Tests
         [Fact]
         public void MultipleDecimalsAndZeros()
         {
-
             Assert.Equal("0", c.SendKeyPress('0'));
             Assert.Equal("0", c.SendKeyPress('0'));
             Assert.Equal("0.", c.SendKeyPress('.'));
@@ -66,8 +65,20 @@ namespace ConsoleCalculator.Tests
             Assert.Equal("0.0", c.SendKeyPress('0'));
             Assert.Equal("0.01", c.SendKeyPress('1'));
             Assert.Equal("1.49", c.SendKeyPress('='));
-
-
         }
+        [Fact]
+        public void ToggleAndClear()
+        {
+
+            Assert.Equal("1", c.SendKeyPress('1'));
+            Assert.Equal("10", c.SendKeyPress('0'));
+            Assert.Equal("10", c.SendKeyPress('+'));
+            Assert.Equal("2", c.SendKeyPress('2'));
+            Assert.Equal("-2", c.SendKeyPress('s'));
+            Assert.Equal("2", c.SendKeyPress('S'));
+            Assert.Equal("12", c.SendKeyPress('-'));
+            Assert.Equal("0", c.SendKeyPress('c'));
+        }
+
     }
 }

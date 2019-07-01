@@ -94,7 +94,7 @@ namespace ConsoleCalculator
                     {
                         result = Char.ToString(key);
                     }
-                    else if (result.Contains('.') && key == '.') { }
+                    else if (result.Contains(".") && key == '.') { }
                     else if (result.Equals("0.") && key == '.')
                     { }                                                        //do nothing
                     else

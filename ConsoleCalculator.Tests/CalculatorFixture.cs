@@ -28,7 +28,7 @@ namespace ConsoleCalculator.Tests
         }
 
         [Fact]
-        public void TestSum()
+        public void TestAddition()
         {
             _calculator.SendKeyPress('9');
             _calculator.SendKeyPress('8');
@@ -37,6 +37,30 @@ namespace ConsoleCalculator.Tests
             _calculator.SendKeyPress('5');
             _calculator.SendKeyPress('=');
             Assert.Equal("163", _calculator.ShowDisplayValue());
+        }
+
+        [Fact]
+        public void TestSubstraction()
+        {
+            _calculator.SendKeyPress('5');
+            _calculator.SendKeyPress('6');
+            _calculator.SendKeyPress('-');
+            _calculator.SendKeyPress('3');
+            _calculator.SendKeyPress('2');
+            _calculator.SendKeyPress('=');
+            Assert.Equal("24", _calculator.ShowDisplayValue());
+        }
+
+        [Fact]
+        public void TestNegativeResultSubstraction()
+        {
+            _calculator.SendKeyPress('3');
+            _calculator.SendKeyPress('2');
+            _calculator.SendKeyPress('-');
+            _calculator.SendKeyPress('5');
+            _calculator.SendKeyPress('6');
+            _calculator.SendKeyPress('=');
+            Assert.Equal("-24", _calculator.ShowDisplayValue());
         }
     }
 }

@@ -91,8 +91,15 @@ namespace ConsoleCalculator
                     SetDisplayValue(result.ToString());
                     break;
                 case '/':
-                    result /= currentOperand;
-                    SetDisplayValue(result.ToString());
+                    if (currentOperand == 0)
+                    {
+                        displayValue = "-E-";
+                    }
+                    else
+                    {
+                        result /= currentOperand;
+                        SetDisplayValue(result.ToString());
+                    }
                     break;
                 default:
                     break;

@@ -73,5 +73,16 @@ namespace ConsoleCalculator.Tests
             _calculator.SendKeyPress('=');
             Assert.Equal("35", _calculator.ShowDisplayValue());
         }
+
+        [Fact]
+        public void TestDivisionDivideBy0()
+        {
+            _calculator.SendKeyPress('7');
+            _calculator.SendKeyPress('0');
+            _calculator.SendKeyPress('/');
+            _calculator.SendKeyPress('0');
+            _calculator.SendKeyPress('=');
+            Assert.Equal("-E-",_calculator.ShowDisplayValue());
+        }
     }
 }

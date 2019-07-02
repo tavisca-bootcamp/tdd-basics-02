@@ -8,7 +8,14 @@ namespace ConsoleCalculator
         private float result = float.MaxValue;
         private char previousOperator = '~';
         private int flag = 0;
-
+        const char TOGGLE_SIGN_COMMAND = 'S';
+        const char CLEAR_DISPLAY_COMMAND = 'C';
+        const char ADD = '+';
+        const char SUBTRACT = '-';
+        const char MULTIPLY = '*';
+        const char DIVIDE = '/';
+        const char EQUALS = '=';
+        const char DECIMAL_POINT = '.';
 
         public string SendKeyPress(char key)
         {
@@ -32,7 +39,7 @@ namespace ConsoleCalculator
                 case '9':   displayChar += key;
                     return displayChar;
 
-                case '.':   
+                case DECIMAL_POINT:   
                     if (int.TryParse(displayChar,out int temp)==true)           //Checks if the displayed character is a number
                     {      
                         displayChar += key;
@@ -40,13 +47,15 @@ namespace ConsoleCalculator
                     return displayChar;
 
                 case 'c':
-                case 'C':   displayChar = "";
+                case CLEAR_DISPLAY_COMMAND:             //Clear Display Command: 'C' and 'c'
+                    displayChar = "";                
                     result = float.MaxValue;
                     flag = 0;
                     return "0";
 
                 case 's':
-                case 'S':   int temp1;
+                case TOGGLE_SIGN_COMMAND:               //Toggle Sign Command: 'S' and 's'
+                    int temp1;                         
                     if(int.TryParse(displayChar,out temp1) == true)
                     {
                         displayChar = (-temp1).ToString();
@@ -57,7 +66,7 @@ namespace ConsoleCalculator
                     }
                     return displayChar;
 
-                case '+':
+                case ADD:
                     if (flag == 0 && previousOperator!='~')
                     {
                         flag = 1;
@@ -77,7 +86,7 @@ namespace ConsoleCalculator
 
                     return result.ToString();
 
-                case '-':
+                case SUBTRACT:
                     if (flag == 0 && previousOperator != '~')
                     {
                         flag = 1;
@@ -98,8 +107,8 @@ namespace ConsoleCalculator
                     return result.ToString();
 
 
-                case 'X':
                 case 'x':
+                case MULTIPLY:                                       //Multplication command : 'X' or 'x'
                     if (flag == 0 && previousOperator != '~')
                     {
                         flag = 1;
@@ -119,7 +128,7 @@ namespace ConsoleCalculator
                     return result.ToString();
 
 
-                case '/':
+                case DIVIDE:
                     if (flag == 0 && previousOperator != '~')
                     {
                         flag = 1;
@@ -144,7 +153,7 @@ namespace ConsoleCalculator
                     }
                     return result.ToString();
 
-                case '=':
+                case EQUALS:
                     if (displayChar == "")
                     {
                         displayChar = result.ToString();

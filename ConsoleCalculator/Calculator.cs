@@ -55,6 +55,9 @@ namespace ConsoleCalculator
                 case '=':
                     HandleArithmeticOperation(key);
                     break;
+                case 'c':
+                    Reset();
+                    break;
                 default:
                     break;
             }
@@ -108,6 +111,14 @@ namespace ConsoleCalculator
                     break;
 
             }
+        }
+
+        public void Reset()
+        {
+            currentOperand = 0;
+            result = 0;
+            displayValue = 0.ToString();
+            currentOperator = '\0';
         }
 
         public bool IsOperator(char key)

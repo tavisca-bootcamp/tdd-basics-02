@@ -96,6 +96,20 @@ namespace ConsoleCalculator.Tests
             Assert.Equal("450", _calculator.ShowDisplayValue());
         }
 
-        
+        [Fact]
+        public void TestResetCalculator()
+        {
+            _calculator.SendKeyPress('9');
+            _calculator.SendKeyPress('5');
+            _calculator.SendKeyPress('/');
+            _calculator.SendKeyPress('5');
+            _calculator.SendKeyPress('=');
+            _calculator.SendKeyPress('c');
+
+            Assert.Equal("0", _calculator.ShowDisplayValue());
+            Assert.Equal(0, _calculator.currentOperand);
+            Assert.Equal('\0', _calculator.currentOperator);
+            Assert.Equal(0, _calculator.result);
+        }
     }
 }

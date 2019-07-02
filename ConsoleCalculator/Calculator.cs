@@ -68,6 +68,9 @@ namespace ConsoleCalculator
                 case 's':
                     ToggleSign();
                     break;
+                case '.':
+                    SetDisplayValue(displayValue + ".");
+                    break;
                 default:
                     break;
             }

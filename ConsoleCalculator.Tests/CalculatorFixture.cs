@@ -137,5 +137,28 @@ namespace ConsoleCalculator.Tests
             Assert.Equal("12", _calculator.ShowDisplayValue());
 
         }
+
+        [Fact]
+        public void MultipleZeroesBeforeDecimalDisplaysSingleZero()
+        {
+            _calculator.SendKeyPress('0');
+            _calculator.SendKeyPress('0');
+            _calculator.SendKeyPress('0');
+            _calculator.SendKeyPress('0');
+            Assert.Equal("0", _calculator.ShowDisplayValue());
+        }
+
+        [Fact]
+        public void DisplayAllValuesAfterDecimal()
+        {
+            _calculator.SendKeyPress('0');
+            _calculator.SendKeyPress('.');
+            _calculator.SendKeyPress('0');
+            _calculator.SendKeyPress('1');
+            Assert.Equal("0.01", _calculator.ShowDisplayValue());
+            _calculator.SendKeyPress('2');
+            _calculator.SendKeyPress('1');
+            Assert.Equal("0.0121", _calculator.ShowDisplayValue());
+        }
     }
 }

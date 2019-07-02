@@ -52,6 +52,9 @@ namespace ConsoleCalculator
                     HandleArithmeticOperation(key);
                     break;
                 case '/':
+                    SetDisplayValue("/");
+                    HandleArithmeticOperation(key);
+                    break;
                 case 'x':
                 case '=':
                     HandleArithmeticOperation(key);
@@ -85,6 +88,10 @@ namespace ConsoleCalculator
                     break;
                 case '-':
                     result -= currentOperand;
+                    SetDisplayValue(result.ToString());
+                    break;
+                case '/':
+                    result /= currentOperand;
                     SetDisplayValue(result.ToString());
                     break;
                 default:

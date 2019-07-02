@@ -1,7 +1,7 @@
 language: csharp
 solution: ConsoleCalculator.sln
 mono: none
-dotnet: 2.2.5
+dotnet: 2.2
 install:
             - dotnet restore
 script:

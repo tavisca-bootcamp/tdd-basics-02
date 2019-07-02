@@ -20,6 +20,9 @@ namespace ConsoleCalculator
                 case var localVariable when Character.IsOperator(localVariable):// do arithimatic operations
                     Display = DoOperation(localVariable);
                     break;
+                case var localVariable when Character.IsToggle(localVariable):
+                    Display = Toggle();
+                    break;
 
                 default:
                     break;
@@ -97,6 +100,30 @@ namespace ConsoleCalculator
             }
 
         }
+        private string Toggle()
+        {
+            string result; // temporary result to store either 1st or 2nd operand
+            if (SecondOperand == null)
+            {
+                double temp = double.Parse(FirstOperand);
+                temp = -temp;
+                FirstOperand = temp.ToString();
+                result = FirstOperand;
+                //result = (-(double.Parse(FirstOperand))).ToString();
+
+            }
+            else
+            {
+                double temp = double.Parse(SecondOperand);
+                temp = -temp;
+                SecondOperand = temp.ToString();
+                result = SecondOperand;
+                //result = (-(double.Parse(SecondOperand))).ToString();
+            }
+            return result;
+
+        }
+
         
     }
 }

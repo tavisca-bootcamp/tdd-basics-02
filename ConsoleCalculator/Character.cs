@@ -26,5 +26,10 @@ namespace ConsoleCalculator
             }
         }
 
+        public static bool IsToggle(char key)
+        {
+            return key == 's' || key == 'S';
+        }
+
     }
 }

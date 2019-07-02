@@ -123,5 +123,19 @@ namespace ConsoleCalculator.Tests
             _calculator.SendKeyPress('s');
             Assert.Equal("-52", _calculator.ShowDisplayValue());
         }
+
+        [Fact]
+        public void EqualToAfterAddOperandDoublesDisplayValue()
+        {
+            _calculator.SendKeyPress('1');
+            _calculator.SendKeyPress('+');
+            _calculator.SendKeyPress('2');
+            _calculator.SendKeyPress('+');
+            _calculator.SendKeyPress('3');
+            _calculator.SendKeyPress('+');
+            _calculator.SendKeyPress('=');
+            Assert.Equal("12", _calculator.ShowDisplayValue());
+
+        }
     }
 }

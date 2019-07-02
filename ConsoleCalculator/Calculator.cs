@@ -27,8 +27,15 @@ namespace ConsoleCalculator
 
         public void DigitHandle(char key)
         {
-            currentOperand = decimal.Parse(currentOperand.ToString() + key);
-            SetDisplayValue(displayValue + key);
+            if (!string.IsNullOrEmpty(displayValue) && displayValue.Contains("."))
+            {
+                SetDisplayValue(displayValue + key);
+            }
+            else
+            {
+                currentOperand = decimal.Parse(currentOperand.ToString() + key);
+                SetDisplayValue(currentOperand.ToString());
+            }
 
         }
 
@@ -85,7 +92,15 @@ namespace ConsoleCalculator
             switch (currentOperator)
             {
                 case '+':
-                    result += currentOperand;
+                    if (currentOperand > 0)
+                    {
+                        result += currentOperand;
+                    }
+                    else
+                    {
+                        result *= 2;
+                    }
+                    
                     SetDisplayValue(result.ToString());
                     break;
 
@@ -114,6 +129,9 @@ namespace ConsoleCalculator
                     break;
 
             }
+
+            currentOperand = 0;
+            currentOperator = key;
         }
 
         public void ToggleSign()

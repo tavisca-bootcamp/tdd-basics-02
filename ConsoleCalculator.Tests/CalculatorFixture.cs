@@ -84,5 +84,18 @@ namespace ConsoleCalculator.Tests
             _calculator.SendKeyPress('=');
             Assert.Equal("-E-",_calculator.ShowDisplayValue());
         }
+
+        [Fact]
+        public void TestMultiplication()
+        {
+            _calculator.SendKeyPress('9');
+            _calculator.SendKeyPress('0');
+            _calculator.SendKeyPress('*');
+            _calculator.SendKeyPress('5');
+            _calculator.SendKeyPress('=');
+            Assert.Equal("450", _calculator.ShowDisplayValue());
+        }
+
+        
     }
 }

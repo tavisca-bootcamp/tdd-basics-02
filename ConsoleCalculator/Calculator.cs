@@ -5,8 +5,8 @@ namespace ConsoleCalculator
     public class Calculator
     {
         public string displayValue;
-        public char[] operators = { '.', '+', '-', '/', 'x', 's', 'c', '=' };
-        public decimal currentOperand=0;
+        public char[] operators = { '.', '+', '-', '/', '*', 's', 'c', '=' };
+        public decimal currentOperand;
         public char currentOperator;
         public decimal result;
 
@@ -28,14 +28,7 @@ namespace ConsoleCalculator
         public void DigitHandle(char key)
         {
             currentOperand = decimal.Parse(currentOperand.ToString() + key);
-            if (currentOperand > 0)
-            {
-                SetDisplayValue(currentOperand.ToString());
-            }
-            else
-            {
-                SetDisplayValue(displayValue + key);
-            }
+            SetDisplayValue(displayValue + key);
 
         }
 
@@ -55,7 +48,10 @@ namespace ConsoleCalculator
                     SetDisplayValue("/");
                     HandleArithmeticOperation(key);
                     break;
-                case 'x':
+                case '*':
+                    SetDisplayValue("*");
+                    HandleArithmeticOperation(key);
+                    break;
                 case '=':
                     HandleArithmeticOperation(key);
                     break;
@@ -86,10 +82,12 @@ namespace ConsoleCalculator
                     result += currentOperand;
                     SetDisplayValue(result.ToString());
                     break;
+
                 case '-':
                     result -= currentOperand;
                     SetDisplayValue(result.ToString());
                     break;
+
                 case '/':
                     if (currentOperand == 0)
                     {
@@ -100,6 +98,11 @@ namespace ConsoleCalculator
                         result /= currentOperand;
                         SetDisplayValue(result.ToString());
                     }
+                    break;
+
+                case '*':
+                    result *= currentOperand;
+                    SetDisplayValue(result.ToString());
                     break;
                 default:
                     break;

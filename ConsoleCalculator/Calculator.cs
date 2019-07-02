@@ -4,10 +4,10 @@ namespace ConsoleCalculator
 {
     public class Calculator
     {
-        public string Display;
-        public string FirstOperand;
-        public string SecondOperand;
-        public Nullable<char> Symbol;
+        private string Display;
+        private string FirstOperand;
+        private string SecondOperand;
+        private Nullable<char> Symbol;
         public string SendKeyPress(char key)
         {
             // Add your implementation here.

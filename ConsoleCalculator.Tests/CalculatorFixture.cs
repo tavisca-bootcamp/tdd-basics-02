@@ -59,7 +59,17 @@ namespace ConsoleCalculator.Tests
             Assert.Equal("2", cal.SendKeyPress('2'));
             Assert.Equal("3", cal.SendKeyPress('+'));
             Assert.Equal("0", cal.SendKeyPress('c'));
-            Assert.Equal("0", cal.SendKeyPress('C'));
+            Assert.Equal("0", cal.SendKeyPress('C'));   
+        }
+        [Fact]
+        public void TestDivisionByZero()
+        {
+            Assert.Equal("1", cal.SendKeyPress('1'));
+            Assert.Equal("1", cal.SendKeyPress('+'));
+            Assert.Equal("2", cal.SendKeyPress('2'));
+            Assert.Equal("3", cal.SendKeyPress('/'));
+            Assert.Equal("0", cal.SendKeyPress('0'));
+            Assert.Equal("-E-", cal.SendKeyPress('+'));
             
         }
 

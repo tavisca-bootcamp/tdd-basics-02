@@ -38,6 +38,8 @@ namespace ConsoleCalculator
         }
         public static string Division(double operandOne, double operandTwo)
         {
+            if ((int)operandTwo == 0)
+                return "-E-";
             double temp = operandOne / operandTwo;
 
             if (temp % 1 != 0.0)

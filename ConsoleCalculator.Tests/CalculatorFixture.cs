@@ -111,5 +111,17 @@ namespace ConsoleCalculator.Tests
             Assert.Equal('\0', _calculator.currentOperator);
             Assert.Equal(0, _calculator.result);
         }
+
+        [Fact]
+        public void OperandSignChange()
+        {
+            _calculator.SendKeyPress('9');
+            _calculator.SendKeyPress('5');
+            _calculator.SendKeyPress('/');
+            _calculator.SendKeyPress('5');
+            _calculator.SendKeyPress('2');
+            _calculator.SendKeyPress('s');
+            Assert.Equal("-52", _calculator.ShowDisplayValue());
+        }
     }
 }

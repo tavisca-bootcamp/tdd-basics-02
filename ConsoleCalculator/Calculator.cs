@@ -58,6 +58,9 @@ namespace ConsoleCalculator
                 case 'c':
                     Reset();
                     break;
+                case 's':
+                    ToggleSign();
+                    break;
                 default:
                     break;
             }
@@ -111,6 +114,12 @@ namespace ConsoleCalculator
                     break;
 
             }
+        }
+
+        public void ToggleSign()
+        {
+            currentOperand = decimal.Negate(currentOperand);
+            SetDisplayValue(currentOperand.ToString());
         }
 
         public void Reset()

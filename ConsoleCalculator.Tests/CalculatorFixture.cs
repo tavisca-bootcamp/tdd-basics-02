@@ -51,6 +51,17 @@ namespace ConsoleCalculator.Tests
             Assert.Equal("2", cal.SendKeyPress('S'));
             Assert.Equal("14", cal.SendKeyPress('='));
         }
+        [Fact]
+        public void TestReset()
+        {
+            Assert.Equal("1", cal.SendKeyPress('1'));
+            Assert.Equal("1", cal.SendKeyPress('+'));
+            Assert.Equal("2", cal.SendKeyPress('2'));
+            Assert.Equal("3", cal.SendKeyPress('+'));
+            Assert.Equal("0", cal.SendKeyPress('c'));
+            Assert.Equal("0", cal.SendKeyPress('C'));
+            
+        }
 
 
     }

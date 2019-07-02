@@ -20,8 +20,13 @@ namespace ConsoleCalculator
                 case var localVariable when Character.IsOperator(localVariable):// do arithimatic operations
                     Display = DoOperation(localVariable);
                     break;
-                case var localVariable when Character.IsToggle(localVariable):
+                case 's':
+                case 'S':
                     Display = Toggle();
+                    break;
+                case 'c':
+                case 'C':
+                    Display = Reset();
                     break;
 
                 default:
@@ -122,6 +127,12 @@ namespace ConsoleCalculator
             }
             return result;
 
+        }
+        private string Reset()
+        {
+            FirstOperand = "";
+            SecondOperand = "";
+            return "0";
         }
 
         

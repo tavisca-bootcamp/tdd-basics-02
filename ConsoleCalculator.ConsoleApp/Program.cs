@@ -16,9 +16,9 @@ namespace ConsoleCalculator.App
             {
                 Console.Clear();
                 Console.WriteLine("key pressed  " + key.KeyChar);
-                string r = calc.SendKeyPress(key.KeyChar);
-                Console.WriteLine(r);
-                if (r.Equals("-E-"))
+                string result = calc.SendKeyPress(key.KeyChar);
+                Console.WriteLine(result);
+                if (result.Equals("-E-"))
                     break;
             }
         }

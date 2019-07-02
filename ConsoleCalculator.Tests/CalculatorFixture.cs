@@ -12,7 +12,7 @@ namespace ConsoleCalculator.Tests
         }
 
         [Fact]
-        public void tenplus2()
+        public void TenPlus2()
         {
             string s = "10+2=";
             string r = "";
@@ -54,7 +54,7 @@ namespace ConsoleCalculator.Tests
         }
 
         [Fact]
-        public void useOfS()
+        public void UseOfS()
         {
             string s = "12+2SSS=";
             string r = "";

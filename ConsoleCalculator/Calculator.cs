@@ -6,36 +6,36 @@ namespace ConsoleCalculator
 
     public class Calculator
     {
-        string s = "";
+        string expression = "";
         char op = '+';
         decimal num = 0;
         decimal result = 0;
-        int f = 0, d=0;
+        int f = 0, point=0;
         char[] opr = { '+', '-', '*', '/' };
 
        
 
         public string SendKeyPress(char key)
         {
-            HashSet<char> hs = new HashSet<char>(opr);
+            HashSet<char> operators = new HashSet<char>(opr);
 
             if ( (int)key>=48 && (int)key<=57 )
             {
                 f = 0;
                 int n = (int)key - 48;
-                if (s.Equals("0"))
-                    s = "";
-                s = s + n;
-                return s;
+                if (expression.Equals("0"))
+                    expression = "";
+                expression = expression + n;
+                return expression;
             }
-            else if (hs.Contains(key))
+            else if (operators.Contains(key))
             {
                 if (f != 0)
                     return "-E-";
                 f = 1;
-                d = 0;
+                point = 0;
                 decimal n1 = 0;
-                n1 = decimal.Parse(s);
+                n1 = decimal.Parse(expression);
                 if (op == '+')
                 {
                     num = num + n1;
@@ -64,7 +64,7 @@ namespace ConsoleCalculator
                 }
                 op = key;
 
-                s = "";
+                expression = "";
 
                 decimal x = result + num;
                 string y = "" + x;
@@ -73,28 +73,28 @@ namespace ConsoleCalculator
 
             if (key == '.')
             {
-                if (d==0)
+                if (point == 0)
                 {
-                    if (s.Length == 0)
-                        s = "0";
-                    s = s + ".";
-                    d = 1;
+                    if (expression.Length == 0)
+                        expression = "0";
+                    expression = expression + ".";
+                    point = 1;
                 }
-                return s;
+                return expression;
             }
 
             if (key == 'S')
             {
-                if (s.Length == 0)
+                if (expression.Length == 0)
                 {
                     result = 0-result;
                     return ("" + result);
                 }
-                if (s[0] == '-')
-                    s = s.Substring(1);
-                else if (!s.Equals("0"))
-                    s = "-" + s;
-                return s;
+                if (expression[0] == '-')
+                    expression = expression.Substring(1);
+                else if (!expression.Equals("0"))
+                    expression = "-" + expression;
+                return expression;
             }
 
 
@@ -105,10 +105,10 @@ namespace ConsoleCalculator
                 {
                     return "-E-";
                 }
-                d = 0;
+                point = 0;
                 decimal n1 = 0;
-                if (s.Length > 0)
-                    n1 = decimal.Parse(s);
+                if (expression.Length > 0)
+                    n1 = decimal.Parse(expression);
                 if (op == '+')
                 {
                     result = result + n1;
@@ -140,12 +140,12 @@ namespace ConsoleCalculator
 
             if (key == 'C')
             {
-                s = "";
+                expression = "";
                 op = '+';
                 num = 0;      
                 result = 0;                                                                                                                                                                                                                           
                 f = 1                                                                                                                                          ;
-                d = 0;
+                point = 0;
                 return "0";
             }
 

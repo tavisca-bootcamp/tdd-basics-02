@@ -24,7 +24,15 @@ namespace ConsoleCalculator.Tests
         public void SKeyTest()
         {
             string expected = "10";
-            Assert.Equal(Calculator("12+2SSS="), expected);
+            Assert.Equal(Calculator("12+2S="), expected);
+            return;
+        }
+
+        [Fact]
+        public void sKeyTest()
+        {
+            string expected = "10";
+            Assert.Equal(Calculator("12+2s="), expected);
             return;
         }
 
@@ -43,6 +51,55 @@ namespace ConsoleCalculator.Tests
             Assert.Equal(Calculator("1+2+C"), expected);
             return;
         }
+
+        [Fact]
+        public void cKeyTest()
+        {
+            string expected = "0";
+            Assert.Equal(Calculator("1+2+c"), expected);
+            return;
+        }
+
+        [Fact]
+        public void MultiplicationTestWithx()
+        {
+            string expected = "195";
+            Assert.Equal(Calculator("13x15="), expected);
+            return;
+        }
+
+        [Fact]
+        public void MultiplicationTestWithX()
+        {
+            string expected = "195";
+            Assert.Equal(Calculator("13X15="), expected);
+            return;
+        }
+
+        [Fact]
+        public void DivisionTest1()
+        {
+            string expected = "2.5";
+            Assert.Equal(Calculator("5/2="), expected);
+            return;
+        }
+
+        [Fact]
+        public void DivisionTest2()
+        {
+            string expected = "1.666667";
+            Assert.Equal(Calculator("5/3="), expected);
+            return;
+        }
+
+        [Fact]
+        public void RepeatingEquals()
+        {
+            string expected = "5";
+            Assert.Equal(Calculator("5/2=x2="), expected);
+            return;
+        }
+
 
         private string Calculator(string input)
         {

@@ -2,6 +2,8 @@ language: csharp
 solution: ConsoleCalculator.sln
 mono: none
 dotnet: 2.2.300
+install:
+    - dotnet restore
 script:
-    -dotnet restore
-    -dotnet test
+    - dotnet build
+    - dotnet test ConsoleCalculator.Tests/ConsoleCalculator.Tests.csproj

@@ -14,10 +14,11 @@ namespace ConsoleCalculator
         {
             switch (key)
             {
-                case '0':   if (!displayChar.Equals("0"))
-                            {
-                                displayChar += key;
-                            }
+                case '0':
+                    if (!displayChar.Equals("0"))
+                    {
+                      displayChar += key;
+                    }
                     return displayChar;
 
                 case '1':
@@ -31,8 +32,8 @@ namespace ConsoleCalculator
                 case '9':   displayChar += key;
                     return displayChar;
 
-                case '.':   int temp;
-                    if (int.TryParse(displayChar,out temp)==true)           //Checks if the displayed character is a number
+                case '.':   
+                    if (int.TryParse(displayChar,out int temp)==true)           //Checks if the displayed character is a number
                     {      
                         displayChar += key;
                     }

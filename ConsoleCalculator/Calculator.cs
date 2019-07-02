@@ -4,11 +4,17 @@ namespace ConsoleCalculator
 {
     public class Calculator
     {
+        public string displayValue;
 
         public string SendKeyPress(char key)
         {
-            // Add your implementation here.
-            throw new NotImplementedException();
+            displayValue += key.ToString();
+            return displayValue;
+        }
+
+        public string ShowDisplayValue()
+        {
+            return displayValue;
         }
     }
 }

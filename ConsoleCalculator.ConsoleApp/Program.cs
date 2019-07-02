@@ -11,6 +11,7 @@ namespace ConsoleCalculator.App
             Console.WriteLine("Press Ctrl + C to close the program.");
             while (IsKillSwitch(key = Console.ReadKey(true)) == false)
             {
+                //Console.WriteLine("fgh");
                 Console.Clear();
                 Console.WriteLine(calc.SendKeyPress(key.KeyChar));
             }

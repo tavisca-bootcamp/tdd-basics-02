@@ -43,25 +43,39 @@ namespace ConsoleCalculator
             string result = Display;
             if (Symbol == null)
                 Symbol = key;
+  
             else
             {
-                double operandOne = double.Parse(FirstOperand);
-                double operandTwo = double.Parse(SecondOperand);
+               
+                //Console.WriteLine(Symbol);
+                double tempOperandOne;
+                double tempOperandTwo;
+                if (key == '=' && (Symbol == '+' || Symbol == '-' || Symbol == 'x' || Symbol == '/')&& SecondOperand == null)
+                {
+                     tempOperandOne = double.Parse(FirstOperand);
+                     tempOperandTwo = tempOperandOne;
+                }
+                else
+                {
+                    tempOperandOne = double.Parse(FirstOperand);
+                    tempOperandTwo = double.Parse(SecondOperand);
+                }
+                 
                 if (Symbol == 'x')
                     Symbol = 'X';
                 switch(Symbol)
                 {
                     case '+':
-                        result = Operations.Addition(operandOne, operandTwo);
+                        result = Operations.Addition(tempOperandOne, tempOperandTwo);
                         break;
                     case '-':
-                        result = Operations.Subtraction(operandOne, operandTwo);
+                        result = Operations.Subtraction(tempOperandOne, tempOperandTwo);
                         break;
                     case 'X':
-                        result = Operations.Multiplication(operandOne, operandTwo);
+                        result = Operations.Multiplication(tempOperandOne, tempOperandTwo);
                         break;
                     case '/':
-                        result = Operations.Division(operandOne, operandTwo);
+                        result = Operations.Division(tempOperandOne, tempOperandTwo);
                         break;
                 }
                 

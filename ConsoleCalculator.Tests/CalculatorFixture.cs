@@ -72,6 +72,18 @@ namespace ConsoleCalculator.Tests
             Assert.Equal("-E-", cal.SendKeyPress('+'));
             
         }
+        [Fact]
+        public void TestEqual()
+        {
+            Assert.Equal("1", cal.SendKeyPress('1'));
+            Assert.Equal("1", cal.SendKeyPress('+'));
+            Assert.Equal("2", cal.SendKeyPress('2'));
+            Assert.Equal("3", cal.SendKeyPress('+'));
+            Assert.Equal("3", cal.SendKeyPress('3'));
+            Assert.Equal("6", cal.SendKeyPress('+'));
+            Assert.Equal("12", cal.SendKeyPress('='));
+
+        }
 
 
     }

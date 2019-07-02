@@ -18,6 +18,20 @@ namespace ConsoleCalculator
         public decimal CurrentOperand { get => currentOperand; set => currentOperand = value; }
         public char CurrentOperator { get => currentOperator; set => currentOperator = value; }
 
-       
+        public void PressSingleKey(char key)
+        {
+            if (IsDigit(key))
+            {
+                this.HandleDigit(key);
+            }
+
+            if (IsOperator(key))
+            {
+                this.HandleOperator(key);
+            }
+        }
+
+
+
     }
 }

@@ -4,15 +4,18 @@ namespace ConsoleCalculator.App
 {
     class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            var calc = new Calculator();
+            
             ConsoleKeyInfo key;
             Console.WriteLine("Press Ctrl + C to close the program.");
+            Console.Write("0");
             while (IsKillSwitch(key = Console.ReadKey(true)) == false)
             {
                 Console.Clear();
-                Console.WriteLine(calc.SendKeyPress(key.KeyChar));
+                //  Console.WriteLine(key.KeyChar);
+
+                Console.WriteLine(Calculator.SendKeyPress(key.KeyChar));
             }
         }
 

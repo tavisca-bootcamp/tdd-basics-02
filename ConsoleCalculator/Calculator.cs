@@ -141,25 +141,25 @@ namespace ConsoleCalculator
             }
         }
 
-        private decimal GetResult(decimal fNumber, decimal sNumber)
+        private decimal GetResult(decimal firstNumber, decimal secondNumber)
         {
             decimal result=decimal.MinValue;
             switch(_operator)
             {
                 case '+':
-                    result = fNumber + sNumber;
+                    result = firstNumber + secondNumber;
                     break;
                 case '-':
-                    result = fNumber - sNumber;
+                    result = firstNumber - secondNumber;
                     break;
                 case 'x':
                 case 'X':
-                    result = fNumber * sNumber;
+                    result = firstNumber * secondNumber;
                     break;
                 case '/':
                     try
                     {
-                        result = fNumber / sNumber;
+                        result = firstNumber / secondNumber;
                     }
                     catch (DivideByZeroException)
                     {

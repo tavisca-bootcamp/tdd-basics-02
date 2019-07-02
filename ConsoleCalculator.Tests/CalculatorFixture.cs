@@ -160,5 +160,6 @@ namespace ConsoleCalculator.Tests
             _calculator.SendKeyPress('1');
             Assert.Equal("0.0121", _calculator.ShowDisplayValue());
         }
+
     }
 }

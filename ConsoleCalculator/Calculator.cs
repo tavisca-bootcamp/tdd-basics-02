@@ -30,7 +30,62 @@ namespace ConsoleCalculator
                 this.HandleOperator(key);
             }
         }
+        public void HandleDigit(char key)
+        {
+            if (!string.IsNullOrEmpty(this.DisplayValue) && this.DisplayValue.Contains("."))
+            {
+                this.SetDisplayValue(this.DisplayValue + key);
+            }
+            else
+            {
+                this.CurrentOperand = decimal.Parse(this.CurrentOperand.ToString() + key);
+                this.SetDisplayValue(this.CurrentOperand.ToString());
+            }
+        }
 
+        public void HandleOperator(char key)
+        {
+            switch (key)
+            {
+                case 'c':
+                    this.Reset();
+                    break;
+
+                case 's':
+                    this.ToggleSign();
+                    break;
+
+                case '.':
+                    this.SetDisplayValue(this.DisplayValue + ".");
+                    break;
+
+                case '+':
+                case '-':
+                case '/':
+                case 'x':
+                case '=':
+                    this.HandleArithmeticOperator(key);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        public void HandleArithmeticOperator(char key)
+        {
+            if (this.CurrentOperator == '\0')
+            {
+                this.CurrentOperator = key;
+                this.Result = this.CurrentOperand;
+                this.CurrentOperand = 0;
+            }
+            else
+            {
+                this.PerformArithmeticOperation(key);
+            }
+
+        }
 
 
     }

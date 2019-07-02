@@ -14,6 +14,7 @@ namespace ConsoleCalculator.App
                 Console.Clear();
                 Console.WriteLine(calc.SendKeyPress(key.KeyChar));
             }
+
         }
 
         private static bool IsKillSwitch(ConsoleKeyInfo key)

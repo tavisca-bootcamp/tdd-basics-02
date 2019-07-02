@@ -13,7 +13,6 @@ namespace ConsoleCalculator
         public bool validOperator;
         
 
-
         public Calculator()
         {
             firstOperand = null;

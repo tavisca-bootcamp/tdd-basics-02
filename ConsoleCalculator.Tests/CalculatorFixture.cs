@@ -4,29 +4,33 @@ namespace ConsoleCalculator.Tests
 {
     public class CalculatorFixture
     {
-        Calculator calculator = new Calculator();
+        private Calculator _calculator;
+        public CalculatorFixture()
+        {
+            _calculator = new Calculator();
+        }
 
         private string SendMultipleKey(char[] key)
         {
             var i = 0;
             for (i = 0; i < key.Length - 1; i++)
-                calculator.SendKeyPress(key[i]);
-            return calculator.SendKeyPress(key[i]);
+                _calculator.SendKeyPress(key[i]);
+            return _calculator.SendKeyPress(key[i]);
         }
 
 
         [Fact]
-        public void TestKeyPress()
+        public void Send_KeyPress_With_Value_1_Should_Return_1()
         {
             char key = '1';
 
-            string fromCall = calculator.SendKeyPress(key);
+            string fromCall = _calculator.SendKeyPress(key);
 
             Assert.Equal("1", fromCall);
         }
 
         [Fact]
-        public void TestMultipleKeyPress()
+        public void Send_MultipleKeyPress_Should_Return_12()
         {
             char[] key = new char[] { 'h', '1', '2' };
 
@@ -36,7 +40,7 @@ namespace ConsoleCalculator.Tests
         }
 
         [Fact]
-        public void TestZeroKeySequence()
+        public void Send_ZeroKeySequence_Should_Return_0()
         {
             char[] key = new char[] { 'h', '0', '0','0' };
 
@@ -46,7 +50,7 @@ namespace ConsoleCalculator.Tests
         }
 
         [Fact]
-        public void TestDecimalKeySequence()
+        public void Send_DecimalKeySequence_Should_Return_SingleDecimal()
         {
             char[] key = new char[] { 'h', '0', '.', '.' };
 
@@ -56,7 +60,7 @@ namespace ConsoleCalculator.Tests
         }
 
         [Fact]
-        public void TestBlankScreenDecimalKeySequence()
+        public void Send_DecimalKey_InBlankScreen_Return_ZeroAndDecimal()
         {
             char[] key = new char[] { 'h', '.', '.' };
 
@@ -67,7 +71,7 @@ namespace ConsoleCalculator.Tests
 
 
         [Fact]
-        public void TestOperatorKeyPress()
+        public void Send_MultipleKey_With_An_Operator()
         {
             char[] key = new char[] { 'h', '1', '2','+' };
 
@@ -77,7 +81,7 @@ namespace ConsoleCalculator.Tests
         }
 
         [Fact]
-        public void TestOperatorAndNumerKeyPress()
+        public void Send_An_ArithmeticEquation_Should_Return_LastValue()
         {
             char[] key = new char[] { 'h', '1', '2', '+','1' };
 
@@ -86,7 +90,7 @@ namespace ConsoleCalculator.Tests
             Assert.Equal("1", fromCall);
         }
         [Fact]
-        public void TestSignChange()
+        public void Send_SignChangeKeyTwice_Return_OriginalValue()
         {
             char[] key = new char[] { 'h', '1', 's','s' };
 
@@ -96,7 +100,7 @@ namespace ConsoleCalculator.Tests
         }
 
         [Fact]
-        public void TestAddition()
+        public void Send_AdditionEquation_Should_Return_Addition()
         {
             char[] key = new char[] { 'h', '1', '2', '+', '1' ,'='};
 
@@ -106,7 +110,7 @@ namespace ConsoleCalculator.Tests
         }
 
         [Fact]
-        public void TestDivision()
+        public void Send_ErroniousDivision_Should_Return_Error()
         {
             char[] key = new char[] { 'h', '1', '/', '0','='};
 
@@ -116,7 +120,7 @@ namespace ConsoleCalculator.Tests
         }
 
         [Fact]
-        public void TestSignAirthmetic()
+        public void Send_ArithmeticEquationWithSign_Should_Return_4()
         {
             char[] key = new char[] { 'h', '1', '+', '3','s','S' ,'=' };
 
@@ -126,7 +130,7 @@ namespace ConsoleCalculator.Tests
         }
 
         [Fact]
-        public void TestArithmeticCalculationWithC()
+        public void Send_MultipleKey_And_C_Should_Return_0()
         {
             char[] key = new char[] { '1', '+', '2', '+', 'C' };
 
@@ -136,7 +140,7 @@ namespace ConsoleCalculator.Tests
         }
 
         [Fact]
-        public void TestArithmeticCalculation()
+        public void Send_Arithmetic_Equation_WithEqualSign_Should_Return_12()
         {
             char[] key = new char[] { '1', '+', '2', '+', '3','+','=' };
 
@@ -146,7 +150,7 @@ namespace ConsoleCalculator.Tests
         }
 
         [Fact]
-        public void TestCombinationOfArithmetic()
+        public void Send_Complex_Arithmetic_Equation_WithEqualSign_Return_10()
         {
             char[] key = new char[] { '1','2' ,'+', '2', 'S', 's', 'S', '=' };
 
@@ -156,7 +160,7 @@ namespace ConsoleCalculator.Tests
         }
 
         [Fact]
-        public void TestZeroAndDecimal()
+        public void Send_Multiple_ZeroKey_And_DecimalKey_Should_Return_ValidValue()
         {
             char[] key = new char[] { '0', '0', '.', '.', '0', '0', '1' };
 
@@ -166,7 +170,7 @@ namespace ConsoleCalculator.Tests
         }
 
         [Fact]
-        public void TestTwoDecimalInANumber()
+        public void Send_TwoDecimal_In_A_Number_Should_Return_Error()
         {
             char[] key = new char[] { '1', '.', '0', '0', '.', '1', '+','2','=' };
 

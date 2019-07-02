@@ -6,12 +6,12 @@ namespace ConsoleCalculator
 {
     public class Calculator
     {
-        StringBuilder firstNumber = new StringBuilder(String.Empty);
-        StringBuilder secondNumber = new StringBuilder(String.Empty);
-        StringBuilder display = new StringBuilder(String.Empty);
-        int mode = 0;
-        char _operator = 'z';
-        List<char> symbolList = new List<char>() { '-', '+', '/', '=', 'x', 'X', 'c', 'C', 's', 'S' };
+        private string _firstNumberBuffer = String.Empty;
+        private string _secondNumberBuffer = String.Empty;
+        private string _displayBuffer = String.Empty;
+        private int _calculationMode = 0;
+        private char _operator = 'z';
+        private List<char> _symbolList = new List<char>() { '-', '+', '/', '=', 'x', 'X', 'c', 'C', 's', 'S' };
 
         public string SendKeyPress(char key)
         {
@@ -21,40 +21,42 @@ namespace ConsoleCalculator
                 {
                     PerformArithmeticOperation(key);
                 }
-                else if(key=='.')
-                {
-                    HandleDecimal('.');
-                }
-                else if(key=='0')
-                {
-                    HandleZero('0');
-                }
                 else
                 {
-                    Display(key);
+                    switch(key)
+                    {
+                        case '.':
+                            HandleDecimalDigit('.');
+                            break;
+                        case '0':
+                            HandleZeroKey('0');
+                            break;
+                        default:
+                            Display(key);
+                            break;
+                    }
                 }
             }
-            return display.ToString();
+            return _displayBuffer;
         }
 
-        private void HandleZero(char key)
+        private void HandleZeroKey(char key)
         {
-            if (display.Length == 1)
+            if (_displayBuffer.Length == 1)
             {
-                if (display[0] == '0')
+                if (_displayBuffer[0] == '0')
                     return;
             }
             Display(key);
         }
 
-        private void HandleDecimal(char key)
+        private void HandleDecimalDigit(char key)
         {
-            if (display.Length == 0||display.ToString().Equals("0"))
+            if (_displayBuffer.Length == 0||_displayBuffer.Equals("0"))
             {
-                display.Clear();
-                display.Append("0.");
+                _displayBuffer = "0.";
             }
-            else if (display[display.Length - 1] != '.')
+            else if (_displayBuffer[_displayBuffer.Length - 1] != '.')
             {
                 Display(key);
             }
@@ -62,14 +64,12 @@ namespace ConsoleCalculator
 
         private void Display(char key)
         {
-            if(mode==1)
+            if(_calculationMode==1||_displayBuffer.Equals("0"))
             {
-                display.Clear();
-                mode = 0;
+                _displayBuffer = String.Empty;
+                _calculationMode = 0;
             }
-            if (display.ToString().Equals("0"))
-                display.Clear();
-            display.Append(key);
+            _displayBuffer += key.ToString();
         }
 
         private void PerformArithmeticOperation(char key)
@@ -78,9 +78,8 @@ namespace ConsoleCalculator
             if(arithmeticList.Contains(key))
             {
                 PerformArithmeticOperation('=');
-                firstNumber.Clear();
-                firstNumber.Append(display.ToString());
-                mode = 1;
+                _firstNumberBuffer = _displayBuffer;
+                _calculationMode = 1;
                 _operator = key;
             }
             else
@@ -90,18 +89,16 @@ namespace ConsoleCalculator
                     case '=':
                         if(_operator!='z')
                         {
-                            secondNumber.Clear();
-                            secondNumber.Append(display.ToString());
+                            _secondNumberBuffer = _displayBuffer;
                             PerformCalculation();
                             _operator = 'z';
-                            mode = 1;
+                            _calculationMode = 1;
                         }
                         break;
                     case 's':
                     case 'S':
-                        decimal result = decimal.Multiply(-1, decimal.Parse(display.ToString()));
-                        display.Clear();
-                        display.Append(result.ToString());
+                        decimal result = decimal.Multiply(-1, decimal.Parse(_displayBuffer));
+                        _displayBuffer = result.ToString();
                         break;
                     case 'c':
                     case 'C':
@@ -114,35 +111,33 @@ namespace ConsoleCalculator
         private void ClearDisplay()
         {
             _operator = 'z';
-            firstNumber.Clear();
-            secondNumber.Clear();
-            display.Clear();
-            display.Append('0');
+            _firstNumberBuffer = String.Empty;
+            _secondNumberBuffer = String.Empty;
+            _displayBuffer = "0";
         }
 
         private void PerformCalculation()
         {
             decimal result;
-            bool firstCondition = decimal.TryParse(firstNumber.ToString(), out decimal fNumber);
-            bool secondContition =decimal.TryParse(secondNumber.ToString(), out decimal SNumber);
+            bool firstCondition = decimal.TryParse(_firstNumberBuffer, out decimal firstNumber);
+            bool secondContition =decimal.TryParse(_secondNumberBuffer, out decimal secondNumber);
             if (firstCondition && secondContition)
             {
-                result = GetResult(fNumber, SNumber);
+                result = GetResult(firstNumber, secondNumber);
                 if(result!=decimal.MinValue)
                 {
-                    display.Clear();
+                    _displayBuffer = String.Empty;
                     if (decimal.Ceiling(result) - decimal.Floor(result) == 0)
                     {
-                        display.Append(decimal.ToInt32(result).ToString());
+                        _displayBuffer = decimal.ToInt32(result).ToString();
                     }
                     else
-                        display.Append(result.ToString());
+                        _displayBuffer = result.ToString();
                 }
             }
             else
             {
-                display.Clear();
-                display.Append("-E-");
+                _displayBuffer = "-E-";
             }
         }
 
@@ -168,8 +163,7 @@ namespace ConsoleCalculator
                     }
                     catch (DivideByZeroException)
                     {
-                        display.Clear();
-                        display.Append("-E-");
+                        _displayBuffer = "-E-";
                     }
                     break;
             }
@@ -189,7 +183,7 @@ namespace ConsoleCalculator
         private bool IsOperator(char key)
         {
             
-            if (symbolList.Contains(key))
+            if (_symbolList.Contains(key))
                 return true;
             else
                 return false;

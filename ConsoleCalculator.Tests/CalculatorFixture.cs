@@ -35,24 +35,12 @@ namespace ConsoleCalculator.Tests
         public void ErrorScenario() {
             string keysPressed1 = "10/0=";
             string keysPressed2 = "0/0=";
-            string keysPressed3 = "+";
-            string keysPressed4 = "a+";
-            string keysPressed5 = "+=";
-            string keysPressed6 = "1+-=";
 
             string result1 = FeedKeysAndGetResult(keysPressed1);
             string result2 = FeedKeysAndGetResult(keysPressed2);
-            string result3 = FeedKeysAndGetResult(keysPressed3);
-            string result4 = FeedKeysAndGetResult(keysPressed4);
-            string result5 = FeedKeysAndGetResult(keysPressed5);
-            string result6 = FeedKeysAndGetResult(keysPressed6);
             
             Assert.Equal("-E-", result1);
             Assert.Equal("-E-", result2);
-            Assert.Equal("-E-", result3);
-            Assert.Equal("-E-", result4);
-            Assert.Equal("-E-", result5);
-            Assert.Equal("-E-", result6);
         }
 
         [Fact]

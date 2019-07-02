@@ -1,145 +1,134 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ConsoleCalculator
 {
     public class Calculator
     {   
+        public States CurrentState;
         private string number1 = "";
         private string number2 = "";
         private char? previousOperator = null;
 
+        public Calculator() {
+            // Display 0 initially
+            Console.WriteLine("0");
+            CurrentState = States.NumberState;
+        }
         public string SendKeyPress(char key)
-        {
-            switch(key) {
-                case 'C':
-                case 'c': ClearMemory(); return "0";
-                
-                case 'S': 
-                case 's':
-                    // Number 1 under process
+        {   
+            if (Constants.Numbers.Contains(key.ToString())) 
+                return Feeder(Events.NumberFeed, key);
+            else if (Constants.Operators.Contains(key.ToString())) 
+                return Feeder(Events.OperatorFeed, key);
+            else if (Constants.Sign.Contains(key.ToString())) 
+                return Feeder(Events.SignFeed, key);
+            else if (Constants.EqualsSign.Contains(key.ToString())) 
+                return Feeder(Events.DisplayResult, key);
+            else if (Constants.ClearScreen.Contains(key.ToString())) 
+                return Feeder(Events.ClearScreen, key);
+            else return Feeder(Events.Error, key);
+        }
+
+        public string Feeder(Events type, char key) {
+            switch (type) {
+                case Events.NumberFeed:
+                    CurrentState = States.NumberState;
                     if (previousOperator == null) {
-                        StaticFunctions.ToggleSign(ref number1);
-                        return number1;
-                    }
-                    // Number1 in cache and number 2 under process
-                    StaticFunctions.ToggleSign(ref number2);
+                            number1 += key;
+                            CheckForMultipleDotsOrZeroes(ref number1);
+                            return number1;
+                        }
+
+                    number2 += key;
+                    CheckForMultipleDotsOrZeroes(ref number2);
                     return number2;
                 
-                case '0': case '1': case '2': case '3': case '4':
-                case '5': case '6': case '7': case '8': case '9':
-                    return NumberCharacterHandling(key);
+                case Events.SignFeed:
+                    if (previousOperator == null) {
+                        ToggleSign(ref number1);
+                        return number1;
+                    }
+                    ToggleSign(ref number2);
+                    return number2;
                 
-                case '.':
-                    return FloatingPointHandling(key);
+                case Events.OperatorFeed:
+                    CurrentState = States.OperatorState;
+                    return EvaluatePreviousExpression(key);
                 
-                case '+':
-                case '-':
-                case 'X':
-                case 'x':
-                case '/':
-                    // Do the previous operation
-                    number1 = DoOperation();
-
-                    if (number1 == "error") return Error();
-
-                    number2 = "";
-
-                    // Assign current operation as previous Operation
-                    previousOperator = key;
+                case Events.DisplayResult:
+                    CurrentState = States.NumberState;
+                    return EvaluatePreviousExpression(null);
+                
+                case Events.ClearScreen:
+                    ClearMemory();
+                    number1 = "0";
+                    CurrentState = States.NumberState;
                     return number1;
                 
-                case '=':
-                    return EqualSignPressed();
-            }
-
-            return RandomCharacterPress();
-        }
-
-        public string RandomCharacterPress() {
-            // No number initialized
-            if (string.IsNullOrWhiteSpace(number1)) return "";
-            // Number 1 exists, but operator and num2 are empty
-            if (previousOperator == null) return number1;
-            // Number1 in cache and operator initialized, number 2 under process
-            return number2;
-        }
-
-        public string EqualSignPressed() {
-            // If number 1 was not provided
-                    if (string.IsNullOrWhiteSpace(number1)) return Error();
-
-                    // Pressing '=' without any operations
+                default:
                     if (previousOperator == null) return number1;
-
-                    // Number 2 was not provided before hitting '=', so the displayed number is number2
-                    if (number2 == "") number2 = number1;
-
-                    // Pass any character, as it will trigger the evaluation of previous operation
-                    string result = SendKeyPress('+');
-                    ClearMemory();
-                    return result;
+                    return number2;
+            }
         }
 
-        public string FloatingPointHandling(char key) {
-            // Check if Number 1 under process
+        public void CheckForMultipleDotsOrZeroes(ref string number) {
+            if (number.Length == 1) return;
+
+            if (number == "00") number = "0";
+            if (number[number.Length-1] == '.' && number[number.Length-2] == '.') 
+                number = number.Substring(0, number.Length-1);
+        }
+
+        public string EvaluatePreviousExpression(char? currentOperator) {
+            // Convert '.' to '0.'
+            if (number1 == ".") number1 = "0.";
+            if (number2 == ".") number2 = "0.";
+
             if (previousOperator == null) {
-                // Appending floating point to empty number: make empty number='0'
-                if (string.IsNullOrEmpty(number1)) {
-                    number1 = "0";
-                } 
-
-                //Avoid adding multiple floating points
-                if (StaticFunctions.LastCharacterOf(number1) != '.') number1 += key;
-
+                previousOperator = currentOperator;
                 return number1;
             }
-
-            #region Number1 in cache and number 2 under process
-                // Converting . to 0.
-                if (string.IsNullOrEmpty(number2)) number2 = "0" + key;
-                // Avoid adding multiple floating points
-                else if (StaticFunctions.LastCharacterOf(number2) != '.') number2 += key;
-                return number2;
-            #endregion 
-        }
-
-        public string NumberCharacterHandling(char key) {
-            // Number1 under process
-            if (previousOperator == null) {
-                // To avoid adding 0 at the start of a number: 001 -> 1, 00000 -> 0
-                number1 = number1 == "0" ? key.ToString(): number1 + key.ToString();
-                return number1;
-            }
-            // Number 2 under process
-            // To avoid adding 0 at the start of a number: 001 -> 1, 00000 -> 0
-            number2 = number2 == "0" ? key.ToString(): number2 + key.ToString();
-            return number2;
-        }
-
-        public string DoOperation() {
-            // Convert number1 from string to float
-            if (!float.TryParse(number1, out float num1)) return "error";
             
-            // First operation: then display number1
-            if (previousOperator == null) return number1;
-
-            // Convert number2 from string to float
-            if (!float.TryParse(number2, out float num2)) return "error"; 
+            if(!float.TryParse(number1, out float num1)) return ErrorState();
+            if(number2 == "") number2 = number1;
+            if(!float.TryParse(number2, out float num2)) return ErrorState();
 
             switch (previousOperator) {
-                case '+': return (num1 + num2).ToString();
-                case '-': return (num1 - num2).ToString();
+                case '+': number1 =  (num1 + num2).ToString(); break;
+                case '-': number1 =  (num1 - num2).ToString(); break;
                 case 'x': 
-                case 'X': return (num1 * num2).ToString();
-                case '/': return num2 == 0? "error": (num1 / num2).ToString();
+                case 'X': number1 =  (num1 * num2).ToString(); break;
+                case '/': number1 =  num2 == 0? "error": (num1 / num2).ToString(); break;
             }
 
-            // Needed to avoid compile time error
-            return "";
+            if (number1 == "error") return ErrorState();
+
+            number2 = "";
+            previousOperator = currentOperator;
+            return number1;
         }
 
-        public string Error() {
+        public void ToggleSign(ref string number) {
+            if (number == "") {
+                number = "-";
+                return;
+            }
+            if (number == "-") {
+                number = "";
+                return;
+            }
+            if (number[0] == '-') {
+                number = number.Substring(1);
+                return;
+            }
+
+            number =  '-' + number;
+        }
+
+        public string ErrorState() {
             ClearMemory();
+            CurrentState = States.NumberState;
             return "-E-";
         }
 

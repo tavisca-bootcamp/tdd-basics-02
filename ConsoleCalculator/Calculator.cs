@@ -155,7 +155,7 @@ namespace ConsoleCalculator
             }
             
 
-            throw new NotImplementedException();
+            
         }
     }
 }

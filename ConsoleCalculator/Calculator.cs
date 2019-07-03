@@ -67,6 +67,26 @@ namespace ConsoleCalculator
                         decimalTwo = true;
                     }
                 }
+
+                else if (key == 's' || key == 'S')
+                {
+                    if (operatorPressed == 1)
+                    {
+                        secondNumber = (-double.Parse(secondNumber)).ToString();
+                    }
+                    else
+                    {
+                        firstNumber = (-double.Parse(firstNumber)).ToString();
+                    }
+                }
+                else if (key == 'c' || key == 'C')
+                {
+                    firstNumber = "0";
+                    secondNumber = "";
+                    operation = null;
+                    operatorPressed = 0;
+                    decimalOne = decimalTwo = false;
+                }
                 else if (key.Equals('='))
                 {
                     ComputeResult();

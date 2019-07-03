@@ -50,6 +50,21 @@ namespace ConsoleCalculator.Tests
             var result = SendMultipleKey(key);
             Assert.Equal("0.001", result);
         }
+        [Fact]
+        public void SignToggleTest()
+        {
+            char[] key = { '1', '2', '+', '2', 's', 's','s','=' };
+            var result = SendMultipleKey(key);
+            Assert.Equal("10", result);
+        }
+
+        [Fact]
+        public void ResetTest()
+        {
+            char[] key = { '1', '+', '2', '+', 'C' };
+            var result = SendMultipleKey(key);
+            Assert.Equal("0", result);
+        }
 
     }
 }

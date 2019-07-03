@@ -14,6 +14,8 @@ namespace ConsoleCalculator
         private string secondNumber = "";
         private char? operation = null;
         private int operatorPressed = 0;
+        private bool decimalOne = false;
+        private bool decimalTwo = false;
 
         public string SendKeyPress(char key)
         {
@@ -36,6 +38,33 @@ namespace ConsoleCalculator
                         }
 
                         return secondNumber;
+                    }
+                }
+                else if (key.Equals('.'))
+                {
+                    if (operatorPressed == 0 && decimalOne == false)
+                    {
+                        if (firstNumber.Length == 0)
+                        {
+                            firstNumber = "0.";
+                        }
+                        else
+                        {
+                            firstNumber += ".";
+                        }
+                        decimalOne = true;
+                    }
+                    else if (operatorPressed == 1 && decimalTwo == false)
+                    {
+                        if (secondNumber.Length == 0)
+                        {
+                            secondNumber = "0.";
+                        }
+                        else
+                        {
+                            secondNumber += ".";
+                        }
+                        decimalTwo = true;
                     }
                 }
                 else if (key.Equals('='))
@@ -79,7 +108,19 @@ namespace ConsoleCalculator
                     firstNumber = (double.Parse(firstNumber) * double.Parse(secondNumber)).ToString();
                     break;
                 case '/':
-                   firstNumber = (double.Parse(firstNumber) / double.Parse(secondNumber)).ToString();
+                    try
+                    {
+                        firstNumber = (double.Parse(firstNumber) / double.Parse(secondNumber)).ToString();
+                        if (secondNumber.Equals("0"))
+                        {
+                            //firstNumber = "-E-";
+                            throw new DivideByZeroException();
+                        }
+                    }
+                    catch (DivideByZeroException)
+                    {
+                        firstNumber = "-E-";
+                    }
                     break;
             }
         }

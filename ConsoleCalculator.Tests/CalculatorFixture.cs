@@ -35,5 +35,21 @@ namespace ConsoleCalculator.Tests
             Assert.Equal("15", result);
         }
 
+        [Fact]
+        public void DivByZeroTest()
+        {
+            char[] key = { '1', '2', '/', '0', '=' };
+            var result = SendMultipleKey(key);
+            Assert.Equal("-E-", result);
+        }
+
+        [Fact]
+        public void MultipleZeroesAndDecimalTest()
+        {
+            char[] key = { '0', '0', '.', '.', '0', '0', '1' };
+            var result = SendMultipleKey(key);
+            Assert.Equal("0.001", result);
+        }
+
     }
 }

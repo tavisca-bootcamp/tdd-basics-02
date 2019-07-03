@@ -22,7 +22,7 @@ namespace ConsoleCalculator
                 HandleOperator(key);
             }
 
-            return ShowDisplayValue();
+            return GetDisplayValue();
         }
 
         public void HandleDigit(char key)
@@ -161,7 +161,7 @@ namespace ConsoleCalculator
             displayValue = value;
         }
 
-        public string ShowDisplayValue()
+        public string GetDisplayValue()
         {
             return displayValue;
         }

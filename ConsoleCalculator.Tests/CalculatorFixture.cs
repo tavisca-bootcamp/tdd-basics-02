@@ -16,7 +16,7 @@ namespace ConsoleCalculator.Tests
         public void SingleDigitDecimal()
         {
             _calculator.SendKeyPress('9');
-            Assert.Equal("9", _calculator.ShowDisplayValue());
+            Assert.Equal("9", _calculator.GetDisplayValue());
         }
 
         [Fact]
@@ -24,7 +24,7 @@ namespace ConsoleCalculator.Tests
         {
             _calculator.SendKeyPress('7');
             _calculator.SendKeyPress('9');
-            Assert.Equal("79", _calculator.ShowDisplayValue());
+            Assert.Equal("79", _calculator.GetDisplayValue());
         }
 
         [Fact]
@@ -36,7 +36,7 @@ namespace ConsoleCalculator.Tests
             _calculator.SendKeyPress('6');
             _calculator.SendKeyPress('5');
             _calculator.SendKeyPress('=');
-            Assert.Equal("163", _calculator.ShowDisplayValue());
+            Assert.Equal("163", _calculator.GetDisplayValue());
         }
 
         [Fact]
@@ -48,7 +48,7 @@ namespace ConsoleCalculator.Tests
             _calculator.SendKeyPress('3');
             _calculator.SendKeyPress('2');
             _calculator.SendKeyPress('=');
-            Assert.Equal("24", _calculator.ShowDisplayValue());
+            Assert.Equal("24", _calculator.GetDisplayValue());
         }
 
         [Fact]
@@ -60,7 +60,7 @@ namespace ConsoleCalculator.Tests
             _calculator.SendKeyPress('5');
             _calculator.SendKeyPress('6');
             _calculator.SendKeyPress('=');
-            Assert.Equal("-24", _calculator.ShowDisplayValue());
+            Assert.Equal("-24", _calculator.GetDisplayValue());
         }
 
         [Fact]
@@ -71,7 +71,7 @@ namespace ConsoleCalculator.Tests
             _calculator.SendKeyPress('/');
             _calculator.SendKeyPress('2');
             _calculator.SendKeyPress('=');
-            Assert.Equal("35", _calculator.ShowDisplayValue());
+            Assert.Equal("35", _calculator.GetDisplayValue());
         }
 
         [Fact]
@@ -82,7 +82,7 @@ namespace ConsoleCalculator.Tests
             _calculator.SendKeyPress('/');
             _calculator.SendKeyPress('0');
             _calculator.SendKeyPress('=');
-            Assert.Equal("-E-",_calculator.ShowDisplayValue());
+            Assert.Equal("-E-",_calculator.GetDisplayValue());
         }
 
         [Fact]
@@ -93,7 +93,7 @@ namespace ConsoleCalculator.Tests
             _calculator.SendKeyPress('*');
             _calculator.SendKeyPress('5');
             _calculator.SendKeyPress('=');
-            Assert.Equal("450", _calculator.ShowDisplayValue());
+            Assert.Equal("450", _calculator.GetDisplayValue());
         }
 
         [Fact]
@@ -106,7 +106,7 @@ namespace ConsoleCalculator.Tests
             _calculator.SendKeyPress('=');
             _calculator.SendKeyPress('c');
 
-            Assert.Equal("0", _calculator.ShowDisplayValue());
+            Assert.Equal("0", _calculator.GetDisplayValue());
             Assert.Equal(0, _calculator.currentOperand);
             Assert.Equal('\0', _calculator.currentOperator);
             Assert.Equal(0, _calculator.result);
@@ -121,7 +121,7 @@ namespace ConsoleCalculator.Tests
             _calculator.SendKeyPress('5');
             _calculator.SendKeyPress('2');
             _calculator.SendKeyPress('s');
-            Assert.Equal("-52", _calculator.ShowDisplayValue());
+            Assert.Equal("-52", _calculator.GetDisplayValue());
         }
 
         [Fact]
@@ -134,7 +134,7 @@ namespace ConsoleCalculator.Tests
             _calculator.SendKeyPress('3');
             _calculator.SendKeyPress('+');
             _calculator.SendKeyPress('=');
-            Assert.Equal("12", _calculator.ShowDisplayValue());
+            Assert.Equal("12", _calculator.GetDisplayValue());
 
         }
 
@@ -145,7 +145,7 @@ namespace ConsoleCalculator.Tests
             _calculator.SendKeyPress('0');
             _calculator.SendKeyPress('0');
             _calculator.SendKeyPress('0');
-            Assert.Equal("0", _calculator.ShowDisplayValue());
+            Assert.Equal("0", _calculator.GetDisplayValue());
         }
 
         [Fact]
@@ -155,10 +155,10 @@ namespace ConsoleCalculator.Tests
             _calculator.SendKeyPress('.');
             _calculator.SendKeyPress('0');
             _calculator.SendKeyPress('1');
-            Assert.Equal("0.01", _calculator.ShowDisplayValue());
+            Assert.Equal("0.01", _calculator.GetDisplayValue());
             _calculator.SendKeyPress('2');
             _calculator.SendKeyPress('1');
-            Assert.Equal("0.0121", _calculator.ShowDisplayValue());
+            Assert.Equal("0.0121", _calculator.GetDisplayValue());
         }
 
     }

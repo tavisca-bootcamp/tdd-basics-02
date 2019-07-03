@@ -14,12 +14,16 @@ namespace ConsoleCalculator
         private string _firstNumber = "";
         private string _secondNumber = "";
         private char? _operation = null;
+        // _operatorPressed = 0 means we are still making changes to first number
+        // _operatorPressed = 1 means we are making changes to second number
+        // _operatorPressed = 2 means we have staged operation to be performed, i.e. , we are performing something like 10+20+30+... 
         private int _operatorPressed = 0;
-        private bool _decimalFirst = false;
-        private bool _decimalSecond = false;
+        //bool to note whether first digit contains a decimal point
+        private bool _decimalInFirstNumber = false;
+        //bool to note whether second digit contains a decimal point
+        private bool _decimalInSecondNumber = false;
         public string SendKeyPress(char key)
-        {
-            
+        {            
             if (IsValid(key))
             {
                 if (char.IsDigit(key))
@@ -29,13 +33,11 @@ namespace ConsoleCalculator
                         if (!(_firstNumber.Equals("0") && key=='0'))
                         {
                             _firstNumber += key;
-                        }
-                        
-                                               
+                        }                               
                     }
                     else
                     {
-                        if (!(_secondNumber.Equals("0")&&key=='0'))
+                        if (!(_secondNumber.Equals("0") && key == '0'))
                         {
                             _secondNumber += key;
                         }
@@ -46,7 +48,7 @@ namespace ConsoleCalculator
                 }
                 else if (key.Equals('.'))
                 {
-                    if (_operatorPressed == 0 && _decimalFirst==false)
+                    if (_operatorPressed == 0 && _decimalInFirstNumber==false)
                     {
                         if (_firstNumber.Length == 0)
                         {
@@ -56,9 +58,9 @@ namespace ConsoleCalculator
                         {
                             _firstNumber += ".";
                         }
-                        _decimalFirst = true;
+                        _decimalInFirstNumber = true;
                     }
-                    else if (_operatorPressed == 1 && _decimalSecond == false)
+                    else if (_operatorPressed == 1 && _decimalInSecondNumber == false)
                     {
                         if (_secondNumber.Length == 0)
                         {
@@ -68,17 +70,19 @@ namespace ConsoleCalculator
                         {
                             _secondNumber += ".";
                         }
-                        _decimalSecond = true;
+                        _decimalInSecondNumber = true;
                     }
                 }
                 else if (key == 's' || key == 'S')
                 {
-                    if (_operatorPressed == 1)
+                    if (_operatorPressed >= 1)
                     {
+                        //toggling sign of second number in case of 's' operator was pressed
                         _secondNumber = (-double.Parse(_secondNumber)).ToString();
                     }
                     else
                     {
+                        //toggling sign of first number
                         _firstNumber = (-double.Parse(_firstNumber)).ToString();
                     }
                 }
@@ -88,7 +92,7 @@ namespace ConsoleCalculator
                     _secondNumber = "";
                     _operation = null;
                     _operatorPressed = 0;
-                    _decimalFirst = _decimalSecond = false;
+                    _decimalInFirstNumber = _decimalInSecondNumber = false;
                 }
                 else if (key.Equals('='))
                 {
@@ -99,22 +103,15 @@ namespace ConsoleCalculator
                 {
                     _operatorPressed += 1;
                     //compute previous if any 
+                    //i.e. in case of 10+20+
                     if (_operatorPressed == 2)
                     {
                         ComputeResult();
                         _secondNumber = "";
                         _operatorPressed -= 1;
-                    }
-                    
-                                     
-                    _operation = key;
-                    
+                    }                   
+                    _operation = key;    
                 }
-
-
-
-
-
                 return _firstNumber;
             }
             else
@@ -144,23 +141,21 @@ namespace ConsoleCalculator
                         if (_firstNumber.Equals((1.0/0).ToString()))
                         {
                             //_firstNumber = "-E-";
+                            // this was done because double division does not throw divide by zero exception
                             throw new DivideByZeroException();
                         }
                     }
                     catch (DivideByZeroException)
                     {
-
                         _firstNumber = "-E-";
                     }
                     break;
-            }
-            
-
+            }         
         }
 
         private bool IsValid(char key)
         {
-            if(char.IsDigit(key) || _allowedOperators.Contains(key)|| key=='.'|| key.Equals('='))
+            if(char.IsDigit(key) || _allowedOperators.Contains(key) || key == '.' || key.Equals('='))
             {
                 return true;
             }

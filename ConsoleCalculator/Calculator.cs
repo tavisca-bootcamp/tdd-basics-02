@@ -86,11 +86,11 @@ namespace ConsoleCalculator
             }
             else
             {
-                PerformsArithmeticOperation(key);
+                PerformArithmeticOperation(key);
             }
         }
 
-        public void PerformsArithmeticOperation(char key)
+        public void PerformArithmeticOperation(char key)
         {
             switch (currentOperator)
             {

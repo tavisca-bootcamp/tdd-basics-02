@@ -5,18 +5,18 @@ namespace ConsoleCalculator
 {
     public class Calculator
     {
-        private List<Char> allowedOperators = new List<char>
+        private List<Char> _allowedOperators = new List<char>
         {
              '-', '+', 'x','X', '/', 's', 'S','c','C'
         };
 
-        //firstNumber will also contain the result
-        private string firstNumber = "";
-        private string secondNumber = "";
-        private char? operation = null;
-        private int operatorPressed = 0;
-        private bool decFirst = false;
-        private bool decSecond = false;
+        //_firstNumber will also contain the result
+        private string _firstNumber = "";
+        private string _secondNumber = "";
+        private char? _operation = null;
+        private int _operatorPressed = 0;
+        private bool _decimalFirst = false;
+        private bool _decimalSecond = false;
         public string SendKeyPress(char key)
         {
             
@@ -24,90 +24,90 @@ namespace ConsoleCalculator
             {
                 if (char.IsDigit(key))
                 {
-                    if (operatorPressed == 0 )
+                    if (_operatorPressed == 0 )
                     {
-                        if (!(firstNumber.Equals("0") && key=='0'))
+                        if (!(_firstNumber.Equals("0") && key=='0'))
                         {
-                            firstNumber += key;
+                            _firstNumber += key;
                         }
                         
                                                
                     }
                     else
                     {
-                        if (!(secondNumber.Equals("0")&&key=='0'))
+                        if (!(_secondNumber.Equals("0")&&key=='0'))
                         {
-                            secondNumber += key;
+                            _secondNumber += key;
                         }
                         
-                        return secondNumber;
+                        return _secondNumber;
                     }
                     
                 }
                 else if (key.Equals('.'))
                 {
-                    if (operatorPressed == 0 && decFirst==false)
+                    if (_operatorPressed == 0 && _decimalFirst==false)
                     {
-                        if (firstNumber.Length == 0)
+                        if (_firstNumber.Length == 0)
                         {
-                            firstNumber = "0.";
+                            _firstNumber = "0.";
                         }
                         else
                         {
-                            firstNumber += ".";
+                            _firstNumber += ".";
                         }
-                        decFirst = true;
+                        _decimalFirst = true;
                     }
-                    else if (operatorPressed == 1 && decSecond == false)
+                    else if (_operatorPressed == 1 && _decimalSecond == false)
                     {
-                        if (secondNumber.Length == 0)
+                        if (_secondNumber.Length == 0)
                         {
-                            secondNumber = "0.";
+                            _secondNumber = "0.";
                         }
                         else
                         {
-                            secondNumber += ".";
+                            _secondNumber += ".";
                         }
-                        decSecond = true;
+                        _decimalSecond = true;
                     }
                 }
                 else if (key == 's' || key == 'S')
                 {
-                    if (operatorPressed == 1)
+                    if (_operatorPressed == 1)
                     {
-                        secondNumber = (-double.Parse(secondNumber)).ToString();
+                        _secondNumber = (-double.Parse(_secondNumber)).ToString();
                     }
                     else
                     {
-                        firstNumber = (-double.Parse(firstNumber)).ToString();
+                        _firstNumber = (-double.Parse(_firstNumber)).ToString();
                     }
                 }
                 else if (key == 'c' || key == 'C')
                 {
-                    firstNumber = "0";
-                    secondNumber = "";
-                    operation = null;
-                    operatorPressed = 0;
-                    decFirst = decSecond = false;
+                    _firstNumber = "0";
+                    _secondNumber = "";
+                    _operation = null;
+                    _operatorPressed = 0;
+                    _decimalFirst = _decimalSecond = false;
                 }
                 else if (key.Equals('='))
                 {
                     ComputeResult();
-                    operatorPressed -= 1;
+                    _operatorPressed -= 1;
                 }
-                else if (allowedOperators.Contains(key))
+                else if (_allowedOperators.Contains(key))
                 {
-                    operatorPressed += 1;
+                    _operatorPressed += 1;
                     //compute previous if any 
-                    if (operatorPressed == 2)
+                    if (_operatorPressed == 2)
                     {
                         ComputeResult();
-                        secondNumber = "";
-                        operatorPressed -= 1;
+                        _secondNumber = "";
+                        _operatorPressed -= 1;
                     }
                     
                                      
-                    operation = key;
+                    _operation = key;
                     
                 }
 
@@ -115,42 +115,42 @@ namespace ConsoleCalculator
 
 
 
-                return firstNumber;
+                return _firstNumber;
             }
             else
             {
-                return firstNumber;
+                return _firstNumber;
             }
         }
 
         private void ComputeResult()
         {
-            switch (operation)
+            switch (_operation)
             {
                 case '+':
-                    firstNumber = (double.Parse(firstNumber) + double.Parse(secondNumber)).ToString();
+                    _firstNumber = (double.Parse(_firstNumber) + double.Parse(_secondNumber)).ToString();
                     break;
                 case '-':
-                    firstNumber = (double.Parse(firstNumber) - double.Parse(secondNumber)).ToString();
+                    _firstNumber = (double.Parse(_firstNumber) - double.Parse(_secondNumber)).ToString();
                     break;
                 case 'x':
                 case 'X':
-                    firstNumber = (double.Parse(firstNumber) * double.Parse(secondNumber)).ToString();
+                    _firstNumber = (double.Parse(_firstNumber) * double.Parse(_secondNumber)).ToString();
                     break;
                 case '/':
                     try
                     {
-                        firstNumber = (double.Parse(firstNumber) / double.Parse(secondNumber)).ToString();
-                        if (firstNumber.Equals((1.0/0).ToString()))
+                        _firstNumber = (double.Parse(_firstNumber) / double.Parse(_secondNumber)).ToString();
+                        if (_firstNumber.Equals((1.0/0).ToString()))
                         {
-                            //firstNumber = "-E-";
+                            //_firstNumber = "-E-";
                             throw new DivideByZeroException();
                         }
                     }
                     catch (DivideByZeroException)
                     {
 
-                        firstNumber = "-E-";
+                        _firstNumber = "-E-";
                     }
                     break;
             }
@@ -160,7 +160,7 @@ namespace ConsoleCalculator
 
         private bool IsValid(char key)
         {
-            if(char.IsDigit(key) || allowedOperators.Contains(key)|| key=='.'|| key.Equals('='))
+            if(char.IsDigit(key) || _allowedOperators.Contains(key)|| key=='.'|| key.Equals('='))
             {
                 return true;
             }

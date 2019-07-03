@@ -5,18 +5,18 @@ namespace ConsoleCalculator.Tests
 {
     public class CalculatorFixture
     {
-        private Calculator calculator;
+        private Calculator _calculator;
         public CalculatorFixture()
         {
-            calculator = new Calculator();
+            _calculator = new Calculator();
         }
 
         private string SendMultipleKey(char[] key)
         {
-            var i = 0;
-            for (i = 0; i < key.Length - 1; i++)
-                calculator.SendKeyPress(key[i]);
-            return calculator.SendKeyPress(key[i]);
+            var index = 0;
+            for (index = 0; index < key.Length - 1; index++)
+                _calculator.SendKeyPress(key[index]);
+            return _calculator.SendKeyPress(key[index]);
         }
 
 
@@ -27,7 +27,7 @@ namespace ConsoleCalculator.Tests
             //simplest test case
             char key = '5';
 
-            var result = calculator.SendKeyPress(key);
+            var result = _calculator.SendKeyPress(key);
 
             //Assert
             Assert.NotEmpty(result);
@@ -89,6 +89,7 @@ namespace ConsoleCalculator.Tests
             Assert.Equal("-6", result);
         }
 
+        // Following Tests were given on tavisca github repo
         [Fact]
         public void FirstTest()
         {

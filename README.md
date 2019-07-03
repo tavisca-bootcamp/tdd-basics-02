@@ -1,5 +1,5 @@
 # Console based calculator
-
+[![Build Status](https://travis-ci.com/tavisca-ahari/tdd-basics-02.svg?branch=master)](https://travis-ci.com/tavisca-ahari/tdd-basics-02)
 ## Description
 
 You have to implement a console based calculator which can perform binary operations on decimal numbers. Your calculator will use the console as its 

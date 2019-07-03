@@ -8,7 +8,15 @@ namespace ConsoleCalculator.Tests
         [Fact]
         public void DummyTest()
         {
-            return;
+            string expected = "6";
+            string actual = "";
+            Calculator calculator = new Calculator();
+            actual = calculator.SendKeyPress('2');
+            actual = calculator.SendKeyPress('x');
+            actual = calculator.SendKeyPress('3');
+            actual = calculator.SendKeyPress('=');
+
+            Assert.Equal(expected, actual);
         }
     }
 }

@@ -64,28 +64,31 @@ namespace ConsoleCalculator
             string answer="";
             if(operation == "+")
             {
-                try
+                double parsedNumber;
+                double parsedSecondNumber;
+                if(double.TryParse(number,out parsedNumber) && double.TryParse(secondNumber,out parsedSecondNumber))
                 {
-                    answer =  (double.Parse(number) + double.Parse(secondNumber)).ToString();
+                    answer =  (parsedNumber + parsedSecondNumber).ToString();
                     secondNumber = "";
                     number = answer;
                 }
-                catch(FormatException e)
+                else
                 {
                     secondNumber = number;
                     return DoCalculation(operation);
-                }
-                
+                }           
             }
             else if(operation == "-")
             {
-                try
+                double parsedNumber;
+                double parsedSecondNumber;
+                if(double.TryParse(number,out parsedNumber) && double.TryParse(secondNumber,out parsedSecondNumber))
                 {
-                    answer = (double.Parse(number) - double.Parse(secondNumber)).ToString();
+                    answer = (parsedNumber - parsedSecondNumber).ToString();
                     secondNumber = "";
                     number = answer;
                 }
-                catch(FormatException e)
+                else
                 {
                     secondNumber = number;
                     return DoCalculation(operation);
@@ -99,13 +102,15 @@ namespace ConsoleCalculator
                 }
                 else
                 {
-                    try
+                    double parsedNumber;
+                    double parsedSecondNumber;
+                    if(double.TryParse(number,out parsedNumber) && double.TryParse(secondNumber,out parsedSecondNumber))
                     {
-                        answer = (double.Parse(number) / double.Parse(secondNumber)).ToString();
+                        answer = (parsedNumber / parsedSecondNumber).ToString();
                         secondNumber = "";
                         number = answer;
                     }
-                    catch(Exception e)
+                    else
                     {
                         secondNumber = number;
                         return DoCalculation(operation);
@@ -114,13 +119,15 @@ namespace ConsoleCalculator
             }
             else if(operation == "x")
             {
-                try
+                double parsedNumber;
+                double parsedSecondNumber;
+                if(double.TryParse(number,out parsedNumber) && double.TryParse(secondNumber,out parsedSecondNumber))
                 {
-                    answer = (double.Parse(number) * double.Parse(secondNumber)).ToString();
+                    answer = (parsedNumber * parsedSecondNumber).ToString();
                     secondNumber = "";
                     number = answer;
                 }
-                catch(Exception e)
+                else
                 {
                     secondNumber = number;
                     return DoCalculation(operation);
@@ -156,7 +163,9 @@ namespace ConsoleCalculator
             {
                 if(key=='s' || key == 'S')
                 {
-                    number = ( double.Parse(number) * -1 ).ToString();
+                    double parsedNumber;
+                    double.TryParse(number,out parsedNumber);
+                    number = ( parsedNumber * -1 ).ToString();
                     return number;
                 }
                 if (key == '.')
@@ -187,7 +196,9 @@ namespace ConsoleCalculator
             {
                 if (key == 's')
                 {
-                    secondNumber = (double.Parse(secondNumber) * -1 ).ToString();
+                    double parsedSecondNumber;
+                    double.TryParse(secondNumber,out parsedSecondNumber);
+                    secondNumber = (parsedSecondNumber * -1 ).ToString();
                     return secondNumber;
                 }
                 if (key == '.')

@@ -14,7 +14,7 @@ namespace ConsoleCalculator
         {
             if (Char.IsDigit(key))
             {
-                DigitHandle(key);
+                HandleDigit(key);
             }
 
             if (IsOperator(key))
@@ -25,7 +25,7 @@ namespace ConsoleCalculator
             return ShowDisplayValue();
         }
 
-        public void DigitHandle(char key)
+        public void HandleDigit(char key)
         {
             if (!string.IsNullOrEmpty(displayValue) && displayValue.Contains("."))
             {

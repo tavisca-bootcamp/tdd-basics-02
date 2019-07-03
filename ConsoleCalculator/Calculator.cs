@@ -19,7 +19,7 @@ namespace ConsoleCalculator
 
             if (IsOperator(key))
             {
-                OperatorHandle(key);
+                HandleOperator(key);
             }
 
             return ShowDisplayValue();
@@ -39,7 +39,7 @@ namespace ConsoleCalculator
 
         }
 
-        public void OperatorHandle(char key)
+        public void HandleOperator(char key)
         {
             switch (key)
             {

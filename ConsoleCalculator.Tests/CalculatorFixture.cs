@@ -76,12 +76,15 @@ namespace ConsoleCalculator.Tests
         public void MultipleOperations() {
             string keysPressed1 = "1+2sx9s/3-3ss=";
             string keysPressed2 = "1-1+1-1+1-1+1-1=";
+            string keysPressed3 = "1+4/5=+2-4+6x10s+50=";
 
             string result1 = FeedKeysAndGetResult(keysPressed1);
             string result2 = FeedKeysAndGetResult(keysPressed2);
+            string result3 = FeedKeysAndGetResult(keysPressed3);
 
             Assert.Equal("0", result1);
             Assert.Equal("0", result2);
+            Assert.Equal("0", result3);
         }
 
         [Fact]

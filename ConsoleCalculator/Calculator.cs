@@ -5,137 +5,141 @@ namespace ConsoleCalculator
 {
     public class Calculator
     {   
-        public States CurrentState;
-        private string number1 = "";
-        private string number2 = "";
+        public const string Numbers = "0123456789.";
+        public const string Sign = "sS";
+        public const string Operators = "+-xX/";
+        public const string EqualsSign = "=";
+        public const string ClearScreen = "cC";
+
+        public enum Events { NumberFeed, SignFeed, OperatorFeed, DisplayResult, ClearScreen, Error, Default }
+        
+        private OperandState number1;
+        private OperandState number2;
         private char? previousOperator = null;
 
         public Calculator() {
             // Display 0 initially
             Console.WriteLine("0");
-            CurrentState = States.NumberState;
+
+            number1 = new OperandState();
+            number2 = new OperandState();
+
+            number1.Display = true;
         }
         public string SendKeyPress(char key)
         {   
-            if (Constants.Numbers.Contains(key.ToString())) 
-                return Feeder(Events.NumberFeed, key);
-            else if (Constants.Operators.Contains(key.ToString())) 
-                return Feeder(Events.OperatorFeed, key);
-            else if (Constants.Sign.Contains(key.ToString())) 
-                return Feeder(Events.SignFeed, key);
-            else if (Constants.EqualsSign.Contains(key.ToString())) 
-                return Feeder(Events.DisplayResult, key);
-            else if (Constants.ClearScreen.Contains(key.ToString())) 
-                return Feeder(Events.ClearScreen, key);
-            else return Feeder(Events.Error, key);
+            Events _event = Events.Default;
+
+            if (Numbers.Contains(key.ToString())) 
+                _event = Events.NumberFeed;
+            else if (Operators.Contains(key.ToString())) 
+                _event = Events.OperatorFeed;
+            else if (Sign.Contains(key.ToString())) 
+                _event = Events.SignFeed;
+            else if (EqualsSign.Contains(key.ToString())) 
+                _event = Events.DisplayResult;
+            else if (ClearScreen.Contains(key.ToString())) 
+                _event = Events.ClearScreen;
+            else _event = Events.Error;
+
+            return FeedToFSM(_event, key);
         }
 
-        public string Feeder(Events type, char key) {
+        public string FeedToFSM(Events type, char key) {
             switch (type) {
                 case Events.NumberFeed:
-                    CurrentState = States.NumberState;
-                    if (previousOperator == null) {
-                            number1 += key;
-                            CheckForMultipleDotsOrZeroes(ref number1);
-                            return number1;
-                        }
-
-                    number2 += key;
-                    CheckForMultipleDotsOrZeroes(ref number2);
-                    return number2;
+                    if (number1.Display) {
+                        return number1.AddAndReturn(key);
+                    }
+                    return number2.AddAndReturn(key);
                 
                 case Events.SignFeed:
-                    if (previousOperator == null) {
-                        ToggleSign(ref number1);
-                        return number1;
+                    if (number1.Display) {
+                        return number1.ToggleSignAndReturn();
                     }
-                    ToggleSign(ref number2);
-                    return number2;
+                    return number2.ToggleSignAndReturn();
                 
                 case Events.OperatorFeed:
-                    CurrentState = States.OperatorState;
+                    this.SwitchNumbersBeingDisplayed();
                     return EvaluatePreviousExpression(key);
                 
                 case Events.DisplayResult:
-                    CurrentState = States.NumberState;
                     return EvaluatePreviousExpression(null);
                 
                 case Events.ClearScreen:
-                    ClearMemory();
-                    number1 = "0";
-                    CurrentState = States.NumberState;
-                    return number1;
+                    this.Restore("0", "", null);
+                    return number1.content;
                 
+                case Events.Default:
                 default:
-                    if (previousOperator == null) return number1;
-                    return number2;
+                    if (number1.Display) {
+                        return number1.content;
+                    }
+                    return number2.content;
             }
-        }
-
-        public void CheckForMultipleDotsOrZeroes(ref string number) {
-            if (number.Length == 1) return;
-
-            if (number == "00") number = "0";
-            if (number[number.Length-1] == '.' && number[number.Length-2] == '.') 
-                number = number.Substring(0, number.Length-1);
         }
 
         public string EvaluatePreviousExpression(char? currentOperator) {
-            // Convert '.' to '0.'
-            if (number1 == ".") number1 = "0.";
-            if (number2 == ".") number2 = "0.";
+            ConvertNumbersInCorrectFormat();
 
+            // No pending operations
             if (previousOperator == null) {
                 previousOperator = currentOperator;
-                return number1;
+                return number1.content;
+            }
+
+            ParseNumbers(out float num1, out float num2, out bool errorOccurredWhileParsing);
+
+            if (errorOccurredWhileParsing) {
+                Restore("", "", null);
+                return OperandState.Error();
+            }
+
+            return GetResultOrError(num1, num2, currentOperator);
+        }
+
+        public string GetResultOrError(float num1, float num2, char? currentOperator) {
+            var result = OperandState.GetResult(num1, num2, (char)previousOperator);
+
+            if (result == "error") {
+                Restore("", "", null);
+                return OperandState.Error();
             }
             
-            if(!float.TryParse(number1, out float num1)) return ErrorState();
-            if(number2 == "") number2 = number1;
-            if(!float.TryParse(number2, out float num2)) return ErrorState();
+            Restore(result, "", currentOperator);
 
-            switch (previousOperator) {
-                case '+': number1 =  (num1 + num2).ToString(); break;
-                case '-': number1 =  (num1 - num2).ToString(); break;
-                case 'x': 
-                case 'X': number1 =  (num1 * num2).ToString(); break;
-                case '/': number1 =  num2 == 0? "error": (num1 / num2).ToString(); break;
-            }
+            // If current operator is not '=', set to modify number 2
+            if (currentOperator != null) SwitchNumbersBeingDisplayed();
 
-            if (number1 == "error") return ErrorState();
-
-            number2 = "";
-            previousOperator = currentOperator;
-            return number1;
+            return number1.content;   
         }
 
-        public void ToggleSign(ref string number) {
-            if (number == "") {
-                number = "-";
-                return;
-            }
-            if (number == "-") {
-                number = "";
-                return;
-            }
-            if (number[0] == '-') {
-                number = number.Substring(1);
-                return;
-            }
-
-            number =  '-' + number;
+        public void ConvertNumbersInCorrectFormat() {
+            number1.Clean();
+            number2.Clean();
         }
 
-        public string ErrorState() {
-            ClearMemory();
-            CurrentState = States.NumberState;
-            return "-E-";
+        public void ParseNumbers(out float num1, out float num2, out bool errorOccurred) {
+            errorOccurred = !float.TryParse(number1.content, out num1);
+
+            // If number 2 is empty, fill it with number 1
+            if(number2.content == "") number2.content = number1.content;
+
+            errorOccurred = !float.TryParse(number2.content, out num2);
         }
 
-        public void ClearMemory() {
-            number1 = "";
-            number2 = "";
-            previousOperator = null;
+        public void Restore(string n1, string n2, char? op) {
+            number1.Set(n1);
+            number2.Set(n2);
+            previousOperator = op;
+
+            number1.Display = true;
+            number2.Display = false;
+        }
+
+        public void SwitchNumbersBeingDisplayed() {
+            number1.ToggleDisplay();
+            number2.ToggleDisplay();
         }
     }
 }

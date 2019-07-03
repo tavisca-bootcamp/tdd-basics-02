@@ -27,6 +27,7 @@ namespace ConsoleCalculator
 
         public void HandleDigit(char key)
         {
+            //Check if diplayed value contains '.' then simply add new digit to it
             if (!string.IsNullOrEmpty(displayValue) && displayValue.Contains("."))
             {
                 SetDisplayValue(displayValue + key);
@@ -78,6 +79,7 @@ namespace ConsoleCalculator
 
         public void HandleArithmeticOperation(char key)
         {
+            //Check for first operator
             if (currentOperator == '\0')
             {
                 currentOperator = key;
@@ -95,6 +97,7 @@ namespace ConsoleCalculator
             switch (currentOperator)
             {
                 case '+':
+                    //Equalto after operand doubles the value
                     if (currentOperand > 0)
                     {
                         result += currentOperand;

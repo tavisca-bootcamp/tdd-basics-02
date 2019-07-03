@@ -9,6 +9,7 @@ namespace ConsoleCalculator
         bool isOperationPerformed = false;
 
         String displayResult = "0";
+        
         bool IsOperation(char input){
             if(input=='+'||input=='-'||input=='x'||input=='/'|| input=='s'|| 
             input=='c'||input=='='||input=='X'||input=='C'||input=='S'){
@@ -32,10 +33,22 @@ namespace ConsoleCalculator
 
         public string SendKeyPress(char key)
         {
+            if(isOperationPerformed){
+                displayResult = "";
+            }
             isOperationPerformed = false;
 
             if(IsOperation(key)){
-                operator_click(key);
+                if(key == 's' || key == 'S'){
+                    displayResult = (-1 * Double.Parse(displayResult)).ToString();
+                }else if(key == 'c' || key == 'C'){
+                    displayResult = "0";
+                    resultValue = 0;
+                    isOperationPerformed = false;
+                }else
+                    operator_click(key);
+
+                return displayResult;
             }
 
             if (key == '.')
@@ -44,12 +57,15 @@ namespace ConsoleCalculator
                    displayResult = displayResult + key;
 
             }else if(IsNumber(key)){
-                if ((displayResult == "0") || (isOperationPerformed)){
+                if ((displayResult == "0") || (displayResult == "-E-") || (isOperationPerformed)){
+                
                     if(key != '0')
                         displayResult = ""+key;
                 }
                 else
                     displayResult = displayResult + key;
+            }else if(!IsNumber(key) || !IsOperation(key)){
+                return displayResult;
             }
 
             
@@ -73,18 +89,6 @@ namespace ConsoleCalculator
                 isOperationPerformed = true;
             }
         }
-
-        private void ToggleSign()
-        {
-            resultValue *= -1;
-        }
-
-        private void ResetAll()
-        {
-            displayResult = "0";
-            resultValue = 0;
-        }
-
         private void PerformCalculation()
         {
             switch (operationPerformed)
@@ -98,12 +102,15 @@ namespace ConsoleCalculator
                 case "x": case "X":
                     displayResult = (resultValue * Double.Parse(displayResult)).ToString();
                     break;
-                case "/":
-                    displayResult = (resultValue / Double.Parse(displayResult)).ToString();
+                case "/":if(!displayResult.Equals("0")){
+                        displayResult = (resultValue / Double.Parse(displayResult)).ToString();
+                    }else{
+                        displayResult = "-E-";
+                        return;
+                    }
                     break;
-                case "s": case "S": ToggleSign();
-                    break;
-                case "c": case "C": ResetAll();
+                case "=":
+                    displayResult = resultValue.ToString();
                     break;
                 default:
                     break;

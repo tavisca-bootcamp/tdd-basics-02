@@ -5,7 +5,7 @@ namespace ConsoleCalculator.Tests
 {
     public class CalculatorFixture
     {
-         private Calculator c;
+        private Calculator c;
 
         [Fact]
         public void checkAdd()
@@ -57,6 +57,16 @@ namespace ConsoleCalculator.Tests
             keyPressed(keys);
             Assert.Equal("1.0001", c.getAnswer());
         }
+
+        [Fact]
+        public void checkMultipleDecimal()
+        {
+            c = new Calculator();
+            string keys = "0....01=";
+            keyPressed(keys);
+            Assert.Equal("0.01", c.getAnswer());
+        }
+
         [Fact]
         public void checkMultipleSymbol()
         {
@@ -80,16 +90,17 @@ namespace ConsoleCalculator.Tests
             c = new Calculator();
             string keys = "10/2+3s=";
             keyPressed(keys);
-            Assert.Equal("-2", c.getAnswer());
+            Assert.Equal("2", c.getAnswer());
         }
 
+
         [Fact]
-        public void checkLongEquation()
+        public void checkToggleWithMultipleDecimal()
         {
             c = new Calculator();
-            string keys = "10/5-1+2+3*5=";
+            string keys = "0....112s=";
             keyPressed(keys);
-            Assert.Equal("30", c.getAnswer());
+            Assert.Equal("-0.112", c.getAnswer());
         }
         private void keyPressed(string keys)
         {

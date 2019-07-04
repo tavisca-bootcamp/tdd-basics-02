@@ -5,7 +5,7 @@ namespace ConsoleCalculator.Tests
 {
     public class CalculatorFixture
     {
-        Calculator c = new Calculator();
+        Calculator calculator = new Calculator();
             
             [Fact]
             public void BasicOperationTest()
@@ -16,7 +16,6 @@ namespace ConsoleCalculator.Tests
             [Fact]
             public void DivideByZeroTest()
             {
-
                 Assert.Equal("-E-",Evaluation("10/0="));
             }
 
@@ -55,7 +54,7 @@ namespace ConsoleCalculator.Tests
                 string display = "";
                 foreach(char term in equation)
                 {
-                    display = c.SendKeyPress(term);
+                    display = calculator.SendKeyPress(term);
                 }
                 return display;
             }

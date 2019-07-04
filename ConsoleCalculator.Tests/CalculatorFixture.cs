@@ -5,10 +5,66 @@ namespace ConsoleCalculator.Tests
 {
     public class CalculatorFixture
     {
-        [Fact]
-        public void DummyTest()
+        private Calculator calculator;
+        public CalculatorFixture()
         {
-            return;
+            calculator = new Calculator();
         }
+
+        private string SendMultipleKey(char[] key)
+        {
+            int i;
+            for (i = 0; i < key.Length - 1; i++)
+                calculator.SendKeyPress(key[i]);
+            return calculator.SendKeyPress(key[i]);
+        }
+
+        [Fact]
+        public void SingleKeyPressTest()
+        {
+            char key = '5';
+            var result = calculator.SendKeyPress(key);
+            Assert.NotEmpty(result);
+        }
+
+        [Fact]
+        public void TestingSimpleOperandsOperation()
+        {
+            char[] key = { '1', '2', '+', '3', '=' };
+            var result = SendMultipleKey(key);
+            Assert.Equal("15", result);
+        }
+
+        [Fact]
+        public void DivByZeroTest()
+        {
+            char[] key = { '1', '2', '/', '0', '=' };
+            var result = SendMultipleKey(key);
+            Assert.Equal("-E-", result);
+        }
+
+        [Fact]
+        public void MultipleZeroesAndDecimalTest()
+        {
+            char[] key = { '0', '0', '.', '.', '0', '0', '1' };
+            var result = SendMultipleKey(key);
+            Assert.Equal("0.001", result);
+        }
+        [Fact]
+        public void SignToggleTest()
+        {
+            char[] key = { '1', '2', '+', '2', 's', 's','s','=' };
+            var result = SendMultipleKey(key);
+            Assert.Equal("10", result);
+        }
+
+        [Fact]
+        public void ResetTest()
+        {
+            char[] key = { '1', '+', '2', '+', 'C' };
+            var result = SendMultipleKey(key);
+            Assert.Equal("0", result);
+        }
+
     }
 }

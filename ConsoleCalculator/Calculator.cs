@@ -3,140 +3,167 @@
 namespace ConsoleCalculator
 {
     public class Calculator
-    {
-        string val1 = "", val2 = "", final_answer = "";
+    {   /* Initial value declaration */
+        string alphaValue1 = "", alphaValue2 = "", _finalAnswer = "";
         char sign;
-        int hold = 1, hold_dot = 0;
-        double operand1 = 0, operand2 = 0;
+        int place = 1, holdDot = 0;
+        double numValue1 = 0, numValue2 = 0;
 
         public string SendKeyPress(char key)
-        {
-            if (key == '.') hold_dot = 1;
-            if (hold_dot == 1 && !isSign(key))
+        {  
+            /* decimal is acceptable only one time */
+            if (key == '.') holdDot = 1;    
+
+            /* Handling decimal values */
+            if (holdDot == 1 && !isSign(key))
             {
-                if (hold == 1)
+
+                if (place == 1)
                 {
-                    val1 += key;
-                    return (val1);
+                    if (key == '.' && !alphaValue1.Contains("."))
+                    { alphaValue1 += key; }
+                    else if (key != '.') alphaValue1 += key;
+                    return (alphaValue1);
+
                 }
-                else if (hold == 2)
+                else if (place == 2 && !alphaValue1.Contains("."))
                 {
-                    val2 += key;
-                    return (val2);
-                }
-            }
-            else if (key == '0' && hold_dot == 0 && val1 == "0")
-            {
-                if (hold == 1)
-                {
-                    if (val1 == "" || val1 == "0") val1 = "0";
-                    return (val1);
-                }
-                else if (hold == 2)
-                {
-                    if (val1 == "" || val1 == "0") val1 = "0"; return (val1);
-                }
-            }
-            else if (Char.IsNumber(key) && hold == 1)
-            {
-                val1 += key;
-                return (val1);
-            }
-            else if (Char.IsNumber(key) && hold == 2)
-            {
-                val2 += key;
-                return (val2);
-            }
-            else if (key == '+' || key == '/' || key == '*' || key == '-')
-            {
-                hold_dot = 0;
-                if (hold == 1)
-                {
-                    operand1 = Convert.ToDouble(val1);
-                    hold = 2;
-                    sign = key;
-                    return val1;
-                }
-                else if (hold == 2)
-                {
-                    if (val2 != "") operand2 = Convert.ToDouble(val2);
-                    else operand2 = 0;
-                    val2 = "";
-                    operand1 = Convert.ToDouble(getResult(operand1, operand2, sign));
-                    sign = key;
-                    return (val1);
+                    if (key == '.' && !alphaValue1.Contains("."))
+                        alphaValue2 += key;
+                    else if (key != '.') alphaValue2 += key;
+                    return (alphaValue2);
                 }
 
             }
-            else if (key == '=')
+            else if (key == '0' && holdDot == 0 && alphaValue1 == "0")
             {
-                if (val2 != "") operand2 = Convert.ToDouble(val2);
-                else operand2 = 0;
-
-                final_answer = (getResult(operand1, operand2, sign));
-                return final_answer;
+                if (place == 1)
+                {
+                    if (alphaValue1 == "" || alphaValue1 == "0") alphaValue1 = "0";
+                    return (alphaValue1);
+                }
+                else if (place == 2)
+                {
+                    if (alphaValue1 == "" || alphaValue1 == "0") alphaValue1 = "0"; return (alphaValue1);
+                }
             }
-            else if (key == 'c')
+            else if (Char.IsNumber(key) && place == 1)  // Concatenating 1st operand
             {
-                val1 = ""; val2 = "";
-                operand1 = 0; operand2 = 0;
-                hold = 1;
+                alphaValue1 += key;
+                return (alphaValue1);
+            }
+            else if (Char.IsNumber(key) && place == 2)  // Concatenating 1st operand
+            {
+                alphaValue2 += key;
+                return (alphaValue2);
+            }
+            else if (key == '+' || key == '/' || key == '*' || key == '-')  // Handling Operator
+            {
+                holdDot = 0;
+                if (place == 1)
+                {
+                    numValue1 = Convert.ToDouble(alphaValue1);
+                    place = 2;
+                    sign = key;
+                    return alphaValue1;
+                }
+                else if (place == 2)
+                {
+                    if (alphaValue2 != "") numValue2 = Convert.ToDouble(alphaValue2);
+                    else numValue2 = 0;
+                    alphaValue2 = "";
+                    numValue1 = Convert.ToDouble(getResult(numValue1, numValue2, sign));
+                    sign = key;
+                    return (alphaValue1);
+                }
+
+            }
+            else if (key == '=')   //Computing Result
+            {
+                if (alphaValue2 == "") _finalAnswer = alphaValue1;
+                else
+                {
+                    numValue2 = Convert.ToDouble(alphaValue2);
+                    _finalAnswer = (getResult(numValue1, numValue2, sign));
+
+                }
+                return _finalAnswer;
+            }
+            else if (key == 'c')    // Clearing Console
+            {
+                alphaValue1 = "0"; alphaValue2 = "0";
+                numValue1 = 0; numValue2 = 0;
+                place = 1;
                 return ("0");
             }
-            else if (key == 's')
+            else if (key == 's')   // Toggling Value
             {
-                operand1 = -operand1;
-                return (operand1.ToString());
+                if (place == 1)
+                {
+                    alphaValue1 = "-" + alphaValue1;
+                    numValue1 = (Convert.ToDouble(alphaValue1));
+                    return (numValue1.ToString());
+                }
+                else
+                {
+                    alphaValue2 = "-" + alphaValue2;
+                    numValue2 = (Convert.ToDouble(alphaValue2));
+                    return (numValue2.ToString());
+                }
+
             }
             else
             {
-                return val1;
+                return alphaValue1;
             }
-            return "";
+            return _finalAnswer;
         }
 
-        public bool isSign(char key)
+        public bool isSign(char key)   // Checking for sign
         {
-            return (key == '+' || key == '/' || key == '*' || key == '-' || key == '=');
+            return (key == '+' || key == '/' || key == '*' || key == '-' || key == '=' || key == 'c' || key == 's');
         }
-        public string getResult(double val1, double val2, char sign)
+        /* Computing values after performing operation */
+        public string getResult(double alphaValue1, double alphaValue2, char sign)
         {
             string result = "";
             switch (sign)
             {
-                case '+': result = (val1 + val2).ToString(); break;
-                case '-': result = (val1 - val2).ToString(); break;
-                case '*': result = (val1 * val2).ToString(); break;
+                case '+': result = (alphaValue1 + alphaValue2).ToString(); break;
+                case '-': result = (alphaValue1 - alphaValue2).ToString(); break;
+                case '*': result = (alphaValue1 * alphaValue2).ToString(); break;
                 case '/':
                     {
-                        if (val2 != 0)
-                            result = (val1 / val2).ToString();
+                        if (alphaValue2 != 0)
+                            result = (alphaValue1 / alphaValue2).ToString();
                         else result = "-E-";
                         break;
                     }
-                default: result = (val1).ToString(); break;
+                default: result = (alphaValue1).ToString(); break;
             }
             return result;
         }
 
-        public string getAnswer()
+        public string getAnswer()   // Return final answer
         {
-            return final_answer;
+            return _finalAnswer;
         }
 
 
     }
+
     class tester
     {
         static void Main(string[] args)
         {
             Calculator p = new Calculator();
-            string s = "100/10-3=c1+2+3s=";
+            string s = "10/2+3s=";
             foreach (char x in s)
             {
-                p.SendKeyPress(x);
+                Console.Write(p.SendKeyPress(x) + " ");
             }
-            Console.Write(p.getAnswer());
+            Console.WriteLine();
+            Console.Write("Result: " + p.getAnswer());
         }
     }
 }

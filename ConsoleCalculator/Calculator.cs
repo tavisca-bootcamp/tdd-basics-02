@@ -13,18 +13,19 @@ namespace ConsoleCalculator
 
         public enum Events { NumberFeed, SignFeed, OperatorFeed, DisplayResult, ClearScreen, Error, Default }
         
-        private OperandState number1;
-        private OperandState number2;
+        private OperandState result;
+        private OperandState operand;
+        private OperandState currentOperandDisplayed;
         private char? previousOperator = null;
 
         public Calculator() {
             // Display 0 initially
             Console.WriteLine("0");
 
-            number1 = new OperandState();
-            number2 = new OperandState();
+            result = new OperandState();
+            operand = new OperandState();
 
-            number1.Display = true;
+            currentOperandDisplayed = result;
         }
         public string SendKeyPress(char key)
         {   
@@ -48,16 +49,10 @@ namespace ConsoleCalculator
         public string FeedToFSM(Events type, char key) {
             switch (type) {
                 case Events.NumberFeed:
-                    if (number1.Display) {
-                        return number1.AddAndReturn(key);
-                    }
-                    return number2.AddAndReturn(key);
+                    return currentOperandDisplayed.AddAndReturn(key);
                 
                 case Events.SignFeed:
-                    if (number1.Display) {
-                        return number1.ToggleSignAndReturn();
-                    }
-                    return number2.ToggleSignAndReturn();
+                    return currentOperandDisplayed.ToggleSignAndReturn();
                 
                 case Events.OperatorFeed:
                     this.SwitchNumbersBeingDisplayed();
@@ -68,14 +63,11 @@ namespace ConsoleCalculator
                 
                 case Events.ClearScreen:
                     this.Restore("0", "", null);
-                    return number1.content;
+                    return result.content;
                 
                 case Events.Default:
                 default:
-                    if (number1.Display) {
-                        return number1.content;
-                    }
-                    return number2.content;
+                    return currentOperandDisplayed.content;
             }
         }
 
@@ -85,14 +77,14 @@ namespace ConsoleCalculator
             // No pending operations
             if (previousOperator == null) {
                 previousOperator = currentOperator;
-                return number1.content;
+                return result.content;
             }
 
             ParseNumbers(out float num1, out float num2, out bool errorOccurredWhileParsing);
 
             if (errorOccurredWhileParsing) {
                 Restore("", "", null);
-                return OperandState.Error();
+                return OperandState.Error;
             }
 
             return GetResultOrError(num1, num2, currentOperator);
@@ -103,7 +95,7 @@ namespace ConsoleCalculator
 
             if (result == "error") {
                 Restore("", "", null);
-                return OperandState.Error();
+                return OperandState.Error;
             }
             
             Restore(result, "", currentOperator);
@@ -111,35 +103,37 @@ namespace ConsoleCalculator
             // If current operator is not '=', set to modify number 2
             if (currentOperator != null) SwitchNumbersBeingDisplayed();
 
-            return number1.content;   
+            return this.result.content;   
         }
 
         public void ConvertNumbersInCorrectFormat() {
-            number1.Clean();
-            number2.Clean();
+            result.Clean();
+            operand.Clean();
         }
 
         public void ParseNumbers(out float num1, out float num2, out bool errorOccurred) {
-            errorOccurred = !float.TryParse(number1.content, out num1);
+            errorOccurred = !float.TryParse(result.content, out num1);
 
             // If number 2 is empty, fill it with number 1
-            if(number2.content == "") number2.content = number1.content;
+            if(operand.content == "") operand.content = result.content;
 
-            errorOccurred = !float.TryParse(number2.content, out num2);
+            errorOccurred = !float.TryParse(operand.content, out num2);
         }
 
         public void Restore(string n1, string n2, char? op) {
-            number1.Set(n1);
-            number2.Set(n2);
+            result.Set(n1);
+            operand.Set(n2);
             previousOperator = op;
 
-            number1.Display = true;
-            number2.Display = false;
+            currentOperandDisplayed = result;
         }
 
         public void SwitchNumbersBeingDisplayed() {
-            number1.ToggleDisplay();
-            number2.ToggleDisplay();
+            if (currentOperandDisplayed == result) {
+                currentOperandDisplayed = operand;
+            } else {
+                currentOperandDisplayed = result;
+            }
         }
     }
 }

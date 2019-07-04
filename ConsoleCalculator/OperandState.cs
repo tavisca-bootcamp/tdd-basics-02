@@ -1,6 +1,6 @@
 namespace ConsoleCalculator {
     class OperandState {
-        public bool Display { get; set; } = false;
+        public const string Error = "-E-";
         public string content;
 
         public OperandState () {
@@ -63,18 +63,10 @@ namespace ConsoleCalculator {
             this.Set(content.Substring(0, content.Length-1));
         }
 
-        public void ToggleDisplay() {
-            Display = !Display;
-        }
-
         public void Clean() {
             if (content == ".") {
                 this.Set("0.");
             }
-        }
-
-        public static string Error() {
-            return "-E-";
         }
     }
 }

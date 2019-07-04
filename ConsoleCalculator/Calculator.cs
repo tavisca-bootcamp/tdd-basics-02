@@ -47,7 +47,7 @@ namespace ConsoleCalculator
                 }
 
             }
-            catch (DivideByZeroException e)
+            catch (DivideByZeroException)
             {
                 result = "-E-";
             }

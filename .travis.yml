@@ -6,4 +6,4 @@ install:
       -dotnet restore
 script:
     - dotnet build
-    -dotnet test ConsoleCalculator.Tests/ConsoleCalculator.Tests.csproj	
+    - dotnet test ConsoleCalculator.Tests/ConsoleCalculator.Tests.csproj	

@@ -13,6 +13,8 @@ namespace ConsoleCalculator
             switch(key)
             {
                 case 'c':
+                    ResetAll();
+                    return "0";
                 case 'C':
                     ResetAll();
                     return "0";
@@ -62,76 +64,69 @@ namespace ConsoleCalculator
         private string DoCalculation(string operation)
         {
             string answer=string.Empty;
-            if(operation == "+")
+            switch(operation)
             {
-                double parsedNumber;
-                double parsedSecondNumber;
-                if(double.TryParse(number,out parsedNumber) && double.TryParse(secondNumber,out parsedSecondNumber))
-                {
-                    answer =  (parsedNumber + parsedSecondNumber).ToString();
-                    secondNumber = string.Empty;
-                    number = answer;
-                }
-                else
-                {
-                    secondNumber = number;
-                    return DoCalculation(operation);
-                }           
-            }
-            else if(operation == "-")
-            {
-                double parsedNumber;
-                double parsedSecondNumber;
-                if(double.TryParse(number,out parsedNumber) && double.TryParse(secondNumber,out parsedSecondNumber))
-                {
-                    answer = (parsedNumber - parsedSecondNumber).ToString();
-                    secondNumber = string.Empty;
-                    number = answer;
-                }
-                else
-                {
-                    secondNumber = number;
-                    return DoCalculation(operation);
-                }
-            }
-            else if(operation == "/")
-            {
-                if (secondNumber == "0")
-                {
-                    return "-E-";
-                }
-                else
-                {
+                case "+":
                     double parsedNumber;
                     double parsedSecondNumber;
                     if(double.TryParse(number,out parsedNumber) && double.TryParse(secondNumber,out parsedSecondNumber))
                     {
-                        answer = (parsedNumber / parsedSecondNumber).ToString();
+                        answer =  (parsedNumber + parsedSecondNumber).ToString();
                         secondNumber = string.Empty;
                         number = answer;
+                        break;
                     }
                     else
                     {
                         secondNumber = number;
                         return DoCalculation(operation);
                     }
-                }
-            }
-            else if(operation == "x")
-            {
-                double parsedNumber;
-                double parsedSecondNumber;
-                if(double.TryParse(number,out parsedNumber) && double.TryParse(secondNumber,out parsedSecondNumber))
-                {
-                    answer = (parsedNumber * parsedSecondNumber).ToString();
-                    secondNumber = string.Empty;
-                    number = answer;
-                }
-                else
-                {
-                    secondNumber = number;
-                    return DoCalculation(operation);
-                }
+                case "-":
+                    if(double.TryParse(number,out parsedNumber) && double.TryParse(secondNumber,out parsedSecondNumber))
+                    {
+                        answer = (parsedNumber - parsedSecondNumber).ToString();
+                        secondNumber = string.Empty;
+                        number = answer;
+                        break;
+                    }
+                    else
+                    {
+                        secondNumber = number;
+                        return DoCalculation(operation);
+                    }
+                case "/":
+                    if (secondNumber == "0")
+                    {
+                        return "-E-";
+                    }
+                    else
+                    {
+                        if(double.TryParse(number,out parsedNumber) && double.TryParse(secondNumber,out parsedSecondNumber))
+                        {
+                            answer = (parsedNumber / parsedSecondNumber).ToString();
+                            secondNumber = string.Empty;
+                            number = answer;
+                            break;
+                        }
+                        else
+                        {
+                            secondNumber = number;
+                            return DoCalculation(operation);
+                        }
+                    }
+                case "x":
+                    if(double.TryParse(number,out parsedNumber) && double.TryParse(secondNumber,out parsedSecondNumber))
+                    {
+                        answer = (parsedNumber * parsedSecondNumber).ToString();
+                        secondNumber = string.Empty;
+                        number = answer;
+                        break;
+                    }
+                    else
+                    {
+                        secondNumber = number;
+                        return DoCalculation(operation);
+                    }
             }
             return answer;
         }

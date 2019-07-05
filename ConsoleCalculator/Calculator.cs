@@ -4,9 +4,9 @@ namespace ConsoleCalculator
 {
     public class Calculator
     {
-        static string number = "";
-        static string operation = "";
-        static string secondNumber = "";
+        static string number = string.Empty;
+        static string operation = string.Empty;
+        static string secondNumber = string.Empty;
 
         public string SendKeyPress(char key)
         {
@@ -44,15 +44,15 @@ namespace ConsoleCalculator
                     SetCalculationSymbol(key);
                     break;
                 case '=':
-                    if (operation != "")
+                    if (!string.IsNullOrEmpty(operation))
                     {
                         string previousOperation = operation;
-                        operation = "";
+                        operation = string.Empty;
                         return DoCalculation(previousOperation);
                     }
                     break;
                 default:
-                    return "";
+                    return string.Empty;
                 
             }
 
@@ -61,7 +61,7 @@ namespace ConsoleCalculator
 
         private string DoCalculation(string operation)
         {
-            string answer="";
+            string answer=string.Empty;
             if(operation == "+")
             {
                 double parsedNumber;
@@ -69,7 +69,7 @@ namespace ConsoleCalculator
                 if(double.TryParse(number,out parsedNumber) && double.TryParse(secondNumber,out parsedSecondNumber))
                 {
                     answer =  (parsedNumber + parsedSecondNumber).ToString();
-                    secondNumber = "";
+                    secondNumber = string.Empty;
                     number = answer;
                 }
                 else
@@ -85,7 +85,7 @@ namespace ConsoleCalculator
                 if(double.TryParse(number,out parsedNumber) && double.TryParse(secondNumber,out parsedSecondNumber))
                 {
                     answer = (parsedNumber - parsedSecondNumber).ToString();
-                    secondNumber = "";
+                    secondNumber = string.Empty;
                     number = answer;
                 }
                 else
@@ -107,7 +107,7 @@ namespace ConsoleCalculator
                     if(double.TryParse(number,out parsedNumber) && double.TryParse(secondNumber,out parsedSecondNumber))
                     {
                         answer = (parsedNumber / parsedSecondNumber).ToString();
-                        secondNumber = "";
+                        secondNumber = string.Empty;
                         number = answer;
                     }
                     else
@@ -124,7 +124,7 @@ namespace ConsoleCalculator
                 if(double.TryParse(number,out parsedNumber) && double.TryParse(secondNumber,out parsedSecondNumber))
                 {
                     answer = (parsedNumber * parsedSecondNumber).ToString();
-                    secondNumber = "";
+                    secondNumber = string.Empty;
                     number = answer;
                 }
                 else
@@ -138,15 +138,15 @@ namespace ConsoleCalculator
 
         public void ResetAll()
         {
-            number = "";
-            secondNumber = "";
-            operation = "";
+            number = string.Empty;
+            secondNumber = string.Empty;
+            operation = string.Empty;
         }
 
         private void SetCalculationSymbol(char key)
         {
 
-            if ( operation == "" && number != "")
+            if ( string.IsNullOrEmpty(operation) && !string.IsNullOrEmpty(number))
             {
                 operation = key.ToString();
             }
@@ -159,7 +159,7 @@ namespace ConsoleCalculator
 
         private string ShowNumber(char key)
         {
-            if ( operation == "")
+            if ( string.IsNullOrEmpty(operation))
             {
                 if(key=='s' || key == 'S')
                 {

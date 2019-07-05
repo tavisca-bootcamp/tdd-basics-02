@@ -57,17 +57,24 @@ namespace ConsoleCalculator
             double num = 0.0;
             if (double.TryParse(operand, out num))
             {
-                result = result + num;
+                if (result == 0.0)
+                    result = num;
+                else
+                    result = result + num;
             }
             operand = "";
             return result.ToString();
         }
         public string GetSubtraction()
         {
+
             double num = 0.0;
             if (double.TryParse(operand, out num))
             {
-                result = result - num;
+                if (result == 0.0)
+                    result = num;
+                else
+                    result = result - num;
             }
             operand = "";
             return result.ToString();
@@ -82,7 +89,10 @@ namespace ConsoleCalculator
                 {
                     return error;
                 }
-                result = result / num;
+                else if (result == 0.0)
+                    result = num;
+                else
+                    result = result / num;
             }
             operand = "";
             return result.ToString();
@@ -104,7 +114,10 @@ namespace ConsoleCalculator
             double num = 0.0;
             if (double.TryParse(operand, out num))
             {
-                result = result * num;
+                if (result == 0.0)
+                    result = num;
+                else
+                    result = result * num;
             }
             operand = "";
             return result.ToString();
@@ -141,5 +154,7 @@ namespace ConsoleCalculator
                 return true;
             }
         }
+
     }
 }
+

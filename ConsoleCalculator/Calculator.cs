@@ -4,7 +4,11 @@ namespace ConsoleCalculator
 {
     public class Calculator
     {
-
+        private static string operand = "";
+        private static double result=0.0;
+        private static char operation= '+';
+        private string error= "-E-";
+        
         public string SendKeyPress(char key)
         {
             if (char.IsDigit(key))

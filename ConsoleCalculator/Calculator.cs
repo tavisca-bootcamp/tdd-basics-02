@@ -45,7 +45,7 @@ namespace ConsoleCalculator
                 case '*':
                     operation = '*';
                     return GetMultiplication();
-                case '=': return DoOperation(operation);
+                case '=': return Equals(operation);
                 case '.': return AddDecimal();
                 default: return error;
 
@@ -153,6 +153,13 @@ namespace ConsoleCalculator
             {
                 return true;
             }
+        }
+        public string Equals(char operation)
+        {
+            if (operand == "")
+                return error;
+            else
+                return DoOperation(operation);
         }
 
     }

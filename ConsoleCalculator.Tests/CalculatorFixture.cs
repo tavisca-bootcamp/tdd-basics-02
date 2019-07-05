@@ -50,28 +50,28 @@ namespace ConsoleCalculator.Tests
         [Fact]
         public void TestEndWithAddition()
         {
-            string expectedResult = "6";
+            string expectedResult = "-E-";
             string actualResult = GetResult("1+2+3+=");
             Assert.Equal(expectedResult, actualResult);
         }
         [Fact]
         public void TestEndWithSubtraction()
         {
-            string expectedResult = "6";
+            string expectedResult = "-E-";
             string actualResult = GetResult("1+2+3-=");
             Assert.Equal(expectedResult, actualResult);
         }
         [Fact]
         public void TestEndWithMultiplication()
         {
-            string expectedResult = "6";
+            string expectedResult = "-E-";
             string actualResult = GetResult("1+2+3*=");
             Assert.Equal(expectedResult, actualResult);
         }
         [Fact]
         public void TestEndWithDivision()
         {
-            string expectedResult = "6";
+            string expectedResult = "-E-";
             string actualResult = GetResult("1+2+3/=");
             Assert.Equal(expectedResult, actualResult);
         }

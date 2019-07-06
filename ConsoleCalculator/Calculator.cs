@@ -1,12 +1,15 @@
 ﻿using System;
+
 namespace ConsoleCalculator
 {
     public class Calculator
     {
-        private string operand1 = "0";
-        private string operand2 = "";
-        private char Operator = '+';
-        private bool isDecimalEncountered = false;
+        private string _inputNumber = "";
+        private double _operandFirst = 0;
+        private double _operandSecond = 0;
+        private char _operator = '+';
+        private bool _isDecimalEncountered = false;
+
         public string SendKeyPress(char key)
         {
             string result = "0";
@@ -19,31 +22,37 @@ namespace ConsoleCalculator
                 }
                 else if (key.ToString().ToUpper() == "S")
                 {
-                    toggleSign();
-                    result = operand2;
+                    result = toggleSign();
                 }
-                else if (key == '.' && !isDecimalEncountered)
+                else if (key == '.' && !_isDecimalEncountered)
                 {
-                    operand2 = operand2 + key;
-                    isDecimalEncountered = true;
-                    result = operand2;
+                    _inputNumber = _inputNumber + key;
+                    _isDecimalEncountered = true;
+
+                    result = _inputNumber;
                 }
                 else if (isDigit(key))
                 {
-                    if (key == '0' && !isDecimalEncountered)
-                        operand2 = Int32.Parse(operand2 + key).ToString();
+                    if (key == '0' && !_isDecimalEncountered)
+                        _inputNumber = Int32.Parse(_inputNumber + key).ToString();      // 000 => 0
                     else
-                        operand2 = operand2 + key;
-                    result = operand2;
+                        _inputNumber = _inputNumber + key;
+                    
+                    _operandSecond = Double.Parse(_inputNumber);
+
+                    result = _inputNumber;
                 }
                 else if (isOperator(key))
                 {
-                    isDecimalEncountered = false;
+                    _isDecimalEncountered = false;   
                     performPreviousOperation();
-                    result = operand1;
+                    result = _operandFirst.ToString();
+
                     if (key != '=')
-                        Operator = key;
-                    operand2 = "";
+                        _operator = key;
+                    
+                    _inputNumber = "";
+                    _operandSecond = 0;
                 }
 
             }
@@ -67,40 +76,42 @@ namespace ConsoleCalculator
 
         private void reset()
         {
-            operand1 = "0";
-            operand2 = "";
-            Operator = '+';
-            isDecimalEncountered = false;
+            _operator = '+';
+            _inputNumber = "";
+            _operandFirst = 0;
+            _operandSecond = 0;
+            _isDecimalEncountered = false;
         }
 
-        private void toggleSign()
+        private string toggleSign()
         {
-            double d = -Double.Parse(operand2);
-            operand2 = d.ToString();
+            _operandSecond = - _operandSecond;
+
+            return _operandSecond.ToString();
         }
 
         private void performPreviousOperation()
         {
-            if (operand2 == "")
-                return;
-            switch (Operator)
+            switch (_operator)
             {
                 case '+':
-                    operand1 = (Double.Parse(operand1) + Double.Parse(operand2)).ToString();
+                    _operandFirst = _operandFirst + _operandSecond;
                     break;
+
                 case '-':
-                    operand1 = (Double.Parse(operand1) - Double.Parse(operand2)).ToString();
+                    _operandFirst = _operandFirst - _operandSecond;
                     break;
+
                 case '/':
-                    if (operand2 == "0")
+                    if (_operandSecond == 0)
                         throw new DivideByZeroException();
-                    operand1 = (Double.Parse(operand1) / Double.Parse(operand2)).ToString();
+                    _operandFirst = _operandFirst / _operandSecond;
                     break;
+
                 case 'x':
                 case 'X':
-                    operand1 = (Double.Parse(operand1) * Double.Parse(operand2)).ToString();
+                    _operandFirst = _operandFirst * _operandSecond;
                     break;
-                
             }
         }
 

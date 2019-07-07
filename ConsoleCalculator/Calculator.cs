@@ -4,14 +4,12 @@ namespace ConsoleCalculator
 {
     public class Calculator
     {
-        private string number1 = "";
-        private string number2 = "";
+        private string _firstNumber = "";
+        private string _secondNumber = "";
         private string operation = "";
 
         public string SendKeyPress(char key)
         {
-            // Add your implementation here.
-            // throw new NotImplementedException();
             switch (key)
             {
                 case 'C':
@@ -34,17 +32,12 @@ namespace ConsoleCalculator
                     return Getnumber(key);
 
                 case '+':
-                    SetOperations(key);
-                    break;
                 case '-':
-                    SetOperations(key);
-                    break;
                 case 'x':
-                    SetOperations(key);
-                    break;
                 case '/':
-                    SetOperations(key);
+                    SetOperator(key);
                     break;
+
                 case '=':
                     if (operation != "")
                     {
@@ -55,25 +48,20 @@ namespace ConsoleCalculator
                     break;
                 default:
                     return "";
-
             }
-            return number1;
+            return _firstNumber;
         }
 
         private void clearSceen()
         {
-            //throw new NotImplementedException();
-            number1 = "";
-            number2 = "";
+            _firstNumber = "";
+            _secondNumber = "";
             operation = "";
-
         }
 
-
-        private void SetOperations(char key)
+        private void SetOperator(char key)
         {
-            //throw new NotImplementedException();
-            if (operation == "" && number1 != "")
+            if (operation == "" && _firstNumber != "")
             {
                 operation = key.ToString();
             }
@@ -86,41 +74,38 @@ namespace ConsoleCalculator
 
         private string DoCalculation(string operation)
         {
-            //throw new NotImplementedException();
             string answer = "";
             if (operation == "+")
             {
-
                 try
                 {
-                    answer = (double.Parse(number1) + double.Parse(number2)).ToString();
-                    number2 = "";
-                    number1 = answer;
+                    answer = (double.Parse(_firstNumber) + double.Parse(_secondNumber)).ToString();
+                    _secondNumber = "";
+                    _firstNumber = answer;
                 }
                 catch (FormatException e)
                 {
-                    number2 = number1;
+                    _secondNumber = _firstNumber;
                     return DoCalculation(operation);
                 }
-
             }
             else if (operation == "-")
             {
                 try
                 {
-                    answer = (double.Parse(number1) - double.Parse(number2)).ToString();
-                    number2 = "";
-                    number1 = answer;
+                    answer = (double.Parse(_firstNumber) - double.Parse(_secondNumber)).ToString();
+                    _secondNumber = "";
+                    _firstNumber = answer;
                 }
                 catch (FormatException e)
                 {
-                    number2 = number1;
+                    _secondNumber = _firstNumber;
                     return DoCalculation(operation);
                 }
             }
             else if (operation == "/")
             {
-                if (number2 == "0")
+                if (_secondNumber == "0")
                 {
                     return "-E-";
                 }
@@ -128,13 +113,13 @@ namespace ConsoleCalculator
                 {
                     try
                     {
-                        answer = (double.Parse(number1) / double.Parse(number2)).ToString();
-                        number2 = "";
-                        number1 = answer;
+                        answer = (double.Parse(_firstNumber) / double.Parse(_secondNumber)).ToString();
+                        _secondNumber = "";
+                        _firstNumber = answer;
                     }
                     catch (Exception e)
                     {
-                        number2 = number1;
+                        _secondNumber = _firstNumber;
                         return DoCalculation(operation);
                     }
                 }
@@ -143,89 +128,78 @@ namespace ConsoleCalculator
             {
                 try
                 {
-                    answer = (double.Parse(number1) * double.Parse(number2)).ToString();
-                    number2 = "";
-                    number1 = answer;
+                    answer = (double.Parse(_firstNumber) * double.Parse(_secondNumber)).ToString();
+                    _secondNumber = "";
+                    _firstNumber = answer;
                 }
                 catch (Exception e)
                 {
-                    number2 = number1;
+                    _secondNumber = _firstNumber;
                     return DoCalculation(operation);
                 }
             }
             return answer;
         }
 
-
-
         private string Getnumber(char key)
         {
-            //throw new NotImplementedException();
             if (operation == "")
             {
-                if (key == 's' || key == 'S')
-                {
-                    number1 = (double.Parse(number1) * -1).ToString();
-                    return number1;
-                }
+                
                 if (key == '.')
                 {
-                    if (!number1.Contains("."))
+                    if (!_firstNumber.Contains("."))
                     {
-                        return number1 += ".";
+                        return _firstNumber += ".";
                     }
                     else
                     {
-                        return number1;
+                        return _firstNumber;
                     }
                 }
-                if (!(number1 == "0" && key == '0'))
+                else if (!(_firstNumber == "0" && key == '0'))
                 {
-                    if (number1 == "0")
+                    if (_firstNumber == "0")
                     {
-                        number1 = key.ToString();
+                        _firstNumber = key.ToString();
                     }
                     else
                     {
-                        number1 += key.ToString();
-
+                        _firstNumber += key.ToString();
                     }
                 }
-
-                return number1;
+                return _firstNumber;
             }
             else
             {
                 if (key == 's')
                 {
-                    number2 = (double.Parse(number2) * -1).ToString();
-                    return number2;
+                    _secondNumber = (double.Parse(_secondNumber) * -1).ToString();
+                    return _secondNumber;
                 }
-                if (key == '.')
+                else if (key == '.')
                 {
-                    if (!number2.Contains("."))
+                    if (!_secondNumber.Contains("."))
                     {
-                        return number2 += ".";
+                        return _secondNumber += ".";
                     }
                     else
                     {
-                        return number2;
+                        return _secondNumber;
                     }
                 }
-                if (!(number2 == "0" && key == '0'))
+                else if (!(_secondNumber == "0" && key == '0'))
                 {
-                    if (number2 == "0")
+                    if (_secondNumber == "0")
                     {
-                        number2 = key.ToString();
+                        _secondNumber = key.ToString();
                     }
                     else
                     {
-                        number2 += key.ToString();
-
+                        _secondNumber += key.ToString();
                     }
                 }
-
-                return number2;
+                return _secondNumber;
             }
         }
     }

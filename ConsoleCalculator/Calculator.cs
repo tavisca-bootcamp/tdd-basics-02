@@ -5,62 +5,58 @@ namespace ConsoleCalculator
 {
     public class Calculator
     {
-        string keyPressed="", temp="0",temp2="0",opertor="",msg=""; //temps assigned with zero to hold . values
-        double A=0,B=0;                                                 //to store operands
-        public double test=0;                                         
-        bool Flag=false;                                        //flag helps to find 2nd operator
-            
-        public void SendKeyPress(char key)
+        static string[] Allinputs=new[]{"1","2","3","4","5","6","7","8","9","0",".","s","c","+","-","/","x","="};
+        static string keyPressed="", temp="0",temp2="0",opertor="",msg=""; //temps assigned with zero to hold decimal values
+        static double A=0,B=0;                                                 //to store operands A and B                                        
+        static bool Flag=false;                                            //flag helps to find 2nd operator
+        public string SendKeyPress(char key)
         {
-            ValidateKey(key);                                      //validity check must be done
-            keyPressed=key.ToString(); 
-
-            //Extraction of first operand=========================================================================================
-            if(keyPressed=="c" || keyPressed=="C")                  //reset everything
+            keyPressed=key.ToString();
+            ValidateKey(keyPressed);                                    //validity check must be done
+        
+            if(keyPressed=="c" || keyPressed=="C")                       //reset everything
             {
-                Console.Clear();
-                System.Console.WriteLine("0");
                 A=0;B=0;temp="";temp2="";Flag=false;
+                return "0";
             }
 
-            else if((keyPressed!="+" && keyPressed!="-" && keyPressed!="x" && keyPressed!="X" && keyPressed!="/") && Flag==false)                      //extract out first operand
+            //Extraction of first operand=========================================================================================
+            else if(keyPressed!="+" && keyPressed!="-" && keyPressed!="x" && keyPressed!="X" && keyPressed!="/" && Flag==false)                      //extract out first operand
             {  
                 if((keyPressed!="s" && keyPressed!="S") && (keyPressed!="c" && keyPressed!="C"))
                 {
                     temp=string.Concat(temp,keyPressed);
                     A=Double.Parse(temp);
                 }               
-                Console.Clear();  
                 //toogle sign change for first Operand                             
                 if(keyPressed=="s" || keyPressed=="S")
                     A=A*(-1);        
-                Console.Write($"{A}\n");
+                return ($"{A}\n");
             }
                
             //Extraction Of Operator==================================================================================================
             else if(keyPressed=="+" || keyPressed=="-" || keyPressed=="x" || keyPressed=="X"|| keyPressed=="/")                             //extraction of operator
             {
                 opertor=keyPressed;
-                if(Flag==true)              //for concussive operator continusly,flag tell presence of b
+                if(Flag==true)              //for continious calculation,flag tell presence of b
                 {
                     try
                     {
-                        Console.Clear();
                         A=Calculate(A,B,opertor);
-                        test=A;                             //extra var to unit testing
                         B=0;
                     }
                     catch(DivideByZeroException)
                     {
-                        Console.Clear();
-                        Console.WriteLine("-E-");
                         msg="error";
+                        return ("-E-");
                     }
                 }
                 if(msg=="")                             //do not print if exception occured
-                    Console.Write($"{A}\n{opertor}\n");  
-                Flag=true;
-                temp2="";   
+                {
+                    Flag=true;
+                    temp2="";
+                    return ($"{A}\n{opertor}\n");
+                    } 
             }
 
             //Extraction of 2nd Operand=========================================================================================
@@ -71,33 +67,31 @@ namespace ConsoleCalculator
                     temp2=string.Concat(temp2,keyPressed);
                     B=Double.Parse(temp2);
                 }
-                Console.Clear();
-                //toogle sign change for 2nd Operand
+                                                            //toogle sign change for 2nd Operand
                 if(keyPressed=="s" || keyPressed=="S")                
                     B=B*(-1);
-                Console.Write($"{A}\n{opertor}\n{B}\n");
+                return ($"{A}\n{opertor}\n{B}\n");
             }
 
-            else if(keyPressed=="=")                                //check for b is given or not
+            else if(keyPressed=="=")                              
             {
                 
-                temp=""; temp2="";
+                temp=""; temp2="";                      
                 try
                 {
-                    Console.WriteLine($"{A}\n{opertor}\n{B}\n{keyPressed}\n{Calculate(A,B,opertor)}");
                     A=Calculate(A,B,opertor);
-                    test=A;                                           //for unit testing
-                    opertor="";B=0;
+                    opertor="";
+                    B=0;
+                    Flag=false;                     //after result new oprand will store in b always
+                    return ($"{A}");               
                 }
                 catch(DivideByZeroException)
                 {
-                    Console.WriteLine("-E-");
-                }
-                    
+                    return ("-E-");
+                }     
             }
-                
+            return "-E-";
         }
-
         public static double Calculate(double A,double B,string opertor)
         {
             if(opertor=="+")
@@ -117,10 +111,9 @@ namespace ConsoleCalculator
                 return 0;       //if no operator provide then this is default result
         }
 
-        public static void ValidateKey(char key)
+        public static void ValidateKey(string key)
         {
-            char[] input=new char[]{'1','2','3','4','5','6','7','8','9','0','.','s','S','c','C','+','-','/','x','X','='};
-            if(input.Contains(key)==false)
+            if(Allinputs.Contains(key,StringComparer.OrdinalIgnoreCase)==false)
                 throw new ArgumentException("Enter only numbers to calculate");
         }
     }

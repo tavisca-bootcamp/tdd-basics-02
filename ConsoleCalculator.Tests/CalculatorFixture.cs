@@ -39,7 +39,7 @@ namespace ConsoleCalculator.Tests
 
         
         [Fact]
-        public void DotOperator()
+        public void TestIgnoreMultipleDecimalPoints()
         {
             
             char[] key = { '0', '.', '.', '0','0','1' };
@@ -49,7 +49,7 @@ namespace ConsoleCalculator.Tests
 
         
         [Fact]
-        public void SOperator()
+        public void SignToggleOperator()
         {
             
             char[] key = { '1', '3', '+', '2','s','S','='};
@@ -69,12 +69,20 @@ namespace ConsoleCalculator.Tests
 
         
         [Fact]
-        public void COperator()
+        public void ClearOperator()
         {
             
             char[] key = { '1','3','4','+','C'};
             var ans = ManykeysPressed(key);
             Assert.Equal("0", ans);
+        }
+        [Fact]
+        public void MultipleOperations()
+        {
+
+            char[] key = { '1', '2', '-', '6', 'X','2','+','5','=' };
+            var ans = ManykeysPressed(key);
+            Assert.Equal("17", ans);
         }
     }
 }

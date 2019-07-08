@@ -4,10 +4,20 @@ namespace ConsoleCalculator
 {
     public class Calculator
     {
+        Display CalculatorDisplay;
+        Operator CurrentOperator;
+        ResultTillNow Result;
+        String CurrentNumber;
 
+        public Calculator(){
+            CalculatorDisplay=new Display();
+            CurrentOperator=new Operator();
+            Result=new ResultTillNow();
+            CurrentNumber="0";
+        }
         public string SendKeyPress(char key)
         {
-            // Add your implementation here.
+            //todo
             throw new NotImplementedException();
         }
     }

@@ -58,7 +58,7 @@ namespace ConsoleCalculator
                 }
                 else if (ValidationHelper.IsSignToggle(key))
                 {
-                    double num = Convert.ToDouble(temp);
+                    Double.TryParse(temp, out double num);
                     num = -num;
                     temp = num.ToString();
                     disp = temp;
@@ -94,19 +94,21 @@ namespace ConsoleCalculator
         private double Calculate(string inp1, char inp2, string inp3)
         {
             double result;
+            Double.TryParse(inp1, out double n1);
+            Double.TryParse(inp3, out double n2);
             switch (inp2)
             {
                 case '+':
-                    result = Convert.ToDouble(inp1) + Convert.ToDouble(inp3);
+                    result = n1+n2;
                     break;
                 case '-':
-                    result = Convert.ToDouble(inp1) - Convert.ToDouble(inp3);
+                    result = n1-n2;
                     break;
                 case 'x':
-                    result = Convert.ToDouble(inp1) * Convert.ToDouble(inp3);
+                    result = n1*n2;
                     break;
                 case '/':
-                    result = Convert.ToDouble(inp1) / Convert.ToDouble(inp3);
+                    result = n1/n2;
                     break;
                 default:
                     return 0;

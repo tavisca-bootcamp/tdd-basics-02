@@ -58,7 +58,13 @@ namespace ConsoleCalculator
             return CalculatorDisplay.ShowOutput();
         }
         public void NumberPressed(char number){
-            //todo
+            if(CurrentNumber.Equals("0")){
+                CurrentNumber=number+"";
+            }
+            else{
+                CurrentNumber=CurrentNumber+number;
+            }
+            CalculatorDisplay.SetOutput(CurrentNumber);
         }
         public void OperatorPressed(char number){
             //todo

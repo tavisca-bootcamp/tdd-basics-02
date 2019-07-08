@@ -8,12 +8,13 @@ namespace ConsoleCalculator
         Operator CurrentOperator;
         ResultTillNow Result;
         String CurrentNumber;
-
+        bool IsPrevKeyAnOperator;
         public Calculator(){
             CalculatorDisplay=new Display();
             CurrentOperator=new Operator();
             Result=new ResultTillNow();
             CurrentNumber="0";
+            IsPrevKeyAnOperator=false;
         }
         public string SendKeyPress(char key)
         {
@@ -65,9 +66,18 @@ namespace ConsoleCalculator
                 CurrentNumber=CurrentNumber+number;
             }
             CalculatorDisplay.SetOutput(CurrentNumber);
+            IsPrevKeyAnOperator=false;
         }
-        public void OperatorPressed(char number){
-            //todo
+        public void OperatorPressed(char currentOperator){
+            if(IsPrevKeyAnOperator)
+                CurrentOperator.SetOperator(currentOperator);
+            else{
+                Result.Operate(CurrentOperator.GetOperator(),CalculatorDisplay.ShowOutput());
+                CalculatorDisplay.SetOutput(Result.GetValue());
+                CurrentNumber="0";
+                CurrentOperator.SetOperator(currentOperator);
+            }
+            IsPrevKeyAnOperator=true;
         }
         public void Toggle(){
             String currDisplay=CalculatorDisplay.ShowOutput();
@@ -76,18 +86,29 @@ namespace ConsoleCalculator
             else
                 currDisplay=currDisplay.Substring(1);
             CalculatorDisplay.SetOutput(currDisplay);
+            CurrentNumber=currDisplay;
+            IsPrevKeyAnOperator=false;
         }
         public void Reset(){
             CalculatorDisplay=new Display();
             CurrentOperator=new Operator();
             Result=new ResultTillNow();
             CurrentNumber="0";
+            IsPrevKeyAnOperator=false;
         }
         public void DecimalAdded(){
-            //todo
+            if(!CurrentNumber.Contains(".")){
+                CurrentNumber=CurrentNumber+".";
+                CalculatorDisplay.SetOutput(CurrentNumber);
+            }
+            IsPrevKeyAnOperator=false;
         }
         public void EqualPressed(){
-            //todo
+            Result.Operate(CurrentOperator.GetOperator(),CalculatorDisplay.ShowOutput());
+            CalculatorDisplay.SetOutput(Result.GetValue());
+            CurrentNumber="0";
+            CurrentOperator.SetOperator(' ');
+            IsPrevKeyAnOperator=false;
         }
     }
 }

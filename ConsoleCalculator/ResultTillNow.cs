@@ -20,6 +20,31 @@ public class ResultTillNow
     }
     public void Operate(char operation,string operand)
     {
-        //todo
+        if (operation == '+'){
+            Value += Double.Parse(operand);
+            Result=Value.ToString();
+        }
+        else if (operation == '-'){
+            Value -= Double.Parse(operand);
+            Result=Value.ToString();
+        }
+        else if(operation=='x' || operation == 'X'){
+            Value *= Double.Parse(operand);
+            Result=Value.ToString();
+        }
+        else if(operation=='/'){
+            if(Double.Parse(operand)==0){
+                Value=0;
+                Result="-E-";
+            }
+            else{
+                Value /= Double.Parse(operand);
+                Result=Value.ToString();
+            }
+        }
+        else {
+            Value=Double.Parse(operand);
+            Result=operand;
+        }
     }
 }

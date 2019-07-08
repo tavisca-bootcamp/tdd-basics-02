@@ -4,84 +4,71 @@ using System.Text;
 
 namespace ConsoleCalculator
 {
-    public class Validations
+    public class ValidationHelper
     {
-        public string[] Validate(char current, string input)
+        public static bool IsValid(Char c)
         {
-            string[] validated = new string[2];
-            if (current == '0' || current == '1' || current == '2' || current == '3' || current == '4' || current == '5' || current == '6' || current == '7' || current == '8' || current == '9' || current == '.')
+            if (Char.IsNumber(c) || c == '.' || IsOperator(c) || IsEquals(c) || IsSignToggle(c) || IsClear(c))
+                return true;
+            else
+                return false;
+        }
+
+        public static bool IsDigit(Char current,string input)
+        {
+            if (Char.IsNumber(current) || current == '.')
             {
                 if (current == '.')
                 {
                     if (CheckDecimal(input))
-                    {
-                        validated[0] = current.ToString();
-                        validated[1] = "digit";
-                    }
+                        return true;
                     else
-                    {
-                        validated[0] = current.ToString();
-                        validated[1] = "invalid input";
-                    }
+                        return false;
                 }
                 else if (current == '0' && input == "0")
-                {
-                    validated[0] = current.ToString();
-                    validated[1] = "invalid input";
-                }
+                    return false;
                 else
-                {
-                    validated[0] = current.ToString();
-                    validated[1] = "digit";
-                }
-            }
-            else if (current == '+' || current == '-' || current == 'x' || current == '/')
-            {
-                validated[0] = current.ToString();
-                validated[1] = "operator";
-            }
-            else if (current == 'C')
-            {
-                validated[0] = current.ToString();
-                validated[1] = "clear";
-            }
-            else if (current == 'S')
-            {
-                validated[0] = current.ToString();
-                validated[1] = "sign";
-            }
-            else if (current == '=')
-            {
-                validated[0] = current.ToString();
-                validated[1] = "calculate";
+                    return true;
             }
             else
-            {
-                validated[0] = current.ToString();
-                validated[1] = "invalid input";
-            }
-            return validated;
+                return false;
         }
 
-        private bool CheckDecimal(string input)
+        public static bool IsOperator(Char current)
+        {
+            if (current == '+' || current == '-' || current == 'x' || current == '/')
+                return true;
+            else
+                return false;
+        }
+
+        public static bool IsEquals(Char current)
+        {
+
+            return current == '=' ? true : false;
+        }
+
+        public static bool IsSignToggle(Char current)
+        {
+            return current == 'S' ? true : false;
+        }
+        public static bool IsClear(Char current)
+        {
+            return current == 'C' ? true : false;
+        }
+
+        private static bool CheckDecimal(string input)
         {
             int count = 0;
             foreach (char chr in input)
             {
                 if (chr == '.')
-                {
                     count++;
-                }
             }
-
             if (count > 0)
-            {
                 return false;
-            }
             else
-            {
                 return true;
-            }
         }
     }
 }

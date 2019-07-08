@@ -4,35 +4,35 @@ namespace ConsoleCalculator
 {
     public class Calculator
     {
-        Validations v = new Validations();
-        string stored = String.Empty, optr, temp = "", disp = "0";
-        Boolean optrExists = false, canCalc = false;
+        string stored,temp,disp;
+        char optr;
+        Boolean optrExists = false;
+
+
         public string SendKeyPress(char key)
         {
-            string[] validated = new string[2];
-            validated = v.Validate(key, temp);
 
-            if (validated[1] != "invalid input")
+            if (ValidationHelper.IsValid(key))
             {
-                if (validated[1] == "operator")
+                if (ValidationHelper.IsOperator(key))
                 {
                     if (CanCalc())
                     {
                         stored = Calculate(stored, optr, temp).ToString();
                         temp = "";
-                        optr = validated[0];
+                        optr = key;
                         disp = stored;
                     }
                     else
                     {
                         stored = temp;
                         temp = "";
-                        optr = validated[0];
+                        optr = key;
                         optrExists = true;
                         disp = stored;
                     }
                 }
-                else if (validated[1] == "calculate")
+                else if (ValidationHelper.IsEquals(key))
                 {
 
                     if (CanCalc())
@@ -56,20 +56,20 @@ namespace ConsoleCalculator
                         disp = stored;
                     }
                 }
-                else if (validated[1] == "sign")
+                else if (ValidationHelper.IsSignToggle(key))
                 {
                     double num = Convert.ToDouble(temp);
                     num = -num;
                     temp = num.ToString();
                     disp = temp;
                 }
-                else if (validated[1] == "clear")
+                else if (ValidationHelper.IsClear(key))
                 {
                     stored = String.Empty;
                     temp = "";
                     disp = "0";
                 }
-                else
+                else if(ValidationHelper.IsDigit(key,temp))
                 {
                     temp += key.ToString();
                     disp = temp;
@@ -91,21 +91,21 @@ namespace ConsoleCalculator
             }
         }
 
-        private double Calculate(string inp1, string inp2, string inp3)
+        private double Calculate(string inp1, char inp2, string inp3)
         {
             double result;
             switch (inp2)
             {
-                case "+":
+                case '+':
                     result = Convert.ToDouble(inp1) + Convert.ToDouble(inp3);
                     break;
-                case "-":
+                case '-':
                     result = Convert.ToDouble(inp1) - Convert.ToDouble(inp3);
                     break;
-                case "x":
+                case 'x':
                     result = Convert.ToDouble(inp1) * Convert.ToDouble(inp3);
                     break;
-                case "/":
+                case '/':
                     result = Convert.ToDouble(inp1) / Convert.ToDouble(inp3);
                     break;
                 default:

@@ -5,10 +5,18 @@ namespace ConsoleCalculator.Tests
 {
     public class CalculatorFixture
     {
-        [Fact]
-        public void DummyTest()
+        Calculator MyCalculator;
+        public CalculatorFixture()
         {
-            return;
+            MyCalculator = new Calculator();
+        }
+        [Fact]
+        public void NumberPressedTest()
+        {
+            string expectedResult,actualResult;
+            expectedResult = "4";
+            actualResult=MyCalculator.SendKeyPress('4');
+            Assert.Equal(expectedResult, actualResult);
         }
     }
 }

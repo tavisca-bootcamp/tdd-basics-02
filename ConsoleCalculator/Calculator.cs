@@ -64,10 +64,18 @@ namespace ConsoleCalculator
             //todo
         }
         public void Toggle(){
-            //todo
+            String currDisplay=CalculatorDisplay.ShowOutput();
+            if(!currDisplay.Contains("-"))
+                currDisplay="-"+currDisplay;
+            else
+                currDisplay=currDisplay.Substring(1);
+            CalculatorDisplay.SetOutput(currDisplay);
         }
         public void Reset(){
-            //todo
+            CalculatorDisplay=new Display();
+            CurrentOperator=new Operator();
+            Result=new ResultTillNow();
+            CurrentNumber="0";
         }
         public void DecimalAdded(){
             //todo

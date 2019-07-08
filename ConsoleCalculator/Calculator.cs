@@ -97,7 +97,7 @@ namespace ConsoleCalculator
             switch (currentOperator)
             {
                 case '+':
-                    //Equalto after operand doubles the value
+                    //Equalto after operand doubles the 
                     if (currentOperand > 0)
                     {
                         result += currentOperand;

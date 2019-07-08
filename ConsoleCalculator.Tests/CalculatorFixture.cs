@@ -5,7 +5,7 @@ namespace ConsoleCalculator.Tests
 {
     public class CalculatorFixture
     {
-        private Calculator _calculator = null;
+        private Calculator _calculator;
 
         public CalculatorFixture()
         {
@@ -122,6 +122,7 @@ namespace ConsoleCalculator.Tests
             _calculator.SendKeyPress('2');
             _calculator.SendKeyPress('s');
             Assert.Equal("-52", _calculator.GetDisplayValue());
+            Console.WriteLine();
         }
 
         [Fact]

@@ -1,4 +1,6 @@
 # Console based calculator
+[![Build Status](https://travis-ci.com/tavisca-pkadam/tdd-basics-02.svg?branch=master)]
+(https://travis-ci.com/tavisca-pkadam/tdd-basics-02)
 
 ## Description
 

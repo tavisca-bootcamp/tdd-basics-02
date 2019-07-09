@@ -1,5 +1,5 @@
 language: csharp
-solution: ConsoleCalculaotr.sln
+solution: ConsoleCalculator.sln
 mono: none
 dotnet: 2.2.300
 install:

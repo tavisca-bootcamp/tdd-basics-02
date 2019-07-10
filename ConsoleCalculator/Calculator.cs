@@ -5,8 +5,8 @@ namespace ConsoleCalculator
 {
     public class Calculator
     {
-        List<double> values = new List<double>();
-        List<char> operations = new List<char>();
+        static List<double> values = new List<double>();
+        static List<char> operations = new List<char>();
         static int pow = 10;
         static bool isOperation = false,dotActive = false;
         public string SendKeyPress(char key)
@@ -50,36 +50,42 @@ namespace ConsoleCalculator
             }
             if (key.Equals('='))
             {
-                if (operations.Count == values.Count - 1)
-                {
-                    for (int i = 0; i < operations.Count; i++)
-                    {       if (operations[i].Equals('*'))
-                                values[0] = values[0] * values[1];
-                            if (operations[i].Equals('/'))
-                            {
-                                if (values[1] != 0)
-                                    values[0] = values[0] / values[1];
-                                else
-                                    return "-E-";
-                            }
-                            if (operations[i].Equals('+'))
-                                values[0] = values[0] + values[1];
-                            if (operations[i].Equals('-'))
-                                values[0] = values[0] - values[1];
-                            values.RemoveAt(1);
-                        
-                        
-                    }
-                    return values[0].ToString();
-                }
-               
-                    return "-E-";
+                return StartCalculating();
                
 
 
             }
             return values[values.Count - 1].ToString();
             throw new NotImplementedException();
+        }
+        public static string StartCalculating()
+        {
+            if (operations.Count == values.Count - 1)
+            {
+                for (int i = 0; i < operations.Count; i++)
+                {
+                    if (operations[i].Equals('*'))
+                        values[0] = values[0] * values[1];
+                    if (operations[i].Equals('/'))
+                    {
+                        if (values[1] != 0)
+                            values[0] = values[0] / values[1];
+                        else
+                            return "-E-";
+                    }
+                    if (operations[i].Equals('+'))
+                        values[0] = values[0] + values[1];
+                    if (operations[i].Equals('-'))
+                        values[0] = values[0] - values[1];
+                    values.RemoveAt(1);
+
+
+                }
+                return values[0].ToString();
+            }
+            return "-E-";
+
+
         }
     }
 }

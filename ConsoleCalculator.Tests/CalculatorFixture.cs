@@ -125,7 +125,8 @@ namespace ConsoleCalculator.Tests
         [InlineData("0",'1','2','s','*','0','=')]
         [InlineData("1230",'1','2','3','*', '1', '0', '=')]
         [InlineData("-E-",'1','2','3','/','0', '=')]
-        [InlineData("-E-",'1','.','2','3','*','1', '=')]
+        [InlineData("1.23", '1', '.', '.', '2', '3', '*', '1', '=')]
+        [InlineData("2.23", '1', '.', '.', '2', '3', '*', '+', '1', '=')]
         public void ParameterizedTesting(string result, params char[] keys)
         {
             var Cal = new Calculator();

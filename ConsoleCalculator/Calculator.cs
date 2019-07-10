@@ -5,14 +5,19 @@ namespace ConsoleCalculator
 {
     public class Calculator
     {
-        static List<double> values = new List<double>();
-        static List<char> operations = new List<char>();
+        List<double> values = new List<double>();
+        List<char> operations = new List<char>();
         static int pow = 10;
         static bool isOperation = false,dotActive = false;
         public string SendKeyPress(char key)
         {    
             if (Char.IsDigit(key))
-            {   if (values.Count == 0)
+
+            {
+                isOperation = false;
+
+
+                if (values.Count == 0)
                     values.Add(0);
 
                 if (!dotActive)
@@ -28,11 +33,21 @@ namespace ConsoleCalculator
             }
             if (key.Equals('-') || key.Equals('+') || key.Equals('/') || key.Equals('*'))
             {
-                values.Add(0);
-                dotActive = false;
-                operations.Add(key);
-                return values[values.Count - 2].ToString();
+                if (!isOperation)
+                {
+                    isOperation = true;
+                    values.Add(0);
+                    dotActive = false;
+                    operations.Add(key);
+                    return values[values.Count - 2].ToString();
+                }
+                else
+                {
+                    dotActive = false;
+                    operations[operations.Count - 1] = key;
+                    return values[values.Count - 2].ToString();
 
+                }
             }
             if (key.Equals('.'))
                 dotActive = true;
@@ -58,7 +73,7 @@ namespace ConsoleCalculator
             return values[values.Count - 1].ToString();
             throw new NotImplementedException();
         }
-        public static string StartCalculating()
+        public  string StartCalculating()
         {
             if (operations.Count == values.Count - 1)
             {

@@ -3,7 +3,8 @@
 namespace ConsoleCalculator
 {
     public class Calculator
-    {private string _inputNumber = "";
+    {
+        private string _inputNumber = "";
         private double _operandFirst = 0;
         private double _operandSecond = 0;
         private char _operator = '+';

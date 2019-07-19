@@ -114,7 +114,7 @@ namespace ConsoleCalculator
                
              String displayOutput=operand1.ToString();
 
-              if(displayOutput=="Infinity")//Error check
+              if(displayOutput=="Infinity" || double.IsInfinity(operand1))//Error check
               {  displayOutput="-E-";
                  operand1=0;
               }

@@ -5,43 +5,312 @@ namespace ConsoleCalculator.Tests
 {
     public class CalculatorFixture
     {
-        [Fact]
-        public void DummyTest()
+        Calculator MyCalculator;
+        public CalculatorFixture()
         {
-            string expectedTest1 = "6";
-            string expectedTest2 = "1.32";
-            string expectedTest3 = "-E-";
-            string actualOutput1 = "";
-            string actualOutput2 = "";
-            string actualOutput3 = "";
-            Calculator calculatorTest1 = new Calculator();
-            Calculator calculatorTest2 = new Calculator();
-            Calculator calculatorTest3 = new Calculator();
+            MyCalculator = new Calculator();
+        }
+        [Fact]
+        public void NumberPressedTest()
+        {
+            string expectedResult,actualResult;
+            expectedResult = "4";
+            actualResult=MyCalculator.SendKeyPress('4');
+            Assert.Equal(expectedResult, actualResult);
+        }
+        [Fact]
+        public void ToggleTest()
+        {
+            string expectedResult, actualResult;
+            expectedResult = "-4";
+            actualResult = MyCalculator.SendKeyPress('4');
+            actualResult = MyCalculator.SendKeyPress('S');
+            Assert.Equal(expectedResult, actualResult);
+        }
+        [Fact]
+        public void AdditionTest()
+        {
+            string expectedResult, actualResult;
+            expectedResult = "9";
+            actualResult = MyCalculator.SendKeyPress('4');
+            actualResult = MyCalculator.SendKeyPress('+');
+            actualResult = MyCalculator.SendKeyPress('5');
+            actualResult = MyCalculator.SendKeyPress('=');
+            Assert.Equal(expectedResult, actualResult);
+        }
+        [Fact]
+        public void SubstractionTest()
+        {
+            string expectedResult, actualResult;
+            expectedResult = "4";
+            actualResult = MyCalculator.SendKeyPress('9');
+            actualResult = MyCalculator.SendKeyPress('-');
+            actualResult = MyCalculator.SendKeyPress('5');
+            actualResult = MyCalculator.SendKeyPress('=');
+            Assert.Equal(expectedResult, actualResult);
+        }
+        [Fact]
+        public void MultiplicationTest()
+        {
+            string expectedResult, actualResult;
+            expectedResult = "20";
+            actualResult = MyCalculator.SendKeyPress('4');
+            actualResult = MyCalculator.SendKeyPress('x');
+            actualResult = MyCalculator.SendKeyPress('5');
+            actualResult = MyCalculator.SendKeyPress('=');
+            Assert.Equal(expectedResult, actualResult);
+        }
+        [Fact]
+        public void DivisionTest()
+        {
+            string expectedResult, actualResult;
+            expectedResult = "2";
+            actualResult = MyCalculator.SendKeyPress('4');
+            actualResult = MyCalculator.SendKeyPress('/');
+            actualResult = MyCalculator.SendKeyPress('2');
+            actualResult = MyCalculator.SendKeyPress('=');
+            Assert.Equal(expectedResult, actualResult);
+        }
+        [Fact]
+        public void DecimalDivisionTest()
+        {
+            string expectedResult, actualResult;
+            expectedResult = "0.8";
+            actualResult = MyCalculator.SendKeyPress('4');
+            actualResult = MyCalculator.SendKeyPress('/');
+            actualResult = MyCalculator.SendKeyPress('5');
+            actualResult = MyCalculator.SendKeyPress('=');
+            Assert.Equal(expectedResult, actualResult);
+        }
 
+        [Fact]
+        public void ResetTest()
+        {
+            string expectedResult, actualResult;
+            expectedResult = "0";
+            actualResult = MyCalculator.SendKeyPress('4');
+            actualResult = MyCalculator.SendKeyPress('C');
+            Assert.Equal(expectedResult, actualResult);
+        }
+        [Fact]
+        public void Scenario_1()
+        {
+            string expectedResult, actualResult;
+            bool flag1, flag2, flag3, flag4, flag5;
 
-            actualOutput1 = calculatorTest1.SendKeyPress('2');
-            actualOutput1 = calculatorTest1.SendKeyPress('x');
-            actualOutput1 = calculatorTest1.SendKeyPress('3');
-            actualOutput1 = calculatorTest1.SendKeyPress('=');
+            expectedResult = "1";
+            actualResult = MyCalculator.SendKeyPress('1');
+            flag1 = expectedResult.Equals(actualResult);
 
-            actualOutput2 = calculatorTest2.SendKeyPress('1');
-            actualOutput2 = calculatorTest2.SendKeyPress('.');
-            actualOutput2 = calculatorTest2.SendKeyPress('2');
-            actualOutput2 = calculatorTest2.SendKeyPress('x');
-            actualOutput2 = calculatorTest2.SendKeyPress('1');
-            actualOutput2 = calculatorTest2.SendKeyPress('.');
-            actualOutput2 = calculatorTest2.SendKeyPress('1');
-            actualOutput2 = calculatorTest2.SendKeyPress('=');
+            expectedResult = "10";
+            actualResult = MyCalculator.SendKeyPress('0');
+            flag2 = expectedResult.Equals(actualResult);
 
-            actualOutput3 = calculatorTest3.SendKeyPress('2');
-            actualOutput3 = calculatorTest3.SendKeyPress('/');
-            actualOutput3 = calculatorTest3.SendKeyPress('0');
-            actualOutput3 = calculatorTest3.SendKeyPress('=');
+            expectedResult = "10";
+            actualResult = MyCalculator.SendKeyPress('+');
+            flag3 = expectedResult.Equals(actualResult);
 
-            Assert.Equal(expectedTest1, actualOutput1);
-            Assert.Equal(expectedTest2, actualOutput2);
-            Assert.Equal(expectedTest3, actualOutput3);
+            expectedResult = "2";
+            actualResult = MyCalculator.SendKeyPress('2');
+            flag4 = expectedResult.Equals(actualResult);
 
+            expectedResult = "12";
+            actualResult = MyCalculator.SendKeyPress('=');
+            flag5 = expectedResult.Equals(actualResult);
+
+            if (flag1 && flag2 && flag3 && flag4 && flag5)
+            {
+                return;
+            }
+            throw new Exception("Didn't pass test");
+        }
+        [Fact]
+        public void Scenario_2()
+        {
+            string expectedResult, actualResult;
+            bool flag1, flag2, flag3, flag4, flag5;
+
+            expectedResult = "1";
+            actualResult = MyCalculator.SendKeyPress('1');
+            flag1 = expectedResult.Equals(actualResult);
+
+            expectedResult = "10";
+            actualResult = MyCalculator.SendKeyPress('0');
+            flag2 = expectedResult.Equals(actualResult);
+
+            expectedResult = "10";
+            actualResult = MyCalculator.SendKeyPress('/');
+            flag3 = expectedResult.Equals(actualResult);
+
+            expectedResult = "0";
+            actualResult = MyCalculator.SendKeyPress('0');
+            flag4 = expectedResult.Equals(actualResult);
+
+            expectedResult = "-E-";
+            actualResult = MyCalculator.SendKeyPress('=');
+            flag5 = expectedResult.Equals(actualResult);
+
+            if (flag1 && flag2 && flag3 && flag4 && flag5)
+            {
+                return;
+            }
+            throw new Exception("Didn't pass test");
+        }
+        [Fact]
+        public void Scenario_3()
+        {
+            string expectedResult, actualResult;
+            bool flag1, flag2, flag3, flag4, flag5, flag6, flag7;
+
+            expectedResult = "0";
+            actualResult = MyCalculator.SendKeyPress('0');
+            flag1 = expectedResult.Equals(actualResult);
+
+            expectedResult = "0";
+            actualResult = MyCalculator.SendKeyPress('0');
+            flag2 = expectedResult.Equals(actualResult);
+
+            expectedResult = "0.";
+            actualResult = MyCalculator.SendKeyPress('.');
+            flag3 = expectedResult.Equals(actualResult);
+
+            expectedResult = "0.";
+            actualResult = MyCalculator.SendKeyPress('.');
+            flag4 = expectedResult.Equals(actualResult);
+
+            expectedResult = "0.0";
+            actualResult = MyCalculator.SendKeyPress('0');
+            flag5 = expectedResult.Equals(actualResult);
+
+            expectedResult = "0.00";
+            actualResult = MyCalculator.SendKeyPress('0');
+            flag6 = expectedResult.Equals(actualResult);
+
+            expectedResult = "0.001";
+            actualResult = MyCalculator.SendKeyPress('1');
+            flag7 = expectedResult.Equals(actualResult);
+
+            if (flag1 && flag2 && flag3 && flag4 && flag5 && flag6 && flag7)
+            {
+                return;
+            }
+            throw new Exception("Didn't pass test");
+        }
+        [Fact]
+        public void Scenario_4()
+        {
+            string expectedResult, actualResult;
+            bool flag1, flag2, flag3, flag4, flag5, flag6, flag7, flag8;
+
+            expectedResult = "1";
+            actualResult = MyCalculator.SendKeyPress('1');
+            flag1 = expectedResult.Equals(actualResult);
+
+            expectedResult = "12";
+            actualResult = MyCalculator.SendKeyPress('2');
+            flag2 = expectedResult.Equals(actualResult);
+
+            expectedResult = "12";
+            actualResult = MyCalculator.SendKeyPress('+');
+            flag3 = expectedResult.Equals(actualResult);
+
+            expectedResult = "2";
+            actualResult = MyCalculator.SendKeyPress('2');
+            flag4 = expectedResult.Equals(actualResult);
+
+            expectedResult = "-2";
+            actualResult = MyCalculator.SendKeyPress('S');
+            flag5 = expectedResult.Equals(actualResult);
+
+            expectedResult = "2";
+            actualResult = MyCalculator.SendKeyPress('S');
+            flag6 = expectedResult.Equals(actualResult);
+
+            expectedResult = "-2";
+            actualResult = MyCalculator.SendKeyPress('S');
+            flag7 = expectedResult.Equals(actualResult);
+
+            expectedResult = "10";
+            actualResult = MyCalculator.SendKeyPress('=');
+            flag8 = expectedResult.Equals(actualResult);
+
+            if (flag1 && flag2 && flag3 && flag4 && flag5 && flag6 && flag7 && flag8)
+            {
+                return;
+            }
+            throw new Exception("Didn't pass test");
+        }
+        [Fact]
+        public void Scenario_5()
+        {
+            string expectedResult, actualResult;
+            bool flag1, flag2, flag3, flag4, flag5, flag6, flag7;
+
+            expectedResult = "1";
+            actualResult = MyCalculator.SendKeyPress('1');
+            flag1 = expectedResult.Equals(actualResult);
+
+            expectedResult = "1";
+            actualResult = MyCalculator.SendKeyPress('+');
+            flag2 = expectedResult.Equals(actualResult);
+
+            expectedResult = "2";
+            actualResult = MyCalculator.SendKeyPress('2');
+            flag3 = expectedResult.Equals(actualResult);
+
+            expectedResult = "3";
+            actualResult = MyCalculator.SendKeyPress('+');
+            flag4 = expectedResult.Equals(actualResult);
+
+            expectedResult = "3";
+            actualResult = MyCalculator.SendKeyPress('3');
+            flag5 = expectedResult.Equals(actualResult);
+
+            expectedResult = "6";
+            actualResult = MyCalculator.SendKeyPress('+');
+            flag6 = expectedResult.Equals(actualResult);
+
+            expectedResult = "12";
+            actualResult = MyCalculator.SendKeyPress('=');
+            flag7 = expectedResult.Equals(actualResult);
+
+            if (flag1 && flag2 && flag3 && flag4 && flag5 && flag6 && flag7)
+            {
+                return;
+            }
+            throw new Exception("Didn't pass test");
+        }
+        [Fact]
+        public void Scenario_6()
+        {
+            string expectedResult, actualResult;
+            bool flag1, flag2, flag3, flag4, flag5;
+
+            expectedResult = "1";
+            actualResult = MyCalculator.SendKeyPress('1');
+            flag1 = expectedResult.Equals(actualResult);
+
+            expectedResult = "1";
+            actualResult = MyCalculator.SendKeyPress('+');
+            flag2 = expectedResult.Equals(actualResult);
+
+            expectedResult = "2";
+            actualResult = MyCalculator.SendKeyPress('2');
+            flag3 = expectedResult.Equals(actualResult);
+
+            expectedResult = "3";
+            actualResult = MyCalculator.SendKeyPress('+');
+            flag4 = expectedResult.Equals(actualResult);
+
+            expectedResult = "0";
+            actualResult = MyCalculator.SendKeyPress('C');
+            flag5 = expectedResult.Equals(actualResult);
+
+            if (flag1 && flag2 && flag3 && flag4 && flag5)
+            {
+                return;
+            }
+            throw new Exception("Didn't pass test");
         }
     }
 }

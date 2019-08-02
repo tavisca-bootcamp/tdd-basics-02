@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ConsoleCalculator.Tests\ConsoleCalculator.Tests.csproj" />
     <ProjectReference Include="..\ConsoleCalculator\ConsoleCalculator.csproj" />
   </ItemGroup>
 </Project>

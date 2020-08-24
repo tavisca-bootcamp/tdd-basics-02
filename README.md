@@ -103,3 +103,19 @@ Scenario is 10 / 0 = -E-
 | + | 3 |
 | C | 0 |
 
+# Three laws of TDD
+
+When doing the exercise, it is important to stick to the three rules of TDD. For more information click [here][4].
+
+1. You may not write production code until you have written a failing unit test.
+
+2. You may not write more of a unit test than is sufficient to fail, and not compiling is failing.
+
+3. You may not write more production code than is sufficient to pass the currently failing test.
+
+# Have fun!
+
+- https://twitter.com/unclebobmartin
+- http://butunclebob.com/ArticleS.UncleBob.TheBowlingGameKata
+- https://xunit.net/-
+- http://butunclebob.com/ArticleS.UncleBob.TheThreeRulesOfTdd

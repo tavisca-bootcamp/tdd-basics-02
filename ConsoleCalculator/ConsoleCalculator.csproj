@@ -4,10 +4,4 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="KayValidator.cs" />
-    <Compile Remove="KeyType.cs" />
-    <Compile Remove="MathCalculator.cs" />
-  </ItemGroup>
-
 </Project>

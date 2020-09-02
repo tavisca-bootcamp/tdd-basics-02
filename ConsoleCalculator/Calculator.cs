@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 namespace ConsoleCalculator
 {
@@ -7,8 +8,7 @@ namespace ConsoleCalculator
 
         public string SendKeyPress(char key)
         {
-            // Add your implementation here.
-            throw new NotImplementedException();
+            return "-1";
         }
     }
 }

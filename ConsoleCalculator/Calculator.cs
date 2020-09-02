@@ -25,31 +25,5 @@ namespace ConsoleCalculator
             // Add your implementation here.
             throw new NotImplementedException();
         }
-
-
-        private bool checkNull()
-        {
-            return firstOperand != null && 
-                   secondOperand != null && 
-                   arthimaticOperator != null;
-        }
-
-      
-        private string calculate(char key)
-        {
-            return string.Empty;   
-        }
-
-        private void resetCalculator()
-        {
-            
-        }
-
-        private string Calculations(string FirstOperand, string SecondOperand, string Operation)
-        {
-           return string.Empty;
-        }
-
-
     }
 }

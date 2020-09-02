@@ -7,32 +7,38 @@ namespace ConsoleCalculator
 {
     public class Validation
     {
-        public bool IsNumericKey(char digit)
+        public bool IsNumricKey(char digit)
         {
-            return false;
+            return new Regex(@"[0-9]").IsMatch(digit.ToString());
         }
 
         public bool IsAlphabetKey(char alpha)
         {
-            return false;
+            bool result = new Regex("[^cCsSxX.=]").IsMatch(alpha.ToString());
+            return result;
         }
 
-        public bool IsArithmaticOperationKey(char operation)
+        public bool IsArthematicOperationKey(char operation)
         {
-            return false;
+            return new Regex(@"[+\-Xx\/]").IsMatch(operation.ToString());
         }
 
-        public string IsPrecedingZero(string operand,char key)
+
+        public string IsPrecedingZero(string operand, char key)
         {
-            return string.Empty;
+            if (operand != null && operand != "0")
+                return operand += key;
+            if (operand.Contains("."))
+                return operand;
+            return null;
         }
 
         public string checkLeadingZeros(string operand, char key)
         {
-            return string.Empty;
+            if (operand == "0")
+                operand = null;
+            return operand += key;
         }
-
-
 
     }
 }

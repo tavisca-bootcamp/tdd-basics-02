@@ -7,19 +7,26 @@ namespace ConsoleCalculator
     class Helper
     {
         Validation validate = new Validation();
-        public  string AssignDecimalToOperand(string operand, char key)
+        public string AssignDecimalToOperand(string operand, char key)
         {
-            return string.Empty;
+            if (operand.Contains("."))
+                return operand;
+            return operand += key;
         }
 
         public string AssignOperand(string operand, char key)
         {
-            return string.Empty;
+            if (string.IsNullOrEmpty(operand))
+                operand = key.ToString();
+            else
+                operand = validate.checkLeadingZeros(operand, key);
+
+            return operand;
         }
 
         public string toggleSign(string operand)
         {
-            return string.Empty;
+            return (-1 * double.Parse(operand)).ToString();
         }
     }
 }

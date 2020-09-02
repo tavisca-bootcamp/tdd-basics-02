@@ -9,24 +9,17 @@ namespace ConsoleCalculator
         Validation validate = new Validation();
         public  string AssignDecimalToOperand(string operand, char key)
         {
-            if (operand.Contains("."))
-                return operand;
-            return operand += key;
+            return string.Empty;
         }
 
         public string AssignOperand(string operand, char key)
         {
-            if (string.IsNullOrEmpty(operand))
-                operand = key.ToString();
-            else
-                operand = validate.checkLeadingZeros(operand, key);
-
-            return operand;
+            return string.Empty;
         }
 
         public string toggleSign(string operand)
         {
-            return (-1 * double.Parse(operand)).ToString();
+            return string.Empty;
         }
     }
 }

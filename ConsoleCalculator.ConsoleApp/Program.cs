@@ -6,11 +6,9 @@ namespace ConsoleCalculator.App
     {
         static void Main(string[] args)
         {
-            
-            ConsoleKeyInfo key;
-            Console.WriteLine("Press Ctrl + C to close the program.");
-            Console.TreatControlCAsInput = true;
             var calc = new Calculator();
+            ConsoleKeyInfo key;
+           // Console.WriteLine("Press Ctrl + C to close the program.");
             while (IsKillSwitch(key = Console.ReadKey(true)) == false)
             {
                 Console.Clear();

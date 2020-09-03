@@ -106,5 +106,8 @@ namespace ConsoleCalculator.Tests
             Assert.Equal("4", calc.SendKeyPress('4'));
             Assert.Equal("3", calc.SendKeyPress('='));
         }
+
+
+
     }
 }

@@ -8,10 +8,14 @@ namespace ConsoleCalculator.App
         {
             var calc = new Calculator();
             ConsoleKeyInfo key;
+            Console.WriteLine("Starting the Calculator...");
+            Console.Clear();
             Console.WriteLine("Press Ctrl + C to close the program.");
+            Console.WriteLine("0");
             while (IsKillSwitch(key = Console.ReadKey(true)) == false)
             {
                 Console.Clear();
+                Console.WriteLine("Press Ctrl + C to close the program.");
                 Console.WriteLine(calc.SendKeyPress(key.KeyChar));
             }
         }

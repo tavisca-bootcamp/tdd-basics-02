@@ -1,0 +1,10 @@
+language: csharp
+solution: ConsoleCalculator.sln
+dist: xenial
+mono: none
+dotnet: 2.2.300
+install:
+  - dotnet restore
+script:
+  - dotnet build
+  - dotnet test ConsoleCalculator.Tests/ConsoleCalculator.Tests.csproj

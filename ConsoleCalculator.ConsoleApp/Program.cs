@@ -16,7 +16,7 @@ namespace ConsoleCalculator.App
             }
         }
 
-        private static bool IsKillSwitch(ConsoleKeyInfo key)
+        public static bool IsKillSwitch(ConsoleKeyInfo key)
         {
             return key.Key == ConsoleKey.C && key.Modifiers == ConsoleModifiers.Control;
         }

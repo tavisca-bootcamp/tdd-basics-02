@@ -1,0 +1,9 @@
+language: csharp
+os: osx
+solution: ConsoleCalculator.sln
+mono: none
+dotnet: 2.1.502
+install: 
+ - dotnet restore
+script:
+ - dotnet test ConsoleCalculator.Tests/ConsoleCalculator.Tests.csproj
